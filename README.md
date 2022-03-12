@@ -1,1 +1,1 @@
-# iptc-photometadata-service
+# IPTC Photo Metadtata Engine

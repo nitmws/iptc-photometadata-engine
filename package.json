@@ -1,0 +1,40 @@
+{
+  "name": "iptc-photometadata-engine",
+  "version": "0.2.0",
+  "description": "Processing of photo metadata in compliance with the IPTC Photo Metadata Standard",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
+    "prepublishOnly": "npm run tsc",
+    "test": "echo \"Warning: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "iptc",
+    "photo",
+    "metadata",
+    "exif",
+    "exiftool"
+  ],
+  "author": {
+    "name": "Michael Steidl",
+    "email": "mwsteidl@newsit.biz",
+    "url": "https://newsit.biz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nitmws/iptc-photometadata-engine.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nitmws/iptc-photometadata-engine/issues"
+  },
+  "homepage": "https://github.com/nitmws/iptc-photometadata-engine",
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "typescript": "^4.6.3"
+  }
+}

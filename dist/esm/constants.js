@@ -41,22 +41,25 @@ export const itgUgtLocation = 'location';
 export const itgUgtOthings = 'othings';
 export const itgUgtPerson = 'person';
 export const itgUgtRights = 'rights';
-// constant values of an IPTC PMD Checker Result object
-export const stateState = 'state';
-export const stateData = 'data';
-export const stateDxmp = 'XMP';
-export const stateDiim = 'IIM';
-export const stateDexif = 'EXIF';
-export const stateDinsync = 'INSYNC';
-export const stateDmapinsync = 'MAPINSYNC';
-export const stateDvaloccur = 'XMPVALOCCUR';
-export const stateValue = 'value';
-export const stateVxmp = 'XMP';
-export const stateViim = 'IIM';
-export const stateVexif = 'EXIF';
-export const stateVet = 'EXIFTOOL';
-export const stateVaodPrefix = 'AOD__';
-export const stateStruct = 'struct';
+// constant property names of an IPTC PMD Checker Result (ipmdcr) object
+export const ipmdcrState = 'state';
+// ... property names inside the top level "state" property
+export const ipmdcrSData = 'data';
+// ... property names inside sub-property "data" of the top level "state"
+export const ipmdcrSDxmp = 'XMP';
+export const ipmdcrSDiim = 'IIM';
+export const ipmdcrSDexif = 'EXIF';
+export const ipmdcrSDinsync = 'INSYNC';
+export const ipmdcrSDmapinsync = 'MAPINSYNC';
+export const ipmdcrSDvaloccur = 'XMPVALOCCUR';
+export const ipmdcrSStruct = 'struct';
+// ... property names inside the top level "value" property
+export const ipmdcrValue = 'value';
+export const ipmdcrVxmp = 'XMP';
+export const ipmdcrViim = 'IIM';
+export const ipmdcrVexif = 'EXIF';
+export const ipmdcrVet = 'EXIFTOOL';
+export const ipmdcrVaodPrefix = 'AOD__';
 // constant values of the Property Node (pnode)
 export const pnodeTypePlain = 'plain';
 export const pnodeTypeStruct = 'struct';

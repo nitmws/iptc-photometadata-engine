@@ -42,7 +42,7 @@ export function ipmdChkResultToTabledata1(ipmdChkResultFsd: FixedStructureData,
                                           ipmdIdFilter: string[],
                                           ipmdTechRefFsd: FixedStructureData): Row1Fields[] {
 
-    let ipmdDataState: object = ipmdChkResultFsd.getFsData(icc.stateState)['value'];
+    let ipmdDataState: object = ipmdChkResultFsd.getFsData(icc.ipmdcrState)['value'];
 
     let statestructIpmdIds: string[] = [];
     let statestructIpmdIdsPre: string[] = Object.keys(ipmdDataState);
@@ -65,20 +65,20 @@ export function ipmdChkResultToTabledata1(ipmdChkResultFsd: FixedStructureData,
         // get reference data:
         let propIpmdRefData: MdStruct = ipmdTechRefFsd.getFsData(icc.itgIpmdTop + fsdLsep + ipmdId)['value'];
         // get state data:
-        let propImpdStateData: MdStruct = ipmdChkResultFsd.getFsData(icc.stateState + fsdLsep + ipmdId
-            + fsdLsep + icc.stateData )['value'];
+        let propImpdStateData: MdStruct = ipmdChkResultFsd.getFsData(icc.ipmdcrState + fsdLsep + ipmdId
+            + fsdLsep + icc.ipmdcrSData )['value'];
         rowFields.topic = propIpmdRefData[icc.itgUgtopic];
         rowFields.sortorder = propIpmdRefData[icc.itgSortorder];
         rowFields.nameL1 = propIpmdRefData[icc.itgName];
-        if (propImpdStateData[icc.stateDxmp] > 0) rowFields.xmpprop = propFound;
-        if (propImpdStateData[icc.stateDxmp] == 0) rowFields.xmpprop = propMissing;
-        if (icc.stateDiim in propImpdStateData){
-            if (propImpdStateData[icc.stateDiim] > 0) rowFields.iimprop = propFound;
-            if (propImpdStateData[icc.stateDiim] === 0) rowFields.iimprop = propMissing;
+        if (propImpdStateData[icc.ipmdcrSDxmp] > 0) rowFields.xmpprop = propFound;
+        if (propImpdStateData[icc.ipmdcrSDxmp] == 0) rowFields.xmpprop = propMissing;
+        if (icc.ipmdcrSDiim in propImpdStateData){
+            if (propImpdStateData[icc.ipmdcrSDiim] > 0) rowFields.iimprop = propFound;
+            if (propImpdStateData[icc.ipmdcrSDiim] === 0) rowFields.iimprop = propMissing;
         }
         else rowFields.iimprop = propNotspec;
-        if (icc.stateDinsync in propImpdStateData){
-            if (propImpdStateData[icc.stateDinsync] > 0) rowFields.valuesinsync = valInsync
+        if (icc.ipmdcrSDinsync in propImpdStateData){
+            if (propImpdStateData[icc.ipmdcrSDinsync] > 0) rowFields.valuesinsync = valInsync
             else rowFields.valuesinsync = valNotInsync;
         }
         tableRows.push(rowFields);
@@ -86,7 +86,7 @@ export function ipmdChkResultToTabledata1(ipmdChkResultFsd: FixedStructureData,
             let structId: string = propIpmdRefData[icc.itgDataformat];
             if (structId !== 'AltLang') {
                 let structRefPath: string = icc.itgIpmdStruct + fsdLsep + structId;
-                let structResultPath: string = icc.stateState + fsdLsep + ipmdId + fsdLsep + icc.stateStruct;
+                let structResultPath: string = icc.ipmdcrState + fsdLsep + ipmdId + fsdLsep + icc.ipmdcrSStruct;
                 let propImpdStateStruct: MdStruct = ipmdChkResultFsd.getFsData(structResultPath);
                 if (propImpdStateStruct['state'] === 'FOUND') {
                     let structLines: Row1Fields[] = _generateXMPstructlines(ipmdChkResultFsd, structResultPath, structRefPath,
@@ -125,7 +125,7 @@ function _generateXMPstructlines(ipmdChkResultFsd: FixedStructureData,
         let propIpmdRefData: MdStruct = ipmdTechRefFsd.getFsData(ipmdTechRefFsdPathToStruct + fsdLsep + ipmdId)['value'];
         // get state data:
         let propImpdStateData: MdStruct = ipmdChkResultFsd.getFsData(ipmdChkResultFsdPathToStruct + fsdLsep + ipmdId
-            + fsdLsep + icc.stateData )['value'];
+            + fsdLsep + icc.ipmdcrSData )['value'];
         rowFields.topic = parentRowFields.topic;
         rowFields.sortorder = parentRowFields.sortorder + '-' + propIpmdRefData[icc.itgSortorder];
         switch (proplevel){
@@ -153,15 +153,15 @@ function _generateXMPstructlines(ipmdChkResultFsd: FixedStructureData,
                 break;
         }
 
-        if (propImpdStateData[icc.stateDxmp] > 0) rowFields.xmpprop = propFound;
-        if (propImpdStateData[icc.stateDxmp] == 0) rowFields.xmpprop = propMissing;
-        if (icc.stateDiim in propImpdStateData){
-            if (propImpdStateData[icc.stateDiim] > 0) rowFields.iimprop = propFound;
-            if (propImpdStateData[icc.stateDiim] === 0) rowFields.iimprop = propMissing;
+        if (propImpdStateData[icc.ipmdcrSDxmp] > 0) rowFields.xmpprop = propFound;
+        if (propImpdStateData[icc.ipmdcrSDxmp] == 0) rowFields.xmpprop = propMissing;
+        if (icc.ipmdcrSDiim in propImpdStateData){
+            if (propImpdStateData[icc.ipmdcrSDiim] > 0) rowFields.iimprop = propFound;
+            if (propImpdStateData[icc.ipmdcrSDiim] === 0) rowFields.iimprop = propMissing;
         }
         else rowFields.iimprop = propNotspec;
-        if (icc.stateDinsync in propImpdStateData){
-            if (propImpdStateData[icc.stateDinsync] > 0) rowFields.valuesinsync = valInsync
+        if (icc.ipmdcrSDinsync in propImpdStateData){
+            if (propImpdStateData[icc.ipmdcrSDinsync] > 0) rowFields.valuesinsync = valInsync
             else rowFields.valuesinsync = valNotInsync;
         }
         tableRows.push(rowFields);
@@ -169,7 +169,7 @@ function _generateXMPstructlines(ipmdChkResultFsd: FixedStructureData,
             let structId: string = propIpmdRefData[icc.itgDataformat];
             if (structId !== 'AltLang') {
                 let structRefPath: string = icc.itgIpmdStruct + fsdLsep + structId;
-                let structResultPath: string = ipmdChkResultFsdPathToStruct + fsdLsep + ipmdId + fsdLsep + icc.stateStruct;
+                let structResultPath: string = ipmdChkResultFsdPathToStruct + fsdLsep + ipmdId + fsdLsep + icc.ipmdcrSStruct;
                 let propImpdStateStruct: MdStruct = ipmdChkResultFsd.getFsData(structResultPath);
                 if (propImpdStateStruct['state'] === 'FOUND') {
                     let structLines: Row1Fields[] = _generateXMPstructlines(ipmdChkResultFsd, structResultPath, structRefPath,
@@ -257,26 +257,26 @@ function ipmdcVal2ipmd(
                     }
                 } else { // a single plain value
                     switch (fmtPref){
-                        case icc.stateVxmp:
-                            if (ipmdcVals[ipmdpropid].hasOwnProperty(icc.stateVxmp)) {
-                                ipmdObj[ipmdpropid] = ipmdcVals[ipmdpropid][icc.stateVxmp];
+                        case icc.ipmdcrVxmp:
+                            if (ipmdcVals[ipmdpropid].hasOwnProperty(icc.ipmdcrVxmp)) {
+                                ipmdObj[ipmdpropid] = ipmdcVals[ipmdpropid][icc.ipmdcrVxmp];
                             }
                             else {
                                 if (!thisFmtOnly) {
-                                    if (ipmdcVals[ipmdpropid].hasOwnProperty(icc.stateViim)) {
-                                        ipmdObj[ipmdpropid] = ipmdcVals[ipmdpropid][icc.stateViim];
+                                    if (ipmdcVals[ipmdpropid].hasOwnProperty(icc.ipmdcrViim)) {
+                                        ipmdObj[ipmdpropid] = ipmdcVals[ipmdpropid][icc.ipmdcrViim];
                                     }
                                 }
                             }
                             break;
-                        case icc.stateViim:
-                            if (ipmdcVals[ipmdpropid].hasOwnProperty(icc.stateViim)) {
-                                ipmdObj[ipmdpropid] = ipmdcVals[ipmdpropid][icc.stateViim];
+                        case icc.ipmdcrViim:
+                            if (ipmdcVals[ipmdpropid].hasOwnProperty(icc.ipmdcrViim)) {
+                                ipmdObj[ipmdpropid] = ipmdcVals[ipmdpropid][icc.ipmdcrViim];
                             }
                             else {
                                 if (!thisFmtOnly) {
-                                    if (ipmdcVals[ipmdpropid].hasOwnProperty(icc.stateVxmp)) {
-                                        ipmdObj[ipmdpropid] = ipmdcVals[ipmdpropid][icc.stateVxmp];
+                                    if (ipmdcVals[ipmdpropid].hasOwnProperty(icc.ipmdcrVxmp)) {
+                                        ipmdObj[ipmdpropid] = ipmdcVals[ipmdpropid][icc.ipmdcrVxmp];
                                     }
                                 }
                             }

@@ -495,12 +495,15 @@ All constants can be used with the namespace "icc", e.g. as `ipmde.icc.itgSortor
 
 
 ```javascript
-// constant values of the IPTC PMD TechGuide object
+// constant property names and property values
+//    of the IPTC PMD TechGuide object
+// top level properties
 const itgIpmdTop: string = 'ipmd_top';
 const itgIpmdStruct: string = 'ipmd_struct';
 const itgEtTopwpre: string = 'et_topwithprefix';
 const itgEtTonopre: string = 'et_topnoprefix';
 const itgEtInstruct: string = 'et_instructure';
+// sub-properties of top level properties
 const itgName: string = 'name';
 const itgIpmdschema: string = 'ipmdschema';
 const itgSortorder: string = 'sortorder';
@@ -509,8 +512,6 @@ const itgSpecidx: string = 'specidx';
 const itgDatatype: string = 'datatype';
 const itgDataformat: string = 'dataformat';
 const itgPropoccurrence: string = 'propoccurrence';
-const itgPropoccurSingle: string = 'single';
-const itgPropoccurMulti: string = 'multi';
 const itgXmpid: string = 'XMPid';
 const itgIimid: string = 'IIMid';
 const itgIimname: string = 'IIMname';
@@ -522,14 +523,19 @@ const itgEtExif: string = 'etEXIF';
 const itgEtTag: string = 'etTag';
 const itgIpmdid: string = 'ipmdid';
 const itgIpmddatatype: string = 'ipmddatatype';
+// values for itgDatatype
 const itgDtString: string = 'string';
 const itgDtNumber: string = 'number';
 const itgDtStruct: string = 'struct';
+// values for itgDataformat
 const itgDfAlg: string = 'AltLang';
 const itgDfDt: string = 'date-time';
 const itgDfUri: string = 'uri';
 const itgDfUrl: string = 'url';
-// codes for User Guide topics
+// calues for itgPropoccurrence values
+const itgPropoccurSingle: string = 'single';
+const itgPropoccurMulti: string = 'multi';
+// values for itgUgtopic
 const itgUgtAdmin: string = 'admin';
 const itgUgtGimgcont: string = 'gimgcont';
 const itgUgtImgreg: string = 'imgreg';
@@ -539,23 +545,25 @@ const itgUgtOthings : string = 'othings';
 const itgUgtPerson : string = 'person';
 const itgUgtRights : string = 'rights';
 
-
-// constant values of an IPTC PMD Checker Result object
-const stateState: string = 'state';
-const stateData: string = 'data';
-const stateDxmp: string = 'XMP';
-const stateDiim: string = 'IIM';
-const stateDexif: string = 'EXIF';
-const stateDinsync: string = 'INSYNC';
-const stateDmapinsync: string = 'MAPINSYNC';
-const stateDvaloccur: string = 'XMPVALOCCUR';
-const stateValue: string = 'value';
-const stateVxmp: string = 'XMP';
-const stateViim: string = 'IIM';
-const stateVexif: string = 'EXIF';
-const stateVet: string ='EXIFTOOL';
-const stateVaodPrefix: string = 'AOD__';
-const stateStruct: string = 'struct';
+// constant property names of an IPTC PMD Checker Result (ipmdcr) object
+const ipmdcrState: string = 'state';
+// ... property names inside the top level "state" property
+const ipmdcrSData: string = 'data';
+// ... property names inside sub-property "data" of the top level "state"
+const ipmdcrSDxmp: string = 'XMP';
+const ipmdcrSDiim: string = 'IIM';
+const ipmdcrSDexif: string = 'EXIF';
+const ipmdcrSDinsync: string = 'INSYNC';
+const ipmdcrSDmapinsync: string = 'MAPINSYNC';
+const ipmdcrSDvaloccur: string = 'XMPVALOCCUR';
+const ipmdcrSStruct: string = 'struct';
+// ... property names inside the top level "value" property
+const ipmdcrValue: string = 'value';
+const ipmdcrVxmp: string = 'XMP';
+const ipmdcrViim: string = 'IIM';
+const ipmdcrVexif: string = 'EXIF';
+const ipmdcrVet: string ='EXIFTOOL';
+const ipmdcrVaodPrefix: string = 'AOD__';
 
 // constant values of the Property Node (pnode)
 const pnodeTypePlain: string = 'plain';

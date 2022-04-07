@@ -51,7 +51,7 @@ export declare enum Ptype {
     struct = 1
 }
 /**
- * Transforms a ipmdchecker result object to pnodes (property nodes)
+ * Transforms an IPTC PMD Checker Result object to pnodes (property nodes)
  * @param ipmdChkResultFsd
  * @param opdOpt
  * @param labeltype

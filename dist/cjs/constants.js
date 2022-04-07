@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stateValue = exports.stateDvaloccur = exports.stateDmapinsync = exports.stateDinsync = exports.stateDexif = exports.stateDiim = exports.stateDxmp = exports.stateData = exports.stateState = exports.itgUgtRights = exports.itgUgtPerson = exports.itgUgtOthings = exports.itgUgtLocation = exports.itgUgtLicensing = exports.itgUgtImgreg = exports.itgUgtGimgcont = exports.itgUgtAdmin = exports.itgDfUrl = exports.itgDfUri = exports.itgDfDt = exports.itgDfAlg = exports.itgDtStruct = exports.itgDtNumber = exports.itgDtString = exports.itgIpmddatatype = exports.itgIpmdid = exports.itgEtTag = exports.itgEtExif = exports.itgEtIim = exports.itgEtXmp = exports.itgExifid = exports.itgIimmaxbytes = exports.itgIimname = exports.itgIimid = exports.itgXmpid = exports.itgPropoccurMulti = exports.itgPropoccurSingle = exports.itgPropoccurrence = exports.itgDataformat = exports.itgDatatype = exports.itgSpecidx = exports.itgUgtopic = exports.itgSortorder = exports.itgIpmdschema = exports.itgName = exports.itgEtInstruct = exports.itgEtTonopre = exports.itgEtTopwpre = exports.itgIpmdStruct = exports.itgIpmdTop = void 0;
-exports.anyPlusBaseUrl = exports.cmpRCpmisg = exports.cmpRCvnotarr = exports.cmpRCvmisg = exports.cmpRCvchngd = exports.fsdStRO = exports.fsdStSearch = exports.fsdStErr = exports.fsdStFound = exports.fsdResValue = exports.fsdResState = exports.pnodeTypeStruct = exports.pnodeTypePlain = exports.stateStruct = exports.stateVaodPrefix = exports.stateVet = exports.stateVexif = exports.stateViim = exports.stateVxmp = void 0;
+exports.ipmdcrSStruct = exports.ipmdcrSDvaloccur = exports.ipmdcrSDmapinsync = exports.ipmdcrSDinsync = exports.ipmdcrSDexif = exports.ipmdcrSDiim = exports.ipmdcrSDxmp = exports.ipmdcrSData = exports.ipmdcrState = exports.itgUgtRights = exports.itgUgtPerson = exports.itgUgtOthings = exports.itgUgtLocation = exports.itgUgtLicensing = exports.itgUgtImgreg = exports.itgUgtGimgcont = exports.itgUgtAdmin = exports.itgDfUrl = exports.itgDfUri = exports.itgDfDt = exports.itgDfAlg = exports.itgDtStruct = exports.itgDtNumber = exports.itgDtString = exports.itgIpmddatatype = exports.itgIpmdid = exports.itgEtTag = exports.itgEtExif = exports.itgEtIim = exports.itgEtXmp = exports.itgExifid = exports.itgIimmaxbytes = exports.itgIimname = exports.itgIimid = exports.itgXmpid = exports.itgPropoccurMulti = exports.itgPropoccurSingle = exports.itgPropoccurrence = exports.itgDataformat = exports.itgDatatype = exports.itgSpecidx = exports.itgUgtopic = exports.itgSortorder = exports.itgIpmdschema = exports.itgName = exports.itgEtInstruct = exports.itgEtTonopre = exports.itgEtTopwpre = exports.itgIpmdStruct = exports.itgIpmdTop = void 0;
+exports.anyPlusBaseUrl = exports.cmpRCpmisg = exports.cmpRCvnotarr = exports.cmpRCvmisg = exports.cmpRCvchngd = exports.fsdStRO = exports.fsdStSearch = exports.fsdStErr = exports.fsdStFound = exports.fsdResValue = exports.fsdResState = exports.pnodeTypeStruct = exports.pnodeTypePlain = exports.ipmdcrVaodPrefix = exports.ipmdcrVet = exports.ipmdcrVexif = exports.ipmdcrViim = exports.ipmdcrVxmp = exports.ipmdcrValue = void 0;
 // constant values of the IPTC PMD TechGuide object
 exports.itgIpmdTop = 'ipmd_top';
 exports.itgIpmdStruct = 'ipmd_struct';
@@ -45,22 +45,25 @@ exports.itgUgtLocation = 'location';
 exports.itgUgtOthings = 'othings';
 exports.itgUgtPerson = 'person';
 exports.itgUgtRights = 'rights';
-// constant values of an IPTC PMD Checker Result object
-exports.stateState = 'state';
-exports.stateData = 'data';
-exports.stateDxmp = 'XMP';
-exports.stateDiim = 'IIM';
-exports.stateDexif = 'EXIF';
-exports.stateDinsync = 'INSYNC';
-exports.stateDmapinsync = 'MAPINSYNC';
-exports.stateDvaloccur = 'XMPVALOCCUR';
-exports.stateValue = 'value';
-exports.stateVxmp = 'XMP';
-exports.stateViim = 'IIM';
-exports.stateVexif = 'EXIF';
-exports.stateVet = 'EXIFTOOL';
-exports.stateVaodPrefix = 'AOD__';
-exports.stateStruct = 'struct';
+// constant property names of an IPTC PMD Checker Result (ipmdcr) object
+exports.ipmdcrState = 'state';
+// ... property names inside the top level "state" property
+exports.ipmdcrSData = 'data';
+// ... property names inside sub-property "data" of the top level "state"
+exports.ipmdcrSDxmp = 'XMP';
+exports.ipmdcrSDiim = 'IIM';
+exports.ipmdcrSDexif = 'EXIF';
+exports.ipmdcrSDinsync = 'INSYNC';
+exports.ipmdcrSDmapinsync = 'MAPINSYNC';
+exports.ipmdcrSDvaloccur = 'XMPVALOCCUR';
+exports.ipmdcrSStruct = 'struct';
+// ... property names inside the top level "value" property
+exports.ipmdcrValue = 'value';
+exports.ipmdcrVxmp = 'XMP';
+exports.ipmdcrViim = 'IIM';
+exports.ipmdcrVexif = 'EXIF';
+exports.ipmdcrVet = 'EXIFTOOL';
+exports.ipmdcrVaodPrefix = 'AOD__';
 // constant values of the Property Node (pnode)
 exports.pnodeTypePlain = 'plain';
 exports.pnodeTypeStruct = 'struct';

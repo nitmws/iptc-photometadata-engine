@@ -183,8 +183,8 @@ class IpmdChecker {
             let refPropData = refIpmdTop[refPropId];
             let etXmpId = refPropData[icc.itgEtXmp];
             if (testImgEtPmd.hasOwnProperty(etXmpId)) {
-                this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.stateData + this._lsep +
-                    icc.stateDxmp);
+                this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                    icc.ipmdcrSDxmp);
                 let datatype = refPropData[icc.itgDatatype];
                 if (datatype === icc.itgDtStruct) {
                     let structureId = refPropData[icc.itgDataformat];
@@ -195,41 +195,41 @@ class IpmdChecker {
                             propVresult[icc.itgDtStruct] = checkStructVresult;
                             if (countOccurrences) {
                                 if (Array.isArray(checkStructVresult)) {
-                                    this._ipmdStateData.setFsData(checkStructVresult.length, refPropId + this._lsep + icc.stateData + this._lsep +
-                                        icc.stateDvaloccur);
+                                    this._ipmdStateData.setFsData(checkStructVresult.length, refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                                        icc.ipmdcrSDvaloccur);
                                 }
                                 else {
-                                    this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.stateData + this._lsep +
-                                        icc.stateDvaloccur);
+                                    this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                                        icc.ipmdcrSDvaloccur);
                                 }
                             }
                         }
                     }
                     else { // AltLang property
                         xmpValue = this._buildAltLangValue(testImgEtPmd, etXmpId);
-                        propVresult[icc.stateVxmp] = xmpValue;
+                        propVresult[icc.ipmdcrVxmp] = xmpValue;
                         if (countOccurrences) {
                             if (Array.isArray(xmpValue)) {
-                                this._ipmdStateData.setFsData(xmpValue.length, refPropId + this._lsep + icc.stateData + this._lsep +
-                                    icc.stateDvaloccur);
+                                this._ipmdStateData.setFsData(xmpValue.length, refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                                    icc.ipmdcrSDvaloccur);
                             }
                             else {
-                                this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.stateData + this._lsep + icc.stateDvaloccur);
+                                this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.ipmdcrSData + this._lsep + icc.ipmdcrSDvaloccur);
                             }
                         }
                     }
                 }
                 else {
-                    propVresult[icc.stateVxmp] = testImgEtPmd[etXmpId];
+                    propVresult[icc.ipmdcrVxmp] = testImgEtPmd[etXmpId];
                     xmpValue = testImgEtPmd[etXmpId];
                     if (countOccurrences) {
                         if (Array.isArray(xmpValue)) {
-                            this._ipmdStateData.setFsData(xmpValue.length, refPropId + this._lsep + icc.stateData + this._lsep +
-                                icc.stateDvaloccur);
+                            this._ipmdStateData.setFsData(xmpValue.length, refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                                icc.ipmdcrSDvaloccur);
                         }
                         else {
-                            this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.stateData + this._lsep +
-                                icc.stateDvaloccur);
+                            this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                                icc.ipmdcrSDvaloccur);
                         }
                     }
                 }
@@ -240,23 +240,23 @@ class IpmdChecker {
                 if (etIimId === "IPTC:DateCreated+IPTC:TimeCreated") {
                     if (testImgEtPmd.hasOwnProperty("IPTC:DateCreated") &&
                         testImgEtPmd.hasOwnProperty("IPTC:TimeCreated")) {
-                        this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.stateData + this._lsep +
-                            icc.stateDiim);
-                        propVresult[icc.stateViim] = testImgEtPmd["IPTC:DateCreated"] + " " + testImgEtPmd["IPTC:TimeCreated"];
+                        this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                            icc.ipmdcrSDiim);
+                        propVresult[icc.ipmdcrViim] = testImgEtPmd["IPTC:DateCreated"] + " " + testImgEtPmd["IPTC:TimeCreated"];
                         iimValue = testImgEtPmd["IPTC:DateCreated"] + " " + testImgEtPmd["IPTC:TimeCreated"];
                     }
                 }
                 if (testImgEtPmd.hasOwnProperty(etIimId)) {
-                    this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.stateData + this._lsep +
-                        icc.stateDiim);
+                    this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                        icc.ipmdcrSDiim);
                     if (etIimId === 'IPTC:By-line') {
                         let tempIimValue = [];
                         tempIimValue.push(testImgEtPmd[etIimId]);
-                        propVresult[icc.stateViim] = tempIimValue;
+                        propVresult[icc.ipmdcrViim] = tempIimValue;
                         iimValue = tempIimValue;
                     }
                     else {
-                        propVresult[icc.stateViim] = testImgEtPmd[etIimId];
+                        propVresult[icc.ipmdcrViim] = testImgEtPmd[etIimId];
                         iimValue = testImgEtPmd[etIimId];
                     }
                 }
@@ -268,18 +268,18 @@ class IpmdChecker {
                 // special case: combine Date Created from multiple Exif tags
                 if (etExifId === "ExifIFD:DateTimeOriginal+ExifIFD:TimeZoneOffset") {
                     if (testImgEtPmd.hasOwnProperty("ExifIFD:DateTimeOriginal")) {
-                        this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.stateData + this._lsep +
-                            icc.stateDexif);
-                        propVresult[icc.stateVexif] = testImgEtPmd["ExifIFD:DateTimeOriginal"];
+                        this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                            icc.ipmdcrSDexif);
+                        propVresult[icc.ipmdcrVexif] = testImgEtPmd["ExifIFD:DateTimeOriginal"];
                         exifValue = testImgEtPmd["ExifIFD:DateTimeOriginal"];
                         exifDataSet = true;
                     }
                 }
                 if (etExifId === "ExifIFD:DateTimeOriginal+ExifIFD:SubSecTimeOriginal+ExifIFD:TimeZoneOffset") {
                     if (testImgEtPmd.hasOwnProperty("ExifIFD:DateTimeOriginal")) {
-                        this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.stateData + this._lsep +
-                            icc.stateDexif);
-                        propVresult[icc.stateVexif] = testImgEtPmd["ExifIFD:DateTimeOriginal"];
+                        this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                            icc.ipmdcrSDexif);
+                        propVresult[icc.ipmdcrVexif] = testImgEtPmd["ExifIFD:DateTimeOriginal"];
                         exifValue = testImgEtPmd["ExifIFD:DateTimeOriginal"];
                         exifDataSet = true;
                     }
@@ -288,16 +288,16 @@ class IpmdChecker {
                 if (etExifId === 'IFD0:ImageDescription|ExifIFD:UserComment') {
                     if (testImgEtPmd.hasOwnProperty("IFD0:ImageDescription")) { // try ImageDescription first ...
                         this._ipmdStateData.setFsData(1, refPropId + this._lsep
-                            + icc.stateData + this._lsep + icc.stateDexif);
-                        propVresult[icc.stateVexif] = testImgEtPmd["IFD0:ImageDescription"];
+                            + icc.ipmdcrSData + this._lsep + icc.ipmdcrSDexif);
+                        propVresult[icc.ipmdcrVexif] = testImgEtPmd["IFD0:ImageDescription"];
                         exifValue = testImgEtPmd["IFD0:ImageDescription"];
                         exifDataSet = true;
                     }
                     else {
                         if (testImgEtPmd.hasOwnProperty("ExifIFD:UserComment")) { //...alternative: try UserComment
                             this._ipmdStateData.setFsData(1, refPropId + this._lsep
-                                + icc.stateData + this._lsep + icc.stateDexif);
-                            propVresult[icc.stateVexif] = testImgEtPmd["ExifIFD:UserComment"];
+                                + icc.ipmdcrSData + this._lsep + icc.ipmdcrSDexif);
+                            propVresult[icc.ipmdcrVexif] = testImgEtPmd["ExifIFD:UserComment"];
                             exifValue = testImgEtPmd["ExifIFD:UserComment"];
                             exifDataSet = true;
                         }
@@ -309,8 +309,8 @@ class IpmdChecker {
                         let testValue = testImgEtPmd[etExifId];
                         if (!testValue.includes(' ')) {
                             this._ipmdStateData.setFsData(1, refPropId + this._lsep
-                                + icc.stateData + this._lsep + icc.stateDexif);
-                            propVresult[icc.stateVexif] = testValue;
+                                + icc.ipmdcrSData + this._lsep + icc.ipmdcrSDexif);
+                            propVresult[icc.ipmdcrVexif] = testValue;
                             exifValue = testValue;
                             exifDataSet = true;
                         }
@@ -324,18 +324,18 @@ class IpmdChecker {
                     if (testImgEtPmd.hasOwnProperty(etExifId)) {
                         let tempExifValue = [];
                         tempExifValue.push(testImgEtPmd[etExifId]);
-                        propVresult[icc.stateVexif] = tempExifValue;
+                        propVresult[icc.ipmdcrVexif] = tempExifValue;
                         exifValue = tempExifValue;
                         exifDataSet = true;
                         this._ipmdStateData.setFsData(1, refPropId + this._lsep
-                            + icc.stateData + this._lsep + icc.stateDexif);
+                            + icc.ipmdcrSData + this._lsep + icc.ipmdcrSDexif);
                     }
                 }
                 // finally, if no Exif data is set yet
                 if (!exifDataSet && testImgEtPmd.hasOwnProperty(etExifId)) {
-                    this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.stateData + this._lsep +
-                        icc.stateDexif);
-                    propVresult[icc.stateVexif] = testImgEtPmd[etExifId];
+                    this._ipmdStateData.setFsData(1, refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                        icc.ipmdcrSDexif);
+                    propVresult[icc.ipmdcrVexif] = testImgEtPmd[etExifId];
                     exifValue = testImgEtPmd[etExifId];
                 }
             }
@@ -380,7 +380,7 @@ class IpmdChecker {
                     }
                     if (xmpIimAreEqual) {
                         this._ipmdStateData.setFsData(1, refPropId + this._lsep
-                            + icc.stateData + this._lsep + icc.stateDinsync);
+                            + icc.ipmdcrSData + this._lsep + icc.ipmdcrSDinsync);
                         if (exifValue !== undefined) {
                             let iptcExifAreEqual = false;
                             if (Array.isArray(xmpValue) && Array.isArray(exifValue)) {
@@ -393,17 +393,17 @@ class IpmdChecker {
                             }
                             if (iptcExifAreEqual) {
                                 this._ipmdStateData.setFsData(1, refPropId + this._lsep
-                                    + icc.stateData + this._lsep + icc.stateDmapinsync);
+                                    + icc.ipmdcrSData + this._lsep + icc.ipmdcrSDmapinsync);
                             }
                             else {
                                 this._ipmdStateData.setFsData(0, refPropId + this._lsep
-                                    + icc.stateData + this._lsep + icc.stateDmapinsync);
+                                    + icc.ipmdcrSData + this._lsep + icc.ipmdcrSDmapinsync);
                             }
                         }
                     }
                     else {
                         this._ipmdStateData.setFsData(0, refPropId + this._lsep
-                            + icc.stateData + this._lsep + icc.stateDinsync);
+                            + icc.ipmdcrSData + this._lsep + icc.ipmdcrSDinsync);
                     }
                 }
             }
@@ -415,8 +415,8 @@ class IpmdChecker {
             if (etTag !== '') {
                 if (testImgEtPmd.hasOwnProperty(etTag)) {
                     let propVresult = {};
-                    propVresult[icc.stateVet] = testImgEtPmd[etTag];
-                    this._ipmdValueData[icc.stateVaodPrefix + etTag] = propVresult;
+                    propVresult[icc.ipmdcrVet] = testImgEtPmd[etTag];
+                    this._ipmdValueData[icc.ipmdcrVaodPrefix + etTag] = propVresult;
                 }
             }
         }
@@ -471,7 +471,7 @@ class IpmdChecker {
                 let etTag = refPropData[icc.itgEtTag];
                 if (teststructEtPmdOfArr.hasOwnProperty(etTag)) {
                     this._ipmdStateData.setFsData(1, parentStatePath +
-                        refPropId + this._lsep + icc.stateData + this._lsep + icc.stateDxmp);
+                        refPropId + this._lsep + icc.ipmdcrSData + this._lsep + icc.ipmdcrSDxmp);
                     let datatype = refPropData[icc.itgDatatype];
                     if (datatype === icc.itgDtStruct) {
                         let structureId = refPropData[icc.itgDataformat];
@@ -484,40 +484,40 @@ class IpmdChecker {
                                 propVresult[icc.itgDtStruct] = checkStructVresult;
                                 if (countOccurrences) {
                                     if (Array.isArray(checkStructVresult)) {
-                                        this._ipmdStateData.setFsData(checkStructVresult.length, parentStatePath + refPropId + this._lsep + icc.stateData + this._lsep +
-                                            icc.stateDvaloccur);
+                                        this._ipmdStateData.setFsData(checkStructVresult.length, parentStatePath + refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                                            icc.ipmdcrSDvaloccur);
                                     }
                                     else {
-                                        this._ipmdStateData.setFsData(1, parentStatePath + refPropId + this._lsep + icc.stateData + this._lsep +
-                                            icc.stateDvaloccur);
+                                        this._ipmdStateData.setFsData(1, parentStatePath + refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                                            icc.ipmdcrSDvaloccur);
                                     }
                                 }
                             }
                         }
                         else { // AltLang property
-                            propVresult[icc.stateVxmp] = this._buildAltLangValue(teststructEtPmdOfArr, etTag);
+                            propVresult[icc.ipmdcrVxmp] = this._buildAltLangValue(teststructEtPmdOfArr, etTag);
                             if (countOccurrences) {
                                 if (Array.isArray(teststructEtPmdOfArr[etTag])) {
-                                    this._ipmdStateData.setFsData(teststructEtPmdOfArr[etTag].length, parentStatePath + refPropId + this._lsep + icc.stateData + this._lsep +
-                                        icc.stateDvaloccur);
+                                    this._ipmdStateData.setFsData(teststructEtPmdOfArr[etTag].length, parentStatePath + refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                                        icc.ipmdcrSDvaloccur);
                                 }
                                 else {
                                     this._ipmdStateData.setFsData(1, parentStatePath + refPropId +
-                                        this._lsep + icc.stateData + this._lsep + icc.stateDvaloccur);
+                                        this._lsep + icc.ipmdcrSData + this._lsep + icc.ipmdcrSDvaloccur);
                                 }
                             }
                         }
                     }
                     else {
-                        propVresult[icc.stateVxmp] = teststructEtPmdOfArr[etTag];
+                        propVresult[icc.ipmdcrVxmp] = teststructEtPmdOfArr[etTag];
                         if (countOccurrences) {
                             if (Array.isArray(teststructEtPmdOfArr[etTag])) {
-                                this._ipmdStateData.setFsData(teststructEtPmdOfArr[etTag].length, parentStatePath + refPropId + this._lsep + icc.stateData + this._lsep +
-                                    icc.stateDvaloccur);
+                                this._ipmdStateData.setFsData(teststructEtPmdOfArr[etTag].length, parentStatePath + refPropId + this._lsep + icc.ipmdcrSData + this._lsep +
+                                    icc.ipmdcrSDvaloccur);
                             }
                             else {
                                 this._ipmdStateData.setFsData(1, parentStatePath + refPropId +
-                                    this._lsep + icc.stateData + this._lsep + icc.stateDvaloccur);
+                                    this._lsep + icc.ipmdcrSData + this._lsep + icc.ipmdcrSDvaloccur);
                             }
                         }
                     }
@@ -590,20 +590,20 @@ class IpmdChecker {
             let iimCrRow = new CompareResultRow(); // create empty row, will be filled if used
             let propRefValue = propRefFsd[icc.fsdResValue];
             // ** compare XMP
-            if (icc.stateVxmp in propRefValue) {
-                let propRefValueXmp = propRefValue[icc.stateVxmp];
-                let propTestValueXmp = propTestValue[icc.stateVxmp];
+            if (icc.ipmdcrVxmp in propRefValue) {
+                let propRefValueXmp = propRefValue[icc.ipmdcrVxmp];
+                let propTestValueXmp = propTestValue[icc.ipmdcrVxmp];
                 if (typeof propRefValueXmp === 'string' || typeof propRefValueXmp === 'number') {
                     // this is a single plain value
-                    if (icc.stateVxmp in propTestValue) {
+                    if (icc.ipmdcrVxmp in propTestValue) {
                         if (propRefValueXmp !== propTestValueXmp) {
                             xmpCrRow.result = icc.cmpRCvchngd;
                             xmpCrRow.message = 'Test image: XMP value CHANGED';
                             xmpCrRow.comparedIpmdIdPath = refIpmdId; // + this.fsdLsep + 'XMP';
-                            xmpCrRow.comparedValueFormat = icc.stateVxmp;
+                            xmpCrRow.comparedValueFormat = icc.ipmdcrVxmp;
                             xmpCrRow.comparedNamePath =
                                 this._ipmdIdPath2nameSeq(xmpCrRow.comparedIpmdIdPath
-                                    + this.fsdLsep + icc.stateVxmp);
+                                    + this.fsdLsep + icc.ipmdcrVxmp);
                             xmpCrRow.refValue = propRefValueXmp.toString();
                             xmpCrRow.testValue = propTestValueXmp.toString();
                             compareResultRows.push(xmpCrRow);
@@ -613,9 +613,9 @@ class IpmdChecker {
                         xmpCrRow.result = icc.cmpRCvmisg;
                         xmpCrRow.message = 'Test image: XMP value is MISSING';
                         xmpCrRow.comparedIpmdIdPath = refIpmdId; // + this.fsdLsep + 'XMP';
-                        xmpCrRow.comparedValueFormat = icc.stateVxmp;
+                        xmpCrRow.comparedValueFormat = icc.ipmdcrVxmp;
                         xmpCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(xmpCrRow.comparedIpmdIdPath
-                            + this.fsdLsep + icc.stateVxmp);
+                            + this.fsdLsep + icc.ipmdcrVxmp);
                         xmpCrRow.refValue = propRefValueXmp.toString();
                         compareResultRows.push(xmpCrRow);
                     }
@@ -626,9 +626,9 @@ class IpmdChecker {
                         xmpCrRow.result = icc.cmpRCvmisg;
                         xmpCrRow.message = 'Test image: XMP value is MISSING';
                         xmpCrRow.comparedIpmdIdPath = refIpmdId;
-                        xmpCrRow.comparedValueFormat = icc.stateVxmp;
+                        xmpCrRow.comparedValueFormat = icc.ipmdcrVxmp;
                         xmpCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(xmpCrRow.comparedIpmdIdPath
-                            + this.fsdLsep + icc.stateVxmp);
+                            + this.fsdLsep + icc.ipmdcrVxmp);
                         xmpCrRow.refValue = propRefValueXmp.toString();
                         compareResultRows.push(xmpCrRow);
                     }
@@ -639,10 +639,10 @@ class IpmdChecker {
                                 xmpCrRow.result = icc.cmpRCvchngd;
                                 xmpCrRow.message = 'Test image: XMP value CHANGED';
                                 xmpCrRow.comparedIpmdIdPath = refIpmdId;
-                                xmpCrRow.comparedValueFormat = icc.stateVxmp;
+                                xmpCrRow.comparedValueFormat = icc.ipmdcrVxmp;
                                 xmpCrRow.comparedNamePath =
                                     this._ipmdIdPath2nameSeq(xmpCrRow.comparedIpmdIdPath
-                                        + this.fsdLsep + icc.stateVxmp);
+                                        + this.fsdLsep + icc.ipmdcrVxmp);
                                 xmpCrRow.refValue = propRefValueXmp.toString();
                                 xmpCrRow.testValue = propTestValueXmp.toString();
                                 compareResultRows.push(xmpCrRow);
@@ -652,42 +652,42 @@ class IpmdChecker {
                             xmpCrRow.result = icc.cmpRCvnotarr;
                             xmpCrRow.message = 'Test image: XMP value is NOT AN ARRAY';
                             xmpCrRow.comparedIpmdIdPath = refIpmdId;
-                            xmpCrRow.comparedValueFormat = icc.stateVxmp;
+                            xmpCrRow.comparedValueFormat = icc.ipmdcrVxmp;
                             xmpCrRow.refValue = '[array of value(s)]';
                             xmpCrRow.testValue = '[a plain value]';
                             xmpCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(xmpCrRow.comparedIpmdIdPath
-                                + this.fsdLsep + icc.stateVxmp);
+                                + this.fsdLsep + icc.ipmdcrVxmp);
                             compareResultRows.push(xmpCrRow);
                         }
                     }
                 }
             }
             // ** compare IIM
-            if (icc.stateViim in propRefValue) {
-                let propRefValueIim = propRefValue[icc.stateViim];
-                let propTestValueIim = propTestValue[icc.stateViim];
+            if (icc.ipmdcrViim in propRefValue) {
+                let propRefValueIim = propRefValue[icc.ipmdcrViim];
+                let propTestValueIim = propTestValue[icc.ipmdcrViim];
                 if (propTestValueIim === undefined) { // no test value exists
                     if (shouldValFmts.iim) {
                         iimCrRow.result = icc.cmpRCvmisg;
                         iimCrRow.message = 'Test image: IIM value is MISSING';
                         iimCrRow.comparedIpmdIdPath = refIpmdId;
-                        iimCrRow.comparedValueFormat = icc.stateViim;
+                        iimCrRow.comparedValueFormat = icc.ipmdcrViim;
                         iimCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(iimCrRow.comparedIpmdIdPath
-                            + this.fsdLsep + icc.stateViim);
+                            + this.fsdLsep + icc.ipmdcrViim);
                         iimCrRow.refValue = propRefValueIim.toString();
                     }
                 }
                 else {
                     if (typeof propRefValueIim === 'string' || typeof propRefValueIim === 'number') {
                         // this is a single plain value
-                        if (icc.stateViim in propTestValue) {
+                        if (icc.ipmdcrViim in propTestValue) {
                             if (propRefValueIim !== propTestValueIim) {
                                 iimCrRow.result = icc.cmpRCvchngd;
                                 iimCrRow.message = 'Test image: IIM value CHANGED';
                                 iimCrRow.comparedIpmdIdPath = refIpmdId; // + this.fsdLsep + 'IIM';
-                                iimCrRow.comparedValueFormat = icc.stateViim;
+                                iimCrRow.comparedValueFormat = icc.ipmdcrViim;
                                 iimCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(iimCrRow.comparedIpmdIdPath
-                                    + this.fsdLsep + icc.stateViim);
+                                    + this.fsdLsep + icc.ipmdcrViim);
                                 iimCrRow.refValue = propRefValueIim.toString();
                                 iimCrRow.testValue = propTestValueIim.toString();
                             }
@@ -696,9 +696,9 @@ class IpmdChecker {
                             iimCrRow.result = icc.cmpRCvmisg;
                             iimCrRow.message = 'Test image: IIM value is MISSING';
                             iimCrRow.comparedIpmdIdPath = refIpmdId;
-                            iimCrRow.comparedValueFormat = icc.stateViim;
+                            iimCrRow.comparedValueFormat = icc.ipmdcrViim;
                             iimCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(iimCrRow.comparedIpmdIdPath
-                                + this.fsdLsep + icc.stateViim);
+                                + this.fsdLsep + icc.ipmdcrViim);
                             iimCrRow.refValue = propRefValueIim.toString();
                         }
                     }
@@ -710,9 +710,9 @@ class IpmdChecker {
                                 iimCrRow.result = icc.cmpRCvchngd;
                                 iimCrRow.message = 'Test image: IIM value CHANGED';
                                 iimCrRow.comparedIpmdIdPath = refIpmdId; // + this.fsdLsep + 'IIM';
-                                iimCrRow.comparedValueFormat = icc.stateViim;
+                                iimCrRow.comparedValueFormat = icc.ipmdcrViim;
                                 iimCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(iimCrRow.comparedIpmdIdPath
-                                    + this.fsdLsep + icc.stateViim);
+                                    + this.fsdLsep + icc.ipmdcrViim);
                                 iimCrRow.refValue = propRefValueIim.toString();
                                 iimCrRow.testValue = propTestValueIim.toString();
                             }
@@ -721,11 +721,11 @@ class IpmdChecker {
                             iimCrRow.result = icc.cmpRCvnotarr;
                             iimCrRow.message = 'Test image: IIM value is NOT AN ARRAY';
                             iimCrRow.comparedIpmdIdPath = refIpmdId;
-                            iimCrRow.comparedValueFormat = icc.stateViim;
+                            iimCrRow.comparedValueFormat = icc.ipmdcrViim;
                             iimCrRow.refValue = '[array of value(s)]';
                             iimCrRow.testValue = '[a plain value]';
                             iimCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(iimCrRow.comparedIpmdIdPath
-                                + this.fsdLsep + icc.stateViim);
+                                + this.fsdLsep + icc.ipmdcrViim);
                         }
                     }
                 }
@@ -784,8 +784,8 @@ class IpmdChecker {
                 }
             }
             // ** compare a structure in this IPTC property
-            if (icc.stateStruct in propRefValue) {
-                let compareResultStructRows = this._compareIpmdCheckerResultsStruct1(refDataValueFsd, testDataValueFsd, refIpmdId + this.fsdLsep + icc.stateStruct, compareOptions);
+            if (icc.ipmdcrSStruct in propRefValue) {
+                let compareResultStructRows = this._compareIpmdCheckerResultsStruct1(refDataValueFsd, testDataValueFsd, refIpmdId + this.fsdLsep + icc.ipmdcrSStruct, compareOptions);
                 if (compareResultStructRows.length > 0) {
                     Array.prototype.push.apply(compareResultRows, compareResultStructRows);
                 }
@@ -856,19 +856,19 @@ class IpmdChecker {
             }
             let propRefValue = propRefFsd[icc.fsdResValue];
             // ** compare XMP
-            if (icc.stateVxmp in propRefValue) {
-                let propRefValueXmp = propRefValue[icc.stateVxmp];
-                let propTestValueXmp = propTestValue[icc.stateVxmp];
+            if (icc.ipmdcrVxmp in propRefValue) {
+                let propRefValueXmp = propRefValue[icc.ipmdcrVxmp];
+                let propTestValueXmp = propTestValue[icc.ipmdcrVxmp];
                 if (typeof propRefValueXmp === 'string' || typeof propRefValueXmp === 'number') {
                     // this is a single plain value
-                    if (icc.stateVxmp in propTestValue) {
+                    if (icc.ipmdcrVxmp in propTestValue) {
                         if (propRefValueXmp !== propTestValueXmp) {
                             let crRow = new CompareResultRow();
                             crRow.message = 'Test image: XMP value CHANGED';
                             crRow.comparedIpmdIdPath = refIpmdIdPath; // + this.fsdLsep + 'XMP';
-                            crRow.comparedValueFormat = icc.stateVxmp;
+                            crRow.comparedValueFormat = icc.ipmdcrVxmp;
                             crRow.comparedNamePath = this._ipmdIdPath2nameSeq(crRow.comparedIpmdIdPath
-                                + this.fsdLsep + icc.stateVxmp);
+                                + this.fsdLsep + icc.ipmdcrVxmp);
                             crRow.refValue = propRefValueXmp.toString();
                             crRow.testValue = propTestValueXmp.toString();
                             compareResultRows.push(crRow);
@@ -878,9 +878,9 @@ class IpmdChecker {
                         let crRow = new CompareResultRow();
                         crRow.message = 'Test image: XMP value is MISSING';
                         crRow.comparedIpmdIdPath = refIpmdIdPath; // + this.fsdLsep + 'XMP';
-                        crRow.comparedValueFormat = icc.stateVxmp;
+                        crRow.comparedValueFormat = icc.ipmdcrVxmp;
                         crRow.comparedNamePath = this._ipmdIdPath2nameSeq(crRow.comparedIpmdIdPath
-                            + this.fsdLsep + icc.stateVxmp);
+                            + this.fsdLsep + icc.ipmdcrVxmp);
                         crRow.refValue = propRefValueXmp.toString();
                         crRow.comparedNamePath = this._ipmdIdPath2nameSeq(crRow.comparedIpmdIdPath);
                         compareResultRows.push(crRow);
@@ -892,9 +892,9 @@ class IpmdChecker {
                         let crRow = new CompareResultRow();
                         crRow.message = 'Test image: XMP value is MISSING';
                         crRow.comparedIpmdIdPath = refIpmdIdPath;
-                        crRow.comparedValueFormat = icc.stateVxmp;
+                        crRow.comparedValueFormat = icc.ipmdcrVxmp;
                         crRow.comparedNamePath = this._ipmdIdPath2nameSeq(crRow.comparedIpmdIdPath
-                            + this.fsdLsep + icc.stateVxmp);
+                            + this.fsdLsep + icc.ipmdcrVxmp);
                         crRow.refValue = propRefValueXmp.toString();
                         crRow.comparedNamePath = this._ipmdIdPath2nameSeq(crRow.comparedIpmdIdPath);
                         compareResultRows.push(crRow);
@@ -906,9 +906,9 @@ class IpmdChecker {
                                 let crRow = new CompareResultRow();
                                 crRow.message = 'Test image: XMP value CHANGED';
                                 crRow.comparedIpmdIdPath = refIpmdIdPath; // + this.fsdLsep + 'XMP';
-                                crRow.comparedValueFormat = icc.stateVxmp;
+                                crRow.comparedValueFormat = icc.ipmdcrVxmp;
                                 crRow.comparedNamePath = this._ipmdIdPath2nameSeq(crRow.comparedIpmdIdPath
-                                    + this.fsdLsep + icc.stateVxmp);
+                                    + this.fsdLsep + icc.ipmdcrVxmp);
                                 crRow.refValue = propRefValueXmp.toString();
                                 crRow.testValue = propTestValueXmp.toString();
                                 compareResultRows.push(crRow);
@@ -918,19 +918,19 @@ class IpmdChecker {
                             let crRow = new CompareResultRow();
                             crRow.message = 'Test image: XMP value is NOT AN ARRAY';
                             crRow.comparedIpmdIdPath = refIpmdIdPath; // + this.fsdLsep + 'XMP';
-                            crRow.comparedValueFormat = icc.stateVxmp;
+                            crRow.comparedValueFormat = icc.ipmdcrVxmp;
                             crRow.refValue = '[array of value(s)]';
                             crRow.testValue = '[a plain value]';
                             crRow.comparedNamePath = this._ipmdIdPath2nameSeq(crRow.comparedIpmdIdPath
-                                + this.fsdLsep + icc.stateVxmp);
+                                + this.fsdLsep + icc.ipmdcrVxmp);
                             compareResultRows.push(crRow);
                         }
                     }
                 }
             }
             // ** compare a structure in this IPTC property
-            if (icc.stateStruct in propRefValue) {
-                let compareResultStructRows = this._compareIpmdCheckerResultsStruct1(refDataValueFsd, testDataValueFsd, refIpmdId + this.fsdLsep + icc.stateStruct, compareOptions);
+            if (icc.ipmdcrSStruct in propRefValue) {
+                let compareResultStructRows = this._compareIpmdCheckerResultsStruct1(refDataValueFsd, testDataValueFsd, refIpmdId + this.fsdLsep + icc.ipmdcrSStruct, compareOptions);
                 if (compareResultStructRows.length > 0) {
                     Array.prototype.push.apply(compareResultRows, compareResultStructRows);
                 }
@@ -987,7 +987,7 @@ class IpmdChecker {
      * @param ipmdIdPath
      */
     _ipmdIdPath2nameSeq(ipmdIdPath) {
-        const embdFmtIds = [icc.stateVxmp, icc.stateViim, icc.stateVexif];
+        const embdFmtIds = [icc.ipmdcrVxmp, icc.ipmdcrViim, icc.ipmdcrVexif];
         let nameSeq = '';
         let parentStructId = '';
         let impdIdPathParts = ipmdIdPath.split(this.fsdLsep);

@@ -69,7 +69,7 @@ const fsdLsep = '/';
 const fsdIsel = '#';
 
 /**
- * Transforms a ipmdchecker result object to pnodes (property nodes)
+ * Transforms an IPTC PMD Checker Result object to pnodes (property nodes)
  * @param ipmdChkResultFsd
  * @param opdOpt
  * @param labeltype
@@ -78,18 +78,20 @@ const fsdIsel = '#';
  * @param ipmdTechRefFsd
  * @param anyOtherDataRef
  */
-export function ipmdChkResultToPropNodes(ipmdChkResultFsd: FixedStructureData,
-                                         opdOpt: OutputDesignOptions,
-                                         labeltype: Labeltype,
-                                         noValueText: string,
-                                         ipmdIdFilter: string[],
-                                         ipmdTechRefFsd: FixedStructureData,
-                                         anyOtherDataRef: MdStruct): PropNodesArraysSet1 {
-    let ipmdDataState: object = ipmdChkResultFsd.getFsData(icc.stateState)['value'];
+export function ipmdChkResultToPropNodes(
+    ipmdChkResultFsd: FixedStructureData,
+    opdOpt: OutputDesignOptions,
+    labeltype: Labeltype,
+    noValueText: string,
+    ipmdIdFilter: string[],
+    ipmdTechRefFsd: FixedStructureData,
+    anyOtherDataRef: MdStruct): PropNodesArraysSet1 {
+
+    let ipmdChkResultState: object = ipmdChkResultFsd.getFsData(icc.ipmdcrState)['value'];
 
     let allPNodesArrays = new PropNodesArraysSet1();
     let statestructIpmdIds: string[] = [];
-    let statestructIpmdIdsPre: string[] = Object.keys(ipmdDataState);
+    let statestructIpmdIdsPre: string[] = Object.keys(ipmdChkResultState);
     if (ipmdIdFilter.length == 0) {
         statestructIpmdIds = statestructIpmdIdsPre;
     }
@@ -104,8 +106,8 @@ export function ipmdChkResultToPropNodes(ipmdChkResultFsd: FixedStructureData,
         // get reference data:
         let propIpmdRefData: MdStruct = ipmdTechRefFsd.getFsData(icc.itgIpmdTop + fsdLsep + ipmdId)['value'];
         // get state data:
-        let propImpdStateData: MdStruct = ipmdChkResultFsd.getFsData(icc.stateState + fsdLsep + ipmdId
-            + fsdLsep + icc.stateData )['value'];
+        let propImpdStateData: MdStruct = ipmdChkResultFsd.getFsData(icc.ipmdcrState + fsdLsep + ipmdId
+            + fsdLsep + icc.ipmdcrSData )['value'];
         let propValue: string | string[] | number;
 
         // try to create a PropNode for the IIM-variant of the property
@@ -125,10 +127,10 @@ export function ipmdChkResultToPropNodes(ipmdChkResultFsd: FixedStructureData,
             }
             iimPropNode.psort = propIpmdRefData[icc.itgSortorder] + 'i';
             iimPropNode.pspecidx = propIpmdRefData[icc.itgSpecidx];
-            let iimOccur: number = propImpdStateData[icc.stateDiim];
+            let iimOccur: number = propImpdStateData[icc.ipmdcrSDiim];
             if (iimOccur > 0){
-                propValue = ipmdChkResultFsd.getFsData(icc.stateValue + fsdLsep + ipmdId + fsdLsep
-                    + icc.stateViim)['value'];
+                propValue = ipmdChkResultFsd.getFsData(icc.ipmdcrValue + fsdLsep + ipmdId + fsdLsep
+                    + icc.ipmdcrViim)['value'];
                 iimPropNode.pvalue = _generateOutputStr(propValue);
                 iimPropNode.hasValue = true;
             }
@@ -151,18 +153,18 @@ export function ipmdChkResultToPropNodes(ipmdChkResultFsd: FixedStructureData,
             }
             exifPropNode.psort = propIpmdRefData[icc.itgSortorder] + 'x';
             exifPropNode.pspecidx = propIpmdRefData[icc.itgSpecidx];
-            let exifOccur: number = propImpdStateData[icc.stateDexif];
+            let exifOccur: number = propImpdStateData[icc.ipmdcrSDexif];
             if (exifOccur > 0){
-                propValue = ipmdChkResultFsd.getFsData(icc.stateValue + fsdLsep + ipmdId + fsdLsep
-                    + icc.stateVexif)['value'];
+                propValue = ipmdChkResultFsd.getFsData(icc.ipmdcrValue + fsdLsep + ipmdId + fsdLsep
+                    + icc.ipmdcrVexif)['value'];
                 exifPropNode.pvalue = _generateOutputStr(propValue);
                 exifPropNode.hasValue = true;
             }
         }
 
         // try to create a PropNode for the XMP-variant of the property
-        let ipmdChkResPathState: string = icc.stateState + fsdLsep + ipmdId;
-        let ipmdChkResPathValue: string = icc.stateValue + fsdLsep + ipmdId;
+        let ipmdChkResPathState: string = icc.ipmdcrState + fsdLsep + ipmdId;
+        let ipmdChkResPathValue: string = icc.ipmdcrValue + fsdLsep + ipmdId;
         let ipmdTechRefPath: string = icc.itgIpmdTop + fsdLsep + ipmdId;
         let xmpPropNode = _generateXmpPropNode(ipmdChkResPathState, ipmdChkResPathValue, ipmdChkResultFsd,
             propIpmdRefData, opdOpt.wvalonly, labeltype, noValueText, ipmdTechRefPath, ipmdTechRefFsd);
@@ -170,15 +172,15 @@ export function ipmdChkResultToPropNodes(ipmdChkResultFsd: FixedStructureData,
 
         // create the PropNode output for all specified IPTC PMD properties, regardless of having a value or not
         if (!opdOpt.wvalonly){
-            if (propImpdStateData[icc.stateDiim] !== undefined){  // IIM is specified for this property
+            if (propImpdStateData[icc.ipmdcrSDiim] !== undefined){  // IIM is specified for this property
                 let iimPropNodeVar1: IPropNode = util1.deepCopyPn(iimPropNode);
                 iimPropNodeVar1.plabel = iimPropNode.plabel;
                 iimPropNodeVar1.pembformat = 'IIM';
 
-                if (propImpdStateData[icc.stateDinsync] !== undefined){
-                    if (propImpdStateData[icc.stateDinsync] === 1) { // XMP and IIM are in sync
-                        if (propImpdStateData[icc.stateDmapinsync] !== undefined){
-                            if (propImpdStateData[icc.stateDmapinsync] === 1){ // XMP, IIM, Exif are in sync
+                if (propImpdStateData[icc.ipmdcrSDinsync] !== undefined){
+                    if (propImpdStateData[icc.ipmdcrSDinsync] === 1) { // XMP and IIM are in sync
+                        if (propImpdStateData[icc.ipmdcrSDmapinsync] !== undefined){
+                            if (propImpdStateData[icc.ipmdcrSDmapinsync] === 1){ // XMP, IIM, Exif are in sync
                                 xmpPropNodeVar1.plabel = xmpPropNode.plabel;
                                 xmpPropNodeVar1.pembformat = 'XMP,IIM,Exif';
                                 xmpPropNodeVar1.pinsync = 2;
@@ -248,15 +250,15 @@ export function ipmdChkResultToPropNodes(ipmdChkResultFsd: FixedStructureData,
             }
         }
         else { //  create the PropNode output only for specified IPTC PMD properties if they have a value
-            if (propImpdStateData[icc.stateDiim] !== undefined){  // IIM is specified for this property
+            if (propImpdStateData[icc.ipmdcrSDiim] !== undefined){  // IIM is specified for this property
                 let iimPropNodeVar1: IPropNode = util1.deepCopyPn(iimPropNode);
                 iimPropNodeVar1.plabel = iimPropNode.plabel
                 iimPropNodeVar1.pembformat = 'IIM';
 
-                if (propImpdStateData[icc.stateDinsync] !== undefined){
-                    if (propImpdStateData[icc.stateDinsync] === 1) { // XMP and IIM are in sync
-                        if (propImpdStateData[icc.stateDmapinsync] !== undefined){
-                            if (propImpdStateData[icc.stateDmapinsync] === 1){ // XMP, IIM, Exif are in sync
+                if (propImpdStateData[icc.ipmdcrSDinsync] !== undefined){
+                    if (propImpdStateData[icc.ipmdcrSDinsync] === 1) { // XMP and IIM are in sync
+                        if (propImpdStateData[icc.ipmdcrSDmapinsync] !== undefined){
+                            if (propImpdStateData[icc.ipmdcrSDmapinsync] === 1){ // XMP, IIM, Exif are in sync
                                 xmpPropNodeVar1.plabel = xmpPropNode.plabel;
                                 xmpPropNodeVar1.pembformat = 'XMP,IIM,Exif'
                                 xmpPropNodeVar1.pinsync = 2;
@@ -352,7 +354,7 @@ export function ipmdChkResultToPropNodes(ipmdChkResultFsd: FixedStructureData,
 
         // create the PropNode output for the OutputDesign option "fstds"
         if (opdOpt.fstds){
-            if (propImpdStateData[icc.stateDxmp] !== undefined) {  // XMP is specified for this property
+            if (propImpdStateData[icc.ipmdcrSDxmp] !== undefined) {  // XMP is specified for this property
                 if (opdOpt.wvalonly){
                     if (xmpPropNode.hasValue){
                         allPNodesArrays.xmpPna.push(xmpPropNode);
@@ -360,7 +362,7 @@ export function ipmdChkResultToPropNodes(ipmdChkResultFsd: FixedStructureData,
                 }
                 else allPNodesArrays.xmpPna.push(xmpPropNode);
             }
-            if (propImpdStateData[icc.stateDiim] !== undefined){  // IIM is specified for this property
+            if (propImpdStateData[icc.ipmdcrSDiim] !== undefined){  // IIM is specified for this property
                 if (opdOpt.wvalonly){
                     if (iimPropNode.hasValue){
                         allPNodesArrays.iimPna.push(iimPropNode);
@@ -368,7 +370,7 @@ export function ipmdChkResultToPropNodes(ipmdChkResultFsd: FixedStructureData,
                 }
                 else allPNodesArrays.iimPna.push(iimPropNode);
             }
-            if (propImpdStateData[icc.stateDexif] !== undefined) {  // Exif is specified for this property
+            if (propImpdStateData[icc.ipmdcrSDexif] !== undefined) {  // Exif is specified for this property
                 if (opdOpt.wvalonly){
                     if (exifPropNode.hasValue){
                         allPNodesArrays.exifPna.push(exifPropNode);
@@ -384,9 +386,9 @@ export function ipmdChkResultToPropNodes(ipmdChkResultFsd: FixedStructureData,
         const anyOtherDataProp: MdStruct = anyOtherDataRef[refPropId];
         const etTag: string = anyOtherDataProp[icc.itgEtTag];
         const label: string = anyOtherDataProp['label'];
-        let anyOtherDataId: string = icc.stateVaodPrefix + etTag;
-        let propValue = ipmdChkResultFsd.getFsData(icc.stateValue + fsdLsep + anyOtherDataId + fsdLsep
-            + icc.stateVet)['value'];
+        let anyOtherDataId: string = icc.ipmdcrVaodPrefix + etTag;
+        let propValue = ipmdChkResultFsd.getFsData(icc.ipmdcrValue + fsdLsep + anyOtherDataId + fsdLsep
+            + icc.ipmdcrVet)['value'];
         if (propValue !== undefined ){
             let anyDataPropNode = _initPropNode(noValueText);
             anyDataPropNode.plabel = label
@@ -433,14 +435,14 @@ function _generateXmpPropNode(ipmdChkResPathState: string,
     propNode.pspecidx = propIpmdRefData[icc.itgSpecidx];
     // sort out: is the value of the property a plain value or a structure
     let propContentType: Ptype = Ptype.plain;
-    let testIsStruct: MdStruct = ipmdChkResultFsd.getFsData(ipmdChkResPathState + fsdLsep + icc.stateStruct)
+    let testIsStruct: MdStruct = ipmdChkResultFsd.getFsData(ipmdChkResPathState + fsdLsep + icc.ipmdcrSStruct)
     if (testIsStruct['state'] === 'FOUND'){
         propContentType = Ptype.struct;
     }
     if (propContentType === Ptype.plain){  // value type === plain
         propNode.ptype = icc.pnodeTypePlain;
         let propValue: string | string[] | number =
-            ipmdChkResultFsd.getFsData(ipmdChkResPathValue + fsdLsep + icc.stateVxmp)['value'];
+            ipmdChkResultFsd.getFsData(ipmdChkResPathValue + fsdLsep + icc.ipmdcrVxmp)['value'];
         propNode.pvalue = _generateOutputStr(propValue);
         if (propNode.pvalue !== ''){
             propNode.hasValue = true;
@@ -452,14 +454,14 @@ function _generateXmpPropNode(ipmdChkResPathState: string,
     else {  // value type === struct
         propNode.ptype = icc.pnodeTypeStruct;
         let ipmdDataState: object = ipmdChkResultFsd.getFsData(ipmdChkResPathState
-            + fsdLsep + icc.stateStruct )['value'];
+            + fsdLsep + icc.ipmdcrSStruct )['value'];
         let statestructIpmdIds: string[] = Object.keys(ipmdDataState);
 
         let fullStructPna: IPropNode[] = [];
 
         // check if the value of this structure is a single object or an array of objects
         let testStructValue: object | object[] = ipmdChkResultFsd.getFsData(ipmdChkResPathValue
-            + fsdLsep + icc.stateStruct )['value'];
+            + fsdLsep + icc.ipmdcrSStruct )['value'];
         if (Array.isArray(testStructValue)) { // structure value is an array of objects
             let superIdx: number = testStructValue.length;
             // loop across all value-objects in the array
@@ -470,9 +472,9 @@ function _generateXmpPropNode(ipmdChkResPathState: string,
                     let ipmdTechRefPathSub: string = icc.itgIpmdStruct + fsdLsep + propRefStructId + fsdLsep + ipmdId;
                     let propIpmdRefDataSub: object = ipmdTechRefFsd.getFsData(ipmdTechRefPathSub)['value'];
                     // get state data:
-                    let ipmdChkResPathStateSub: string = ipmdChkResPathState + fsdLsep + icc.stateStruct
+                    let ipmdChkResPathStateSub: string = ipmdChkResPathState + fsdLsep + icc.ipmdcrSStruct
                         + fsdLsep + ipmdId;
-                    let ipmdChkResPathValueSub: string = ipmdChkResPathValue + fsdLsep + icc.stateStruct
+                    let ipmdChkResPathValueSub: string = ipmdChkResPathValue + fsdLsep + icc.ipmdcrSStruct
                         + fsdIsel + idx.toString() + fsdLsep + ipmdId;
                     let structPropNode = _generateXmpPropNode(ipmdChkResPathStateSub, ipmdChkResPathValueSub,
                         ipmdChkResultFsd, propIpmdRefDataSub, wValueOnly, labeltype, noValueText,
@@ -496,7 +498,7 @@ function _generateXmpPropNode(ipmdChkResPathState: string,
                 let ipmdTechRefPathSub: string = icc.itgIpmdStruct + fsdLsep + propRefStructId + fsdLsep + ipmdId;
                 let propIpmdRefDataSub: object = ipmdTechRefFsd.getFsData(ipmdTechRefPathSub)['value'];
                 // get state data:
-                let ipmdChkResPathBothSub: string = ipmdChkResPathState + fsdLsep + icc.stateStruct + fsdLsep + ipmdId;
+                let ipmdChkResPathBothSub: string = ipmdChkResPathState + fsdLsep + icc.ipmdcrSStruct + fsdLsep + ipmdId;
                 let structPropNode = _generateXmpPropNode(ipmdChkResPathBothSub, ipmdChkResPathBothSub,
                     ipmdChkResultFsd, propIpmdRefDataSub, wValueOnly, labeltype, noValueText,
                     ipmdTechRefPathSub, ipmdTechRefFsd);

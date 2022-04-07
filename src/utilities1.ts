@@ -65,28 +65,28 @@ export function generateIpmdChkResultsStateTemplate(ipmdTechRefData: MdStruct): 
         if (reftop[reftopkey][icc.itgXmpid] !== undefined && reftop[reftopkey][icc.itgIimid] !== undefined &&
             reftop[reftopkey][icc.itgExifid] !== undefined) {
             if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurSingle) {
-                stateStruct[reftopkey][icc.stateData] = dataStructXmpIimExif;
+                stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpIimExif;
             }
             if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurMulti) {
-                stateStruct[reftopkey][icc.stateData] = dataStructXmpIimExifMulti;
+                stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpIimExifMulti;
             }
         }
         else {
             if (reftop[reftopkey][icc.itgXmpid] !== undefined && reftop[reftopkey][icc.itgIimid] !== undefined) {
                 if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurSingle) {
-                    stateStruct[reftopkey][icc.stateData] = dataStructXmpIim;
+                    stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpIim;
                 }
                 if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurMulti) {
-                    stateStruct[reftopkey][icc.stateData] = dataStructXmpIimMulti;
+                    stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpIimMulti;
                 }
             }
             else {
                 if (reftop[reftopkey][icc.itgXmpid] !== undefined) {
                     if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurSingle) {
-                        stateStruct[reftopkey][icc.stateData] = dataStructXmp;
+                        stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmp;
                     }
                     if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurMulti) {
-                        stateStruct[reftopkey][icc.stateData] = dataStructXmpMulti;
+                        stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpMulti;
                     }
                 }
             }
@@ -99,7 +99,7 @@ export function generateIpmdChkResultsStateTemplate(ipmdTechRefData: MdStruct): 
                         let generateStruct = refstruct[structId];
                         let structSub = generateIpmdRefStateStructOfStruct(generateStruct, refstruct);
                         if (!objectIsEmpty(structSub)) {
-                            stateStruct[reftopkey][icc.stateStruct] =  structSub;
+                            stateStruct[reftopkey][icc.ipmdcrSStruct] =  structSub;
                         }
                     }
                 }
@@ -127,19 +127,19 @@ function generateIpmdRefStateStructOfStruct(refstruct: MdStruct, toprefstruct: M
         stateStruct[refstructkey] = {}
         if (refstruct[refstructkey][icc.itgXmpid] !== undefined && refstruct[refstructkey][icc.itgIimid] !== undefined &&
             refstruct[refstructkey][icc.itgExifid] !== undefined) {
-            stateStruct[refstructkey][icc.stateData] = dataStructXmpIimExif;
+            stateStruct[refstructkey][icc.ipmdcrSData] = dataStructXmpIimExif;
         }
         else {
             if (refstruct[refstructkey][icc.itgXmpid] !== undefined && refstruct[refstructkey][icc.itgIimid] !== undefined) {
-                stateStruct[refstructkey][icc.stateData] = dataStructXmpIim;
+                stateStruct[refstructkey][icc.ipmdcrSData] = dataStructXmpIim;
             }
             else {
                 if (refstruct[refstructkey][icc.itgXmpid] !== undefined) {
                     if (refstruct[refstructkey][icc.itgPropoccurrence] === icc.itgPropoccurSingle) {
-                        stateStruct[refstructkey][icc.stateData] = dataStructXmp;
+                        stateStruct[refstructkey][icc.ipmdcrSData] = dataStructXmp;
                     }
                     if (refstruct[refstructkey][icc.itgPropoccurrence] === icc.itgPropoccurMulti) {
-                        stateStruct[refstructkey][icc.stateData] = dataStructXmpMulti;
+                        stateStruct[refstructkey][icc.ipmdcrSData] = dataStructXmpMulti;
                     }
                 }
             }
@@ -152,7 +152,7 @@ function generateIpmdRefStateStructOfStruct(refstruct: MdStruct, toprefstruct: M
                         let generateStruct = toprefstruct[structId];
                         let structSub = generateIpmdRefStateStructOfStruct(generateStruct, toprefstruct);
                         if (!objectIsEmpty(structSub)) {
-                            stateStruct[refstructkey][icc.stateStruct] = structSub;
+                            stateStruct[refstructkey][icc.ipmdcrSStruct] = structSub;
                         }
                     }
                 }

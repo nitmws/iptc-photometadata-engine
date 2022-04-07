@@ -35,19 +35,28 @@ class OutputDesignOptions {
         this.topics = false; // IPTC photo metadata, grouped by User Guide topics
         this.fstds = false; // format standards: XMP, IIM, Exif
         this.isearch1 = false; // metadata properties relevant for search engines
-        this.wvalonly = false; // only properties with value are selected (and returned)
+        this.wvalonly = false; // only properties with value are in the generated PropNodes
     }
 }
 exports.OutputDesignOptions = OutputDesignOptions;
+/**
+ * Enumeration of types of label values:
+ * ipmd = IPTC Photo Metadata Standard
+ * valuefmt = standards of the value format
+ * et = ExifTool
+ */
 var Labeltype;
 (function (Labeltype) {
     Labeltype[Labeltype["ipmd"] = 0] = "ipmd";
     Labeltype[Labeltype["valuefmt"] = 1] = "valuefmt";
     Labeltype[Labeltype["et"] = 2] = "et";
 })(Labeltype = exports.Labeltype || (exports.Labeltype = {}));
+/**
+ * Class of properties holding arrays of PropNodes
+ * for different Output Designs
+ */
 class PropNodesArraysSet1 {
     constructor() {
-        // Arrays of objects for output of the PMD in different sections of the HTML output
         // for full IPTC PMD design
         this.ipmdFullPna1 = [];
         // for the 'format standards' design
@@ -67,20 +76,24 @@ class PropNodesArraysSet1 {
         this.noTopicPna = [];
         // for other purposes
         this.schemaorgPna = []; // container of schema.org metadata (property name/value pair objects)
-        // any other daata than IPTC photo metadata
+        // any other data than IPTC photo metadata
         this.anyOtherDataPna = [];
     }
 }
 exports.PropNodesArraysSet1 = PropNodesArraysSet1;
+/**
+ * Enumeration of types of PropNodes
+ */
 var Ptype;
 (function (Ptype) {
     Ptype[Ptype["plain"] = 0] = "plain";
     Ptype[Ptype["struct"] = 1] = "struct";
 })(Ptype = exports.Ptype || (exports.Ptype = {}));
+// Internal constants
 const fsdLsep = '/';
 const fsdIsel = '#';
 /**
- * Transforms an IPTC PMD Checker Result object to pnodes (property nodes)
+ * Transforms an IPTC PMD Checker Result object to PropNodes (property nodes)
  * @param ipmdChkResultFsd
  * @param opdOpt
  * @param labeltype
@@ -92,23 +105,23 @@ const fsdIsel = '#';
 function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueText, ipmdIdFilter, ipmdTechRefFsd, anyOtherDataRef) {
     let ipmdChkResultState = ipmdChkResultFsd.getFsData(icc.ipmdcrState)['value'];
     let allPNodesArrays = new PropNodesArraysSet1();
-    let statestructIpmdIds = [];
-    let statestructIpmdIdsPre = Object.keys(ipmdChkResultState);
-    if (ipmdIdFilter.length == 0) {
-        statestructIpmdIds = statestructIpmdIdsPre;
+    let ipmdcrSpropIds = [];
+    let ipmdcrSpropIdsPre = Object.keys(ipmdChkResultState);
+    if (ipmdIdFilter.length === 0) {
+        ipmdcrSpropIds = ipmdcrSpropIdsPre;
     }
     else {
-        statestructIpmdIdsPre.forEach(function (ipmdId) {
+        ipmdcrSpropIdsPre.forEach(function (ipmdId) {
             if (ipmdIdFilter.includes(ipmdId)) {
-                statestructIpmdIds.push(ipmdId);
+                ipmdcrSpropIds.push(ipmdId);
             }
         });
     }
-    statestructIpmdIds.forEach(function (ipmdId) {
+    ipmdcrSpropIds.forEach(ipmdPropId => {
         // get reference data:
-        let propIpmdRefData = ipmdTechRefFsd.getFsData(icc.itgIpmdTop + fsdLsep + ipmdId)['value'];
+        let propIpmdRefData = ipmdTechRefFsd.getFsData(icc.itgIpmdTop + fsdLsep + ipmdPropId)['value'];
         // get state data:
-        let propImpdStateData = ipmdChkResultFsd.getFsData(icc.ipmdcrState + fsdLsep + ipmdId
+        let propImpdStateData = ipmdChkResultFsd.getFsData(icc.ipmdcrState + fsdLsep + ipmdPropId
             + fsdLsep + icc.ipmdcrSData)['value'];
         let propValue;
         // try to create a PropNode for the IIM-variant of the property
@@ -130,7 +143,7 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
             iimPropNode.pspecidx = propIpmdRefData[icc.itgSpecidx];
             let iimOccur = propImpdStateData[icc.ipmdcrSDiim];
             if (iimOccur > 0) {
-                propValue = ipmdChkResultFsd.getFsData(icc.ipmdcrValue + fsdLsep + ipmdId + fsdLsep
+                propValue = ipmdChkResultFsd.getFsData(icc.ipmdcrValue + fsdLsep + ipmdPropId + fsdLsep
                     + icc.ipmdcrViim)['value'];
                 iimPropNode.pvalue = _generateOutputStr(propValue);
                 iimPropNode.hasValue = true;
@@ -155,16 +168,16 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
             exifPropNode.pspecidx = propIpmdRefData[icc.itgSpecidx];
             let exifOccur = propImpdStateData[icc.ipmdcrSDexif];
             if (exifOccur > 0) {
-                propValue = ipmdChkResultFsd.getFsData(icc.ipmdcrValue + fsdLsep + ipmdId + fsdLsep
+                propValue = ipmdChkResultFsd.getFsData(icc.ipmdcrValue + fsdLsep + ipmdPropId + fsdLsep
                     + icc.ipmdcrVexif)['value'];
                 exifPropNode.pvalue = _generateOutputStr(propValue);
                 exifPropNode.hasValue = true;
             }
         }
         // try to create a PropNode for the XMP-variant of the property
-        let ipmdChkResPathState = icc.ipmdcrState + fsdLsep + ipmdId;
-        let ipmdChkResPathValue = icc.ipmdcrValue + fsdLsep + ipmdId;
-        let ipmdTechRefPath = icc.itgIpmdTop + fsdLsep + ipmdId;
+        let ipmdChkResPathState = icc.ipmdcrState + fsdLsep + ipmdPropId;
+        let ipmdChkResPathValue = icc.ipmdcrValue + fsdLsep + ipmdPropId;
+        let ipmdTechRefPath = icc.itgIpmdTop + fsdLsep + ipmdPropId;
         let xmpPropNode = _generateXmpPropNode(ipmdChkResPathState, ipmdChkResPathValue, ipmdChkResultFsd, propIpmdRefData, opdOpt.wvalonly, labeltype, noValueText, ipmdTechRefPath, ipmdTechRefFsd);
         let xmpPropNodeVar1 = util1.deepCopyPn(xmpPropNode);
         // create the PropNode output for all specified IPTC PMD properties, regardless of having a value or not
@@ -182,7 +195,7 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
                                 xmpPropNodeVar1.pinsync = 2;
                                 allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
                                 _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
-                                _push_schemaorgPna(opdOpt, ipmdId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                                _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                             }
                             else { // XMP, IIM exist and are in sync, Exif exists but not in sync
                                 xmpPropNodeVar1.plabel = xmpPropNode.plabel;
@@ -195,7 +208,7 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
                                 exifPropNodeVar1.pinsync = -2;
                                 allPNodesArrays.ipmdFullPna1.push(exifPropNodeVar1);
                                 _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, exifPropNodeVar1);
-                                _push_schemaorgPna(opdOpt, ipmdId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                                _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                             }
                         }
                         else { // XMP and IIM exist, are in sync
@@ -204,7 +217,7 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
                             xmpPropNodeVar1.pinsync = 1;
                             allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
                             _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
-                            _push_schemaorgPna(opdOpt, ipmdId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                            _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                         }
                     }
                     else { // XMP and IIM exist, are not in sync
@@ -215,7 +228,7 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
                         iimPropNodeVar1.pinsync = -1;
                         allPNodesArrays.ipmdFullPna1.push(iimPropNodeVar1);
                         _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, iimPropNodeVar1, null);
-                        _push_schemaorgPna(opdOpt, ipmdId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                        _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                     }
                 }
                 else { // IIM is specified, but no sync value available = same as: both exist, not in sync
@@ -226,7 +239,7 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
                     iimPropNodeVar1.pinsync = -1;
                     allPNodesArrays.ipmdFullPna1.push(iimPropNodeVar1);
                     _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, iimPropNode, null);
-                    _push_schemaorgPna(opdOpt, ipmdId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                    _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                 }
             }
             else { // only XMP is specified
@@ -234,7 +247,7 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
                 xmpPropNodeVar1.pembformat = 'XMP';
                 allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
                 _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
-                _push_schemaorgPna(opdOpt, ipmdId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
             }
         }
         else { //  create the PropNode output only for specified IPTC PMD properties if they have a value
@@ -252,7 +265,7 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
                                 if (xmpPropNodeVar1.hasValue) {
                                     allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
                                     _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
-                                    _push_schemaorgPna(opdOpt, ipmdId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                                    _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                                 }
                             }
                             else { // XMP, IIM exist and are in sync, Exif exists but not in sync
@@ -262,7 +275,7 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
                                 if (xmpPropNodeVar1.hasValue) {
                                     allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
                                     _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
-                                    _push_schemaorgPna(opdOpt, ipmdId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                                    _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                                 }
                                 let exifPropNodeVar1 = util1.deepCopyPn(exifPropNode);
                                 exifPropNodeVar1.plabel = exifPropNode.plabel;
@@ -281,7 +294,7 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
                             if (xmpPropNodeVar1.hasValue) {
                                 allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
                                 _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
-                                _push_schemaorgPna(opdOpt, ipmdId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                                _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                             }
                         }
                     }
@@ -291,7 +304,7 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
                         xmpPropNodeVar1.pinsync = -1;
                         if (xmpPropNodeVar1.hasValue) {
                             allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
-                            _push_schemaorgPna(opdOpt, ipmdId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                            _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                         }
                         if (iimPropNodeVar1.hasValue) {
                             iimPropNodeVar1.pinsync = -1;
@@ -307,7 +320,7 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
                     if (xmpPropNodeVar1.hasValue) {
                         allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
                         _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
-                        _push_schemaorgPna(opdOpt, ipmdId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                        _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                     }
                     if (iimPropNodeVar1.hasValue) {
                         iimPropNodeVar1.pinsync = -1;
@@ -317,13 +330,13 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
                 }
             }
             else { // XMP only is specified
-                if (xmpPropNodeVar1.pvalue != '') {
+                if (xmpPropNodeVar1.pvalue !== '') {
                     xmpPropNodeVar1.plabel = xmpPropNode.plabel;
                     xmpPropNodeVar1.pembformat = 'XMP';
                     if (xmpPropNodeVar1.hasValue) {
                         allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
                         _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
-                        _push_schemaorgPna(opdOpt, ipmdId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                        _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                     }
                 }
             }
@@ -379,6 +392,18 @@ function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueTe
     return allPNodesArrays;
 }
 exports.ipmdChkResultToPropNodes = ipmdChkResultToPropNodes;
+/**
+ * Recursive internal function for creating XMP values which may be structured
+ * @param ipmdChkResPathState
+ * @param ipmdChkResPathValue
+ * @param ipmdChkResultFsd
+ * @param propIpmdRefData
+ * @param wValueOnly
+ * @param labeltype
+ * @param noValueText
+ * @param ipmdTechRefPath
+ * @param ipmdTechRefFsd
+ */
 function _generateXmpPropNode(ipmdChkResPathState, ipmdChkResPathValue, ipmdChkResultFsd, propIpmdRefData, wValueOnly, labeltype, noValueText, ipmdTechRefPath, ipmdTechRefFsd) {
     let propRefDtIsStruct = false;
     if (propIpmdRefData[icc.itgDatatype] === icc.itgDtStruct) {
@@ -615,7 +640,7 @@ function _push_schemaorgPna(opdOpt, ipmdId, propIpmdRefData, xmpPropNodeVar, all
         allPNodesArrays.schemaorgPna.push(xmpPropNodeVar1);
     }
     // next: workaround to map the Licensor URL in a Licensor structure to a schema.org property
-    if (ipmdId == 'licensors') {
+    if (ipmdId === 'licensors') {
         let licUrlPropNode = _initPropNode();
         licUrlPropNode.ptype = icc.pnodeTypePlain;
         licUrlPropNode.plabel = 'acquireLicensePage';

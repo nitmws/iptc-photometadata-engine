@@ -55,7 +55,7 @@ import * as ipmde from 'iptc-photometadata-engine'
     * [Class OutputDesignOptions](#class-outputdesignoptions)
     * [Object PropNode](#object-propnode)
     * [Class PropNodesArraysSet1](#class-propnodesarraysset1)
-* [Functions transforming data of this Engine](#functions-transforming-data-of-this-engine)
+* [More functions transforming data of this Engine](#more-functions-transforming-data-of-this-engine)
     * [Function ipmdChkResultToTabledata1](#function-ipmdchkresulttotabledata1)
     * [Function tabledata1ToCsvdata1](#function-tabledata1tocsvdata1)
     * [Function tabledata1ToCsvstring1](#function-tabledata1tocsvstring1)
@@ -319,7 +319,7 @@ This function returns an instance of [PropNodesArraysSet1](#class-propnodesarray
 
 * Parameter `ipmdChkResultFsd`: an instance of [FixedStructureData](#class-fixedstructuredata) holding the to-be-converted [IPTC Photo Metadata Checker Result](#object-ipmdcheckerresult)
 * Parameter `opdOpt`: an instance of [OutputDesignOptions](#class-outputdesignoptions) for controlling the generation of output data corresponding to the design option.
-* Parameter `labeltype`: a code from this enumeration selects the applied label: ipmd (= IPTC Photo Metadata Standard labels), valuefmt (= labels used by XMP, IPTC IIM or Exif), et (= lables used by ExifTool)
+* Parameter `labeltype`: a code from this enumeration selects the applied label: ipmd (= IPTC Photo Metadata Standard labels), valuefmt (= labels used by XMP, IPTC IIM or Exif), et (= labels used by ExifTool)
 * Parameter `noValueText`: a string acting as default text applied if no embedded value was found, e.g. "[no value found]"
 * Parameter `ipmdIdFilter`: array of IPTC Photo Metadata property identifiers. If this array is not empty only these IPTC properties are used for generating output data.
 * Parameter `ipmdTechRefFsd`: an instance of [FixedStructureData](#class-fixedstructuredata) holding the object of the IPTC TechReference
@@ -343,21 +343,23 @@ One property of `ipmdfull` through `isearch1` must be set to true.
 
 This object represents an IPTC Photo Metadata property.
 
-The properties of this JavaScript object:
-* `ptype`: has one of these values:
+> Be aware: multiple objects about the same IPTC property may exist, this depends on the Output Design. For "fstds" instances exist for the XMP, the IIM and the Exif value. For "ipmdfull" multiple instances may exist if the XMP and the IIM values (and Exif value) are different.
+
+The properties of this JavaScript object and if their occurrence is mandatory or optional:
+* `ptype` (mandatory): has one of these values:
     * "plain": this property has plain value(s), may be an array
     * "struct": this property has structured value(s), may be an array
-* `plabel`: label of the IPTC Photo Metadata property
-* `psort`: sortorder value of the IPTC Photo Metadata property (of an alphabetical sortorder of the property labels in English)
-* `pspecidx`: fragment identifer of the specification of this IPTC property in the IPTC Photo Metadata Standard specification document. This fragment identifier may be appended to the URL https://www.iptc.org/std/photometadata/specification/IPTC-PhotoMetadata for linking.
-* `pvalue`: the IPTC Photo Metadata property's plain value or its data structure value expressed as PropNode.
-* `pinsync`: a numeric value indicating if values of this IPTC property in different embedded formats are in sync: 0 = a value of only one format was found, 1 = XMP and IIM value are in sync, 2 = XMP/IIM and further Exif values are in sync, -1 = should be 1 but is not in sync, -2 = should be 2 but is not in sync.
-* `pembformat`: a comma separated sequence of these optionals codes: "XMP", "IIM" and/or "Exif". It shows from which format the pvalue was taken. This property is only set for top level properties as sub-properties in a structure can only be from the XMP format.
-* `hasValue`: boolean value, is "true" if a value exists, else "false"
+* `plabel` (mandatory): label of the IPTC Photo Metadata property
+* `psort` (optional): sortorder value of the IPTC Photo Metadata property (of an alphabetical sortorder of the property labels in English)
+* `pspecidx` (mandatory): fragment identifer of the specification of this IPTC property in the IPTC Photo Metadata Standard specification document. This fragment identifier may be appended to the URL https://www.iptc.org/std/photometadata/specification/IPTC-PhotoMetadata for linking.
+* `pvalue` (mandatory): the IPTC Photo Metadata property's plain value or its data structure value expressed as PropNode.
+* `pinsync` (mandatory): a numeric value indicating if values of this IPTC property in different embedded formats are in sync: 0 = a value of only one format was found, 1 = XMP and IIM value are in sync, 2 = XMP/IIM and further Exif values are in sync, -1 = should be 1 but is not in sync, -2 = should be 2 but is not in sync.
+* `pembformat` (optional): a comma separated sequence of these codes: "XMP", "IIM", "Exif". It shows from which format the pvalue was taken. This property is only set for top level properties as sub-properties in a structure can only be from the XMP format.
+* `hasValue` (mandatory): boolean value, is "true" if a value exists, else "false"
 
 ### Class PropNodesArraysSet1
 
-Object with arrays of objects for showing IPTC Photo Metadata in different sections of the HTML output
+Class of properties holding arrays of PropNodes for different Output Designs, can be used for rendering HTML.
 
 The properties of this JavaScript object:
 * Used for the 'full IPTC Photo Metadata' design option
@@ -382,7 +384,78 @@ The properties of this JavaScript object:
 * Used for any other kind of data than the IPTC Photo Metadata
     * `anyOtherDataPna`: array of PropNodes
 
-## Functions transforming data of this Engine
+### Examples of generated PropNodes
+
+**A property with a singular plain value**
+```JSON
+{
+  "ptype": "plain",
+  "plabel": "Copyright Notice",
+  "psort": "tp150",
+  "pspecidx": "#copyright-notice",
+  "pvalue": "Copyright 2022 Michael Kreatoris",
+  "pinsync": 2,
+  "pembformat": "XMP,IIM,Exif",
+  "hasValue": true
+}
+```
+
+**A property with multiple plain values**
+```JSON
+{
+  "ptype": "plain",
+  "plabel": "Keywords",
+  "psort": "tp450",
+  "pspecidx": "#keywords",
+  "pvalue": "[1] sports, [2]soccer, ",
+  "pinsync": 1,
+  "pembformat": "XMP,IIM",
+  "hasValue": true
+}
+```
+
+**A property with a structured value**
+```JSON
+{
+  "ptype": "struct",
+  "plabel": "Licensor",
+  "psort": "tp460",
+  "pspecidx": "#licensor",
+  "pvalue": [
+    {
+      "ptype": "plain",
+      "plabel": "[1] Licensor ID",
+      "psort": "s3101",
+      "pspecidx": "#licensor-id",
+      "pvalue": "https://m.kreatoris.example.com",
+      "pinsync": 0,
+      "pembformat": "",
+      "hasValue": true
+    },
+    {
+      "ptype": "plain",
+      "plabel": "[1] Licensor Name",
+      "psort": "s3102",
+      "pspecidx": "#licensor-name",
+      "pvalue": "Michael Kreatoris",
+      "pinsync": 0,
+      "pembformat": "",
+      "hasValue": true
+    },{
+      "ptype": "plain",
+      "plabel": "[1] Licensor URL",
+      "psort": "s3114",
+      "pspecidx": "#licensor-url",
+      "pvalue": "https://m.kreatoris.example.com/imageshop/id13423423",
+      "pinsync": 0,
+      "pembformat": "",
+      "hasValue": true
+    }]
+ }
+```
+
+
+## More functions transforming data of this Engine
 
 ### Function ipmdChkResultToTabledata1
 

@@ -10,11 +10,21 @@ export declare class OutputDesignOptions {
     isearch1: boolean;
     wvalonly: boolean;
 }
+/**
+ * Enumeration of types of label values:
+ * ipmd = IPTC Photo Metadata Standard
+ * valuefmt = standards of the value format
+ * et = ExifTool
+ */
 export declare enum Labeltype {
     ipmd = 0,
     valuefmt = 1,
     et = 2
 }
+/**
+ * Class of properties holding arrays of PropNodes
+ * for different Output Designs
+ */
 export declare class PropNodesArraysSet1 {
     ipmdFullPna1: IPropNode[];
     xmpPna: IPropNode[];
@@ -46,12 +56,15 @@ export interface IPropNode {
     pembformat: string;
     hasValue: boolean;
 }
+/**
+ * Enumeration of types of PropNodes
+ */
 export declare enum Ptype {
     plain = 0,
     struct = 1
 }
 /**
- * Transforms an IPTC PMD Checker Result object to pnodes (property nodes)
+ * Transforms an IPTC PMD Checker Result object to PropNodes (property nodes)
  * @param ipmdChkResultFsd
  * @param opdOpt
  * @param labeltype

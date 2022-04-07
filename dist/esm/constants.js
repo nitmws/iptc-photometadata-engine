@@ -1,9 +1,12 @@
-// constant values of the IPTC PMD TechGuide object
+// constant property names and property values
+//    of the IPTC PMD TechGuide object
+// top level properties
 export const itgIpmdTop = 'ipmd_top';
 export const itgIpmdStruct = 'ipmd_struct';
 export const itgEtTopwpre = 'et_topwithprefix';
 export const itgEtTonopre = 'et_topnoprefix';
 export const itgEtInstruct = 'et_instructure';
+// sub-properties of top level properties
 export const itgName = 'name';
 export const itgIpmdschema = 'ipmdschema';
 export const itgSortorder = 'sortorder';
@@ -12,8 +15,6 @@ export const itgSpecidx = 'specidx';
 export const itgDatatype = 'datatype';
 export const itgDataformat = 'dataformat';
 export const itgPropoccurrence = 'propoccurrence';
-export const itgPropoccurSingle = 'single';
-export const itgPropoccurMulti = 'multi';
 export const itgXmpid = 'XMPid';
 export const itgIimid = 'IIMid';
 export const itgIimname = 'IIMname';
@@ -25,14 +26,19 @@ export const itgEtExif = 'etEXIF';
 export const itgEtTag = 'etTag';
 export const itgIpmdid = 'ipmdid';
 export const itgIpmddatatype = 'ipmddatatype';
+// values for itgDatatype
 export const itgDtString = 'string';
 export const itgDtNumber = 'number';
 export const itgDtStruct = 'struct';
+// values for itgDataformat
 export const itgDfAlg = 'AltLang';
 export const itgDfDt = 'date-time';
 export const itgDfUri = 'uri';
 export const itgDfUrl = 'url';
-// codes for User Guide topics
+// calues for itgPropoccurrence values
+export const itgPropoccurSingle = 'single';
+export const itgPropoccurMulti = 'multi';
+// values for itgUgtopic
 export const itgUgtAdmin = 'admin';
 export const itgUgtGimgcont = 'gimgcont';
 export const itgUgtImgreg = 'imgreg';

@@ -1,13 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ipmdcrSStruct = exports.ipmdcrSDvaloccur = exports.ipmdcrSDmapinsync = exports.ipmdcrSDinsync = exports.ipmdcrSDexif = exports.ipmdcrSDiim = exports.ipmdcrSDxmp = exports.ipmdcrSData = exports.ipmdcrState = exports.itgUgtRights = exports.itgUgtPerson = exports.itgUgtOthings = exports.itgUgtLocation = exports.itgUgtLicensing = exports.itgUgtImgreg = exports.itgUgtGimgcont = exports.itgUgtAdmin = exports.itgDfUrl = exports.itgDfUri = exports.itgDfDt = exports.itgDfAlg = exports.itgDtStruct = exports.itgDtNumber = exports.itgDtString = exports.itgIpmddatatype = exports.itgIpmdid = exports.itgEtTag = exports.itgEtExif = exports.itgEtIim = exports.itgEtXmp = exports.itgExifid = exports.itgIimmaxbytes = exports.itgIimname = exports.itgIimid = exports.itgXmpid = exports.itgPropoccurMulti = exports.itgPropoccurSingle = exports.itgPropoccurrence = exports.itgDataformat = exports.itgDatatype = exports.itgSpecidx = exports.itgUgtopic = exports.itgSortorder = exports.itgIpmdschema = exports.itgName = exports.itgEtInstruct = exports.itgEtTonopre = exports.itgEtTopwpre = exports.itgIpmdStruct = exports.itgIpmdTop = void 0;
+exports.ipmdcrSStruct = exports.ipmdcrSDvaloccur = exports.ipmdcrSDmapinsync = exports.ipmdcrSDinsync = exports.ipmdcrSDexif = exports.ipmdcrSDiim = exports.ipmdcrSDxmp = exports.ipmdcrSData = exports.ipmdcrState = exports.itgUgtRights = exports.itgUgtPerson = exports.itgUgtOthings = exports.itgUgtLocation = exports.itgUgtLicensing = exports.itgUgtImgreg = exports.itgUgtGimgcont = exports.itgUgtAdmin = exports.itgPropoccurMulti = exports.itgPropoccurSingle = exports.itgDfUrl = exports.itgDfUri = exports.itgDfDt = exports.itgDfAlg = exports.itgDtStruct = exports.itgDtNumber = exports.itgDtString = exports.itgIpmddatatype = exports.itgIpmdid = exports.itgEtTag = exports.itgEtExif = exports.itgEtIim = exports.itgEtXmp = exports.itgExifid = exports.itgIimmaxbytes = exports.itgIimname = exports.itgIimid = exports.itgXmpid = exports.itgPropoccurrence = exports.itgDataformat = exports.itgDatatype = exports.itgSpecidx = exports.itgUgtopic = exports.itgSortorder = exports.itgIpmdschema = exports.itgName = exports.itgEtInstruct = exports.itgEtTonopre = exports.itgEtTopwpre = exports.itgIpmdStruct = exports.itgIpmdTop = void 0;
 exports.anyPlusBaseUrl = exports.cmpRCpmisg = exports.cmpRCvnotarr = exports.cmpRCvmisg = exports.cmpRCvchngd = exports.fsdStRO = exports.fsdStSearch = exports.fsdStErr = exports.fsdStFound = exports.fsdResValue = exports.fsdResState = exports.pnodeTypeStruct = exports.pnodeTypePlain = exports.ipmdcrVaodPrefix = exports.ipmdcrVet = exports.ipmdcrVexif = exports.ipmdcrViim = exports.ipmdcrVxmp = exports.ipmdcrValue = void 0;
-// constant values of the IPTC PMD TechGuide object
+// constant property names and property values
+//    of the IPTC PMD TechGuide object
+// top level properties
 exports.itgIpmdTop = 'ipmd_top';
 exports.itgIpmdStruct = 'ipmd_struct';
 exports.itgEtTopwpre = 'et_topwithprefix';
 exports.itgEtTonopre = 'et_topnoprefix';
 exports.itgEtInstruct = 'et_instructure';
+// sub-properties of top level properties
 exports.itgName = 'name';
 exports.itgIpmdschema = 'ipmdschema';
 exports.itgSortorder = 'sortorder';
@@ -16,8 +19,6 @@ exports.itgSpecidx = 'specidx';
 exports.itgDatatype = 'datatype';
 exports.itgDataformat = 'dataformat';
 exports.itgPropoccurrence = 'propoccurrence';
-exports.itgPropoccurSingle = 'single';
-exports.itgPropoccurMulti = 'multi';
 exports.itgXmpid = 'XMPid';
 exports.itgIimid = 'IIMid';
 exports.itgIimname = 'IIMname';
@@ -29,14 +30,19 @@ exports.itgEtExif = 'etEXIF';
 exports.itgEtTag = 'etTag';
 exports.itgIpmdid = 'ipmdid';
 exports.itgIpmddatatype = 'ipmddatatype';
+// values for itgDatatype
 exports.itgDtString = 'string';
 exports.itgDtNumber = 'number';
 exports.itgDtStruct = 'struct';
+// values for itgDataformat
 exports.itgDfAlg = 'AltLang';
 exports.itgDfDt = 'date-time';
 exports.itgDfUri = 'uri';
 exports.itgDfUrl = 'url';
-// codes for User Guide topics
+// calues for itgPropoccurrence values
+exports.itgPropoccurSingle = 'single';
+exports.itgPropoccurMulti = 'multi';
+// values for itgUgtopic
 exports.itgUgtAdmin = 'admin';
 exports.itgUgtGimgcont = 'gimgcont';
 exports.itgUgtImgreg = 'imgreg';

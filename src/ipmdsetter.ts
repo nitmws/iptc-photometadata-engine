@@ -23,7 +23,7 @@ export class IpmdSetter {
      * @param iptcPmdTechRefDocFp File path of the JSON file with the IPTC PMD reference data
      */
     constructor(iptcPmdTechRefDocFp: string) {
-        this.ipmdRef = this._loadIpmdRefJson(iptcPmdTechRefDocFp);
+        this.ipmdRef = IpmdSetter._loadIpmdRefJson(iptcPmdTechRefDocFp);
         this._lsep = "/";
     }
 
@@ -322,7 +322,7 @@ export class IpmdSetter {
      * Loads the IPTC Photo Metadata Reference document from a JSON file.
      * For class-internal use only.
      */
-    private _loadIpmdRefJson (ipmdRefFp: string): object {
+    private static _loadIpmdRefJson (ipmdRefFp: string): object {
         if (!fs.existsSync(ipmdRefFp))
             return {};
         return util1.loadFromJson(ipmdRefFp);

@@ -56,8 +56,8 @@ export class IpmdChecker {
      */
     constructor(iptcPmdTechRefDocFp: string, ipmdCheckerResultTemplateFp: string) {
         this._readyToCheck = false;
-        this.ipmdRef = this._loadIpmdRefJson(iptcPmdTechRefDocFp);
-        this._ipmdStateDataTempl = this._loadIpmdStateDataTemplate(ipmdCheckerResultTemplateFp);
+        this.ipmdRef = IpmdChecker._loadIpmdRefJson(iptcPmdTechRefDocFp);
+        this._ipmdStateDataTempl = IpmdChecker._loadIpmdStateDataTemplate(ipmdCheckerResultTemplateFp);
         this._ipmdStateData = new FixedStructureData(this._ipmdStateDataTempl, true);
         this._ipmdValueData = {};
         this._testEtJsonFp = '';
@@ -656,7 +656,7 @@ export class IpmdChecker {
                     else {
                         if (Array.isArray(propTestValueXmp)) {
                             // compare the arrays
-                            if (!this._arraysAreEqual(propRefValueXmp, propTestValueXmp)) {
+                            if (!IpmdChecker._arraysAreEqual(propRefValueXmp, propTestValueXmp)) {
                                 xmpCrRow.result = icc.cmpRCvchngd;
                                 xmpCrRow.message = 'Test image: XMP value CHANGED';
                                 xmpCrRow.comparedIpmdIdPath = refIpmdId;
@@ -725,7 +725,7 @@ export class IpmdChecker {
                         // this is an array of values in the reference and a test value exists
                         if (Array.isArray(propTestValueIim)) {
                             // compare the arrays
-                            if (!this._arraysAreEqual(propRefValueIim, propTestValueIim)) {
+                            if (!IpmdChecker._arraysAreEqual(propRefValueIim, propTestValueIim)) {
                                 iimCrRow.result = icc.cmpRCvchngd;
                                 iimCrRow.message = 'Test image: IIM value CHANGED';
                                 iimCrRow.comparedIpmdIdPath = refIpmdId; // + this.fsdLsep + 'IIM';
@@ -934,7 +934,7 @@ export class IpmdChecker {
                     else {
                         if (Array.isArray(propTestValueXmp)) {
                             // compare the arrays
-                            if (!this._arraysAreEqual(propRefValueXmp, propTestValueXmp)) {
+                            if (!IpmdChecker._arraysAreEqual(propRefValueXmp, propTestValueXmp)) {
                                 let crRow = new CompareResultRow();
                                 crRow.message = 'Test image: XMP value CHANGED';
                                 crRow.comparedIpmdIdPath = refIpmdIdPath; // + this.fsdLsep + 'XMP';
@@ -979,7 +979,7 @@ export class IpmdChecker {
      * Loads the IPTC Photo Metadata Reference document from a JSON file.
      * For class-internal use only.
      */
-    private _loadIpmdRefJson (ipmdRefFp: string): object {
+    private static _loadIpmdRefJson (ipmdRefFp: string): object {
         if (!fs.existsSync(ipmdRefFp))
             return {};
         return util1.loadFromJson(ipmdRefFp);
@@ -989,7 +989,7 @@ export class IpmdChecker {
      * Loods the template of IPTC PMD state data from a JSON file
      * @param ipmdStateDataTemplFp
      */
-    private _loadIpmdStateDataTemplate(ipmdStateDataTemplFp: string): object{
+    private static _loadIpmdStateDataTemplate(ipmdStateDataTemplFp: string): object{
         if (!fs.existsSync(ipmdStateDataTemplFp)){
             return {};
         }
@@ -1009,7 +1009,7 @@ export class IpmdChecker {
      * @param array1
      * @param array2
      */
-    private _arraysAreEqual(array1: string[] | number[], array2: string[] | number[]): boolean{
+    private static _arraysAreEqual(array1: string[] | number[], array2: string[] | number[]): boolean{
         if (array1.length !== array2.length)
             return false;
         if (array1.length === 0)

@@ -23,7 +23,6 @@ export class Row1Fields {
 }
 
 const fsdLsep: string = '/';
-const fsdIsel: string = '#';
 
 // constant text values
 const propFound: string = 'found';

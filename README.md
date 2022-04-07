@@ -407,7 +407,7 @@ The properties of this JavaScript object:
   "plabel": "Keywords",
   "psort": "tp450",
   "pspecidx": "#keywords",
-  "pvalue": "[1] sports, [2]soccer, ",
+  "pvalue": "[1] sports, [2] soccer,",
   "pinsync": 1,
   "pembformat": "XMP,IIM",
   "hasValue": true

@@ -4,6 +4,7 @@
     "target": "ES2016",
     "module": "ES2020",
     "strict": true,
+    "pretty": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": true,

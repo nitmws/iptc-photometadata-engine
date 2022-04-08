@@ -1,0 +1,13 @@
+tsconfig.json
+tslint.json
+lib/src
+lib/test
+test/
+src/
+node_modules
+.idea
+.travis.yml
+.nyc_output/
+coverage/
+
+

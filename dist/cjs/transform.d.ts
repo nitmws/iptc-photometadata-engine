@@ -1,4 +1,4 @@
-import FixedStructureData from './fixed_structure_data';
+import FixedStructureData from "./fixed_structure_data";
 import { IipmdCheckerResult } from "./ipmdchecker";
 export declare class Csv1Options {
     fieldsep: string;

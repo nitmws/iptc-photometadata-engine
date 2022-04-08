@@ -1,4 +1,4 @@
-import { MdStruct } from './incommon';
+import { MdStruct } from "./incommon";
 /**
  * The result object of IpmdChecker
  */
@@ -119,12 +119,12 @@ export declare class IpmdChecker {
      * Loads the IPTC Photo Metadata Reference document from a JSON file.
      * For class-internal use only.
      */
-    private _loadIpmdRefJson;
+    private static _loadIpmdRefJson;
     /**
      * Loods the template of IPTC PMD state data from a JSON file
      * @param ipmdStateDataTemplFp
      */
-    private _loadIpmdStateDataTemplate;
+    private static _loadIpmdStateDataTemplate;
     /**
      * Checks if the class instance is ready for doing a check and set the property _readyToCheck
      */
@@ -134,7 +134,7 @@ export declare class IpmdChecker {
      * @param array1
      * @param array2
      */
-    private _arraysAreEqual;
+    private static _arraysAreEqual;
     /**
      * Transforms an FSD ipmdId-path to a corresponding sequence of IPTC PMD property names
      * @param ipmdIdPath

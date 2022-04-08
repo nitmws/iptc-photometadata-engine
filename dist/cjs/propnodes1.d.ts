@@ -1,5 +1,5 @@
-import { MdStruct } from './incommon';
-import FixedStructureData from './fixed_structure_data';
+import { MdStruct } from "./incommon";
+import FixedStructureData from "./fixed_structure_data";
 /**
  * Class holds all options relevant for the design of the output
  */

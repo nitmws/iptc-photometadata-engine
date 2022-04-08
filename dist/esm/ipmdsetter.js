@@ -1,8 +1,8 @@
-import fs from 'fs';
-import * as icc from './constants';
-import * as util1 from './utilities1';
-import FixedStructureData from './fixed_structure_data';
-import * as valmap from './valuemapper';
+import fs from "fs";
+import * as icc from "./constants";
+import * as util1 from "./utilities1";
+import FixedStructureData from "./fixed_structure_data";
+import * as valmap from "./valuemapper";
 /**
  * Generate ExifTool JSON options
  */
@@ -18,7 +18,7 @@ export class IpmdSetter {
      * @param iptcPmdTechRefDocFp File path of the JSON file with the IPTC PMD reference data
      */
     constructor(iptcPmdTechRefDocFp) {
-        this.ipmdRef = this._loadIpmdRefJson(iptcPmdTechRefDocFp);
+        this.ipmdRef = IpmdSetter._loadIpmdRefJson(iptcPmdTechRefDocFp);
         this._lsep = "/";
     }
     /**
@@ -29,14 +29,14 @@ export class IpmdSetter {
      */
     generateExiftoolJson(ipmdData, genOptions = new GenerateEtJsonOptions()) {
         this._ipmdDataFsd = new FixedStructureData(ipmdData, false);
-        let etJson = { SourceFile: "*" };
-        let refIpmdTop = this.ipmdRef[icc.itgIpmdTop];
+        const etJson = { SourceFile: "*" };
+        const refIpmdTop = this.ipmdRef[icc.itgIpmdTop];
         // Iterate all properties of the reference ipmd_top
         for (const refPropId in refIpmdTop) {
-            let refPropData = refIpmdTop[refPropId];
+            const refPropData = refIpmdTop[refPropId];
             // get the value of the property
             let ipmdPropValue;
-            let getPropValueFsd = this._ipmdDataFsd.getFsData(refPropId);
+            const getPropValueFsd = this._ipmdDataFsd.getFsData(refPropId);
             if (getPropValueFsd[icc.fsdResState] === icc.fsdStFound) {
                 ipmdPropValue = getPropValueFsd[icc.fsdResValue];
             }
@@ -44,14 +44,14 @@ export class IpmdSetter {
                 continue;
             // the property value of Et-JSON
             let etPropValue;
-            let valIsArray = Array.isArray(ipmdPropValue);
+            const valIsArray = Array.isArray(ipmdPropValue);
             const datatype = refPropData[icc.itgDatatype];
-            let dataformat = '';
+            let dataformat = "";
             if (refPropData.hasOwnProperty(icc.itgDataformat)) {
                 dataformat = refPropData[icc.itgDataformat];
             }
             let altLangActive = false;
-            let propoccurrence = '';
+            let propoccurrence = "";
             if (refPropData.hasOwnProperty(icc.itgPropoccurrence)) {
                 propoccurrence = refPropData[icc.itgPropoccurrence];
             }
@@ -67,9 +67,11 @@ export class IpmdSetter {
                 }
             }
             // datatype "string"
-            if (datatype === icc.itgDtString && propoccurrence === icc.itgPropoccurSingle && typeof ipmdPropValue === 'string') {
+            if (datatype === icc.itgDtString &&
+                propoccurrence === icc.itgPropoccurSingle &&
+                typeof ipmdPropValue === "string") {
                 const ipmdPropValueStr = ipmdPropValue.toString();
-                if (ipmdPropValueStr.indexOf(icc.anyPlusBaseUrl) == 0) {
+                if (ipmdPropValueStr.indexOf(icc.anyPlusBaseUrl) === 0) {
                     if (genOptions.disabledPrintConv) {
                         etPropValue = ipmdPropValueStr.substring(icc.anyPlusBaseUrl.length);
                     }
@@ -80,28 +82,40 @@ export class IpmdSetter {
                 else
                     etPropValue = ipmdPropValueStr;
             }
-            if (datatype === icc.itgDtString && propoccurrence === icc.itgPropoccurMulti && valIsArray) {
+            if (datatype === icc.itgDtString &&
+                propoccurrence === icc.itgPropoccurMulti &&
+                valIsArray) {
                 etPropValue = ipmdPropValue;
             }
             // datatype "string" + dataformat date-time
-            if (datatype === icc.itgDtString && dataformat === icc.itgDfDt && propoccurrence === icc.itgPropoccurSingle && typeof ipmdPropValue === 'string') {
+            if (datatype === icc.itgDtString &&
+                dataformat === icc.itgDfDt &&
+                propoccurrence === icc.itgPropoccurSingle &&
+                typeof ipmdPropValue === "string") {
                 etPropValue = util1.xmpIsoDatetime2etDatetime(ipmdPropValue);
             }
             // datatype "number"
-            if (datatype === icc.itgDtNumber && propoccurrence === icc.itgPropoccurSingle && typeof ipmdPropValue === 'number') {
+            if (datatype === icc.itgDtNumber &&
+                propoccurrence === icc.itgPropoccurSingle &&
+                typeof ipmdPropValue === "number") {
                 etPropValue = ipmdPropValue;
             }
-            if (datatype === icc.itgDtNumber && propoccurrence === icc.itgPropoccurMulti && valIsArray) {
+            if (datatype === icc.itgDtNumber &&
+                propoccurrence === icc.itgPropoccurMulti &&
+                valIsArray) {
                 etPropValue = ipmdPropValue;
             }
             // datatype "struct" + dataformat = 'AltLang'
-            if (datatype === icc.itgDtStruct && dataformat === icc.itgDfAlg && propoccurrence === icc.itgPropoccurSingle && typeof ipmdPropValue === 'string') {
+            if (datatype === icc.itgDtStruct &&
+                dataformat === icc.itgDfAlg &&
+                propoccurrence === icc.itgPropoccurSingle &&
+                typeof ipmdPropValue === "string") {
                 const ipmdPropValueStr = ipmdPropValue.toString();
-                const altLangStartIdx = ipmdPropValueStr.indexOf('{@');
+                const altLangStartIdx = ipmdPropValueStr.indexOf("{@");
                 if (altLangStartIdx > -1) {
-                    const ipmdPropValues = ipmdPropValueStr.split('{@');
-                    ipmdPropValues.forEach(altstring => {
-                        if (altstring.indexOf('}') > -1) {
+                    const ipmdPropValues = ipmdPropValueStr.split("{@");
+                    ipmdPropValues.forEach((altstring) => {
+                        if (altstring.indexOf("}") > -1) {
                             altLangActive = true;
                         }
                     });
@@ -110,15 +124,24 @@ export class IpmdSetter {
                 else
                     etPropValue = ipmdPropValue;
             }
-            if (datatype === icc.itgDtStruct && dataformat === icc.itgDfAlg && propoccurrence === icc.itgPropoccurMulti && valIsArray) {
+            if (datatype === icc.itgDtStruct &&
+                dataformat === icc.itgDfAlg &&
+                propoccurrence === icc.itgPropoccurMulti &&
+                valIsArray) {
                 etPropValue = ipmdPropValue;
             }
             // datatype "struct" + dataformat != 'AltLang'
             // console.log(typeof ipmdPropValue);
-            if (datatype === icc.itgDtStruct && dataformat !== icc.itgDfAlg && propoccurrence === icc.itgPropoccurSingle && typeof ipmdPropValue === 'object') {
+            if (datatype === icc.itgDtStruct &&
+                dataformat !== icc.itgDfAlg &&
+                propoccurrence === icc.itgPropoccurSingle &&
+                typeof ipmdPropValue === "object") {
                 etPropValue = this._generateExiftoolJsonStruct(refPropId, dataformat, propoccurrence, ipmdDataOccurrence)[0];
             }
-            if (datatype === icc.itgDtStruct && dataformat !== icc.itgDfAlg && propoccurrence === icc.itgPropoccurMulti && valIsArray) {
+            if (datatype === icc.itgDtStruct &&
+                dataformat !== icc.itgDfAlg &&
+                propoccurrence === icc.itgPropoccurMulti &&
+                valIsArray) {
                 etPropValue = this._generateExiftoolJsonStruct(refPropId, dataformat, propoccurrence, ipmdDataOccurrence);
             }
             // set XMP value(s)
@@ -126,13 +149,14 @@ export class IpmdSetter {
                 if (etPropValue !== undefined) {
                     if (altLangActive) {
                         etPropValue.forEach((altstring) => {
-                            let langEndIdx = altstring.indexOf('}');
-                            if (langEndIdx == -1) {
+                            const langEndIdx = altstring.indexOf("}");
+                            if (langEndIdx === -1) {
                                 etJson[refPropData[icc.itgEtXmp]] = altstring;
                             }
                             if (langEndIdx > -1) {
-                                let langid = altstring.substring(0, langEndIdx);
-                                etJson[refPropData[icc.itgEtXmp] + '-' + langid] = altstring.substring(langEndIdx + 1);
+                                const langid = altstring.substring(0, langEndIdx);
+                                etJson[refPropData[icc.itgEtXmp] + "-" + langid] =
+                                    altstring.substring(langEndIdx + 1);
                             }
                         });
                     }
@@ -144,19 +168,18 @@ export class IpmdSetter {
             if (refPropData.hasOwnProperty(icc.itgEtIim)) {
                 if (etPropValue !== undefined) {
                     switch (refPropId) {
-                        case 'dateCreated':
-                            let etPropValues = etPropValue.split(" ");
-                            etJson['IPTC:DateCreated'] = etPropValues[0];
+                        case "dateCreated":
+                            const etPropValues = etPropValue.split(" ");
+                            etJson["IPTC:DateCreated"] = etPropValues[0];
                             if (etPropValues.length > 1) {
-                                // @ts-ignore
-                                etJson['IPTC:TimeCreated'] = etPropValues[1];
+                                etJson["IPTC:TimeCreated"] = etPropValues[1];
                             }
                             break;
-                        case 'subjectCodes':
-                            etJson[refPropData[icc.itgEtIim]] = 'IPTC:' + etPropValue;
+                        case "subjectCodes":
+                            etJson[refPropData[icc.itgEtIim]] = "IPTC:" + etPropValue;
                             break;
-                        case 'intellectualGenre':
-                            etJson[refPropData[icc.itgEtIim]] = '000:' + etPropValue;
+                        case "intellectualGenre":
+                            etJson[refPropData[icc.itgEtIim]] = "000:" + etPropValue;
                             break;
                         default:
                             etJson[refPropData[icc.itgEtIim]] = etPropValue;
@@ -168,11 +191,11 @@ export class IpmdSetter {
             if (refPropData.hasOwnProperty(icc.itgEtExif)) {
                 if (etPropValue !== undefined) {
                     switch (refPropId) {
-                        case 'dateCreated':
-                            etJson['ExifIFD:DateTimeOriginal'] = etPropValue.substring(0, 19);
-                            etJson['ExifIFD:TimeZoneOffset'] = etPropValue.substring(19);
+                        case "dateCreated":
+                            etJson["ExifIFD:DateTimeOriginal"] = etPropValue.substring(0, 19);
+                            etJson["ExifIFD:TimeZoneOffset"] = etPropValue.substring(19);
                             break;
-                        case 'imageRegion': // the mapping to Exif's Subject Area is virtual
+                        case "imageRegion": // the mapping to Exif's Subject Area is virtual
                             break;
                         default:
                             etJson[refPropData[icc.itgEtExif]] = etPropValue;
@@ -185,22 +208,22 @@ export class IpmdSetter {
     }
     // eo generateExiftoolJson
     _generateExiftoolJsonStruct(propPath, structId, propOccurrence, dataOccurrence) {
-        let etJsonStructArr = [{}];
-        let dummy = etJsonStructArr.pop();
+        const etJsonStructArr = [{}];
+        const dummy = etJsonStructArr.pop();
         for (let itemIdx = 0; itemIdx < dataOccurrence; itemIdx++) {
-            let etJsonStruct = {};
-            let refIpmdStruct = this.ipmdRef[icc.itgIpmdStruct][structId];
+            const etJsonStruct = {};
+            const refIpmdStruct = this.ipmdRef[icc.itgIpmdStruct][structId];
             // Iterate all properties of the reference ipmd_struct[structId]
             for (const refPropId in refIpmdStruct) {
-                let refPropData = refIpmdStruct[refPropId];
+                const refPropData = refIpmdStruct[refPropId];
                 let thisPropPath = propPath;
                 if (propOccurrence === icc.itgPropoccurMulti) {
-                    thisPropPath += '#' + itemIdx.toString();
+                    thisPropPath += "#" + itemIdx.toString();
                 }
                 thisPropPath += this._lsep + refPropId;
                 // get the value of the property
                 let ipmdPropValue;
-                let getPropValueFsd = this._ipmdDataFsd.getFsData(thisPropPath);
+                const getPropValueFsd = this._ipmdDataFsd.getFsData(thisPropPath);
                 if (getPropValueFsd[icc.fsdResState] === icc.fsdStFound) {
                     ipmdPropValue = getPropValueFsd[icc.fsdResValue];
                 }
@@ -208,14 +231,14 @@ export class IpmdSetter {
                     continue;
                 // the property value of Et-JSON
                 let etPropValue;
-                let valIsArray = Array.isArray(ipmdPropValue);
+                const valIsArray = Array.isArray(ipmdPropValue);
                 const datatype = refPropData[icc.itgDatatype];
-                let dataformat = '';
+                let dataformat = "";
                 if (refPropData.hasOwnProperty(icc.itgDataformat)) {
                     dataformat = refPropData[icc.itgDataformat];
                 }
                 let altLangActive = false;
-                let propoccurrence = '';
+                let propoccurrence = "";
                 if (refPropData.hasOwnProperty(icc.itgPropoccurrence)) {
                     propoccurrence = refPropData[icc.itgPropoccurrence];
                 }
@@ -231,36 +254,50 @@ export class IpmdSetter {
                     }
                 }
                 // datatype "string"
-                if (datatype === icc.itgDtString && propoccurrence === icc.itgPropoccurSingle && typeof ipmdPropValue === 'string') {
+                if (datatype === icc.itgDtString &&
+                    propoccurrence === icc.itgPropoccurSingle &&
+                    typeof ipmdPropValue === "string") {
                     const ipmdPropValueStr = ipmdPropValue.toString();
-                    if (ipmdPropValueStr.indexOf(icc.anyPlusBaseUrl) == 0) {
+                    if (ipmdPropValueStr.indexOf(icc.anyPlusBaseUrl) === 0) {
                         etPropValue = valmap.ipmdToEt(ipmdPropValueStr);
                     }
                     else
                         etPropValue = ipmdPropValueStr;
                 }
-                if (datatype === icc.itgDtString && propoccurrence === icc.itgPropoccurMulti && valIsArray) {
+                if (datatype === icc.itgDtString &&
+                    propoccurrence === icc.itgPropoccurMulti &&
+                    valIsArray) {
                     etPropValue = ipmdPropValue;
                 }
                 // datatype "string" + dataformat date-time
-                if (datatype === icc.itgDtString && dataformat === icc.itgDfDt && propoccurrence === icc.itgPropoccurSingle && typeof ipmdPropValue === 'string') {
+                if (datatype === icc.itgDtString &&
+                    dataformat === icc.itgDfDt &&
+                    propoccurrence === icc.itgPropoccurSingle &&
+                    typeof ipmdPropValue === "string") {
                     etPropValue = util1.xmpIsoDatetime2etDatetime(ipmdPropValue);
                 }
                 // datatype "number"
-                if (datatype === icc.itgDtNumber && propoccurrence === icc.itgPropoccurSingle && typeof ipmdPropValue === 'number') {
+                if (datatype === icc.itgDtNumber &&
+                    propoccurrence === icc.itgPropoccurSingle &&
+                    typeof ipmdPropValue === "number") {
                     etPropValue = ipmdPropValue;
                 }
-                if (datatype === icc.itgDtNumber && propoccurrence === icc.itgPropoccurMulti && valIsArray) {
+                if (datatype === icc.itgDtNumber &&
+                    propoccurrence === icc.itgPropoccurMulti &&
+                    valIsArray) {
                     etPropValue = ipmdPropValue;
                 }
                 // datatype "struct" + dataformat = 'AltLang'
-                if (datatype === icc.itgDtStruct && dataformat === icc.itgDfAlg && propoccurrence === icc.itgPropoccurSingle && typeof ipmdPropValue === 'string') {
+                if (datatype === icc.itgDtStruct &&
+                    dataformat === icc.itgDfAlg &&
+                    propoccurrence === icc.itgPropoccurSingle &&
+                    typeof ipmdPropValue === "string") {
                     const ipmdPropValueStr = ipmdPropValue.toString();
-                    const altLangStartIdx = ipmdPropValueStr.indexOf('{@');
+                    const altLangStartIdx = ipmdPropValueStr.indexOf("{@");
                     if (altLangStartIdx > -1) {
-                        const ipmdPropValues = ipmdPropValueStr.split('{@');
-                        ipmdPropValues.forEach(altstring => {
-                            if (altstring.indexOf('}') > -1) {
+                        const ipmdPropValues = ipmdPropValueStr.split("{@");
+                        ipmdPropValues.forEach((altstring) => {
+                            if (altstring.indexOf("}") > -1) {
                                 altLangActive = true;
                             }
                         });
@@ -269,27 +306,37 @@ export class IpmdSetter {
                     else
                         etPropValue = ipmdPropValue;
                 }
-                if (datatype === icc.itgDtStruct && dataformat === icc.itgDfAlg && propoccurrence === icc.itgPropoccurMulti && valIsArray) {
+                if (datatype === icc.itgDtStruct &&
+                    dataformat === icc.itgDfAlg &&
+                    propoccurrence === icc.itgPropoccurMulti &&
+                    valIsArray) {
                     etPropValue = ipmdPropValue;
                 }
                 // datatype "struct" + dataformat != 'AltLang'
-                if (datatype === icc.itgDtStruct && dataformat !== icc.itgDfAlg && propoccurrence === icc.itgPropoccurSingle && typeof ipmdPropValue === 'object') {
+                if (datatype === icc.itgDtStruct &&
+                    dataformat !== icc.itgDfAlg &&
+                    propoccurrence === icc.itgPropoccurSingle &&
+                    typeof ipmdPropValue === "object") {
                     etPropValue = this._generateExiftoolJsonStruct(thisPropPath, dataformat, propoccurrence, ipmdDataOccurrence)[0];
                 }
-                if (datatype === icc.itgDtStruct && dataformat !== icc.itgDfAlg && propoccurrence === icc.itgPropoccurMulti && valIsArray) {
+                if (datatype === icc.itgDtStruct &&
+                    dataformat !== icc.itgDfAlg &&
+                    propoccurrence === icc.itgPropoccurMulti &&
+                    valIsArray) {
                     etPropValue = this._generateExiftoolJsonStruct(thisPropPath, dataformat, propoccurrence, ipmdDataOccurrence);
                 }
                 if (refPropData.hasOwnProperty(icc.itgEtTag)) {
                     if (etPropValue !== undefined) {
                         if (altLangActive) {
                             etPropValue.forEach((altstring) => {
-                                let langEndIdx = altstring.indexOf('}');
-                                if (langEndIdx == -1) {
+                                const langEndIdx = altstring.indexOf("}");
+                                if (langEndIdx === -1) {
                                     etJsonStruct[refPropData[icc.itgEtTag]] = altstring;
                                 }
                                 if (langEndIdx > -1) {
-                                    let langid = altstring.substring(0, langEndIdx);
-                                    etJsonStruct[refPropData[icc.itgEtTag] + '-' + langid] = altstring.substring(langEndIdx + 1);
+                                    const langid = altstring.substring(0, langEndIdx);
+                                    etJsonStruct[refPropData[icc.itgEtTag] + "-" + langid] =
+                                        altstring.substring(langEndIdx + 1);
                                 }
                             });
                         }
@@ -308,7 +355,7 @@ export class IpmdSetter {
      * Loads the IPTC Photo Metadata Reference document from a JSON file.
      * For class-internal use only.
      */
-    _loadIpmdRefJson(ipmdRefFp) {
+    static _loadIpmdRefJson(ipmdRefFp) {
         if (!fs.existsSync(ipmdRefFp))
             return {};
         return util1.loadFromJson(ipmdRefFp);

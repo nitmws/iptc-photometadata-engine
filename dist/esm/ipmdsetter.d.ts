@@ -1,4 +1,4 @@
-import { MdStruct } from './incommon';
+import { MdStruct } from "./incommon";
 /**
  * Generate ExifTool JSON options
  */
@@ -26,5 +26,5 @@ export declare class IpmdSetter {
      * Loads the IPTC Photo Metadata Reference document from a JSON file.
      * For class-internal use only.
      */
-    private _loadIpmdRefJson;
+    private static _loadIpmdRefJson;
 }

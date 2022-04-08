@@ -28,34 +28,33 @@ const icc = __importStar(require("./constants"));
 const util = __importStar(require("./utilities1"));
 class Csv1Options {
     constructor() {
-        this.fieldsep = ',';
+        this.fieldsep = ",";
     }
 }
 exports.Csv1Options = Csv1Options;
 class Row1Fields {
     constructor() {
-        this.topic = '';
-        this.sortorder = '';
-        this.nameL1 = ' ';
-        this.nameL2 = ' ';
-        this.nameL3 = ' ';
-        this.nameL4 = ' ';
-        this.nameL5 = ' ';
-        this.xmpprop = 'MISSING';
-        this.iimprop = 'not spec';
-        this.valuesinsync = ' ';
-        this.comments = '';
+        this.topic = "";
+        this.sortorder = "";
+        this.nameL1 = " ";
+        this.nameL2 = " ";
+        this.nameL3 = " ";
+        this.nameL4 = " ";
+        this.nameL5 = " ";
+        this.xmpprop = "MISSING";
+        this.iimprop = "not spec";
+        this.valuesinsync = " ";
+        this.comments = "";
     }
 }
 exports.Row1Fields = Row1Fields;
-const fsdLsep = '/';
-const fsdIsel = '#';
+const fsdLsep = "/";
 // constant text values
-const propFound = 'found';
-const propMissing = 'MISSING';
-const propNotspec = 'not spec';
-const valInsync = 'in sync';
-const valNotInsync = 'NOT in sync';
+const propFound = "found";
+const propMissing = "MISSING";
+const propNotspec = "not spec";
+const valInsync = "in sync";
+const valNotInsync = "NOT in sync";
 /**
  * Transform an IPTC PMD Checker Result object to an array of table rows, type 1 (Row1Fields)
  * @param ipmdChkResultFsd
@@ -63,10 +62,10 @@ const valNotInsync = 'NOT in sync';
  * @param ipmdTechRefFsd
  */
 function ipmdChkResultToTabledata1(ipmdChkResultFsd, ipmdIdFilter, ipmdTechRefFsd) {
-    let ipmdDataState = ipmdChkResultFsd.getFsData(icc.ipmdcrState)['value'];
+    const ipmdDataState = ipmdChkResultFsd.getFsData(icc.ipmdcrState)["value"];
     let statestructIpmdIds = [];
-    let statestructIpmdIdsPre = Object.keys(ipmdDataState);
-    if (ipmdIdFilter.length == 0) {
+    const statestructIpmdIdsPre = Object.keys(ipmdDataState);
+    if (ipmdIdFilter.length === 0) {
         statestructIpmdIds = statestructIpmdIdsPre;
     }
     else {
@@ -76,21 +75,20 @@ function ipmdChkResultToTabledata1(ipmdChkResultFsd, ipmdIdFilter, ipmdTechRefFs
             }
         });
     }
-    let tableRows = [];
+    const tableRows = [];
     tableRows.push(createTable1Header());
     statestructIpmdIds.forEach(function (ipmdId) {
-        let rowFields = new Row1Fields();
+        const rowFields = new Row1Fields();
         // get reference data:
-        let propIpmdRefData = ipmdTechRefFsd.getFsData(icc.itgIpmdTop + fsdLsep + ipmdId)['value'];
+        const propIpmdRefData = ipmdTechRefFsd.getFsData(icc.itgIpmdTop + fsdLsep + ipmdId)["value"];
         // get state data:
-        let propImpdStateData = ipmdChkResultFsd.getFsData(icc.ipmdcrState + fsdLsep + ipmdId
-            + fsdLsep + icc.ipmdcrSData)['value'];
+        const propImpdStateData = ipmdChkResultFsd.getFsData(icc.ipmdcrState + fsdLsep + ipmdId + fsdLsep + icc.ipmdcrSData)["value"];
         rowFields.topic = propIpmdRefData[icc.itgUgtopic];
         rowFields.sortorder = propIpmdRefData[icc.itgSortorder];
         rowFields.nameL1 = propIpmdRefData[icc.itgName];
         if (propImpdStateData[icc.ipmdcrSDxmp] > 0)
             rowFields.xmpprop = propFound;
-        if (propImpdStateData[icc.ipmdcrSDxmp] == 0)
+        if (propImpdStateData[icc.ipmdcrSDxmp] === 0)
             rowFields.xmpprop = propMissing;
         if (icc.ipmdcrSDiim in propImpdStateData) {
             if (propImpdStateData[icc.ipmdcrSDiim] > 0)
@@ -108,13 +106,13 @@ function ipmdChkResultToTabledata1(ipmdChkResultFsd, ipmdIdFilter, ipmdTechRefFs
         }
         tableRows.push(rowFields);
         if (propIpmdRefData[icc.itgDatatype] === icc.itgDtStruct) {
-            let structId = propIpmdRefData[icc.itgDataformat];
-            if (structId !== 'AltLang') {
-                let structRefPath = icc.itgIpmdStruct + fsdLsep + structId;
-                let structResultPath = icc.ipmdcrState + fsdLsep + ipmdId + fsdLsep + icc.ipmdcrSStruct;
-                let propImpdStateStruct = ipmdChkResultFsd.getFsData(structResultPath);
-                if (propImpdStateStruct['state'] === 'FOUND') {
-                    let structLines = _generateXMPstructlines(ipmdChkResultFsd, structResultPath, structRefPath, rowFields, 2, ipmdTechRefFsd);
+            const structId = propIpmdRefData[icc.itgDataformat];
+            if (structId !== "AltLang") {
+                const structRefPath = icc.itgIpmdStruct + fsdLsep + structId;
+                const structResultPath = icc.ipmdcrState + fsdLsep + ipmdId + fsdLsep + icc.ipmdcrSStruct;
+                const propImpdStateStruct = ipmdChkResultFsd.getFsData(structResultPath);
+                if (propImpdStateStruct["state"] === "FOUND") {
+                    const structLines = _generateXMPstructlines(ipmdChkResultFsd, structResultPath, structRefPath, rowFields, 2, ipmdTechRefFsd);
                     Array.prototype.push.apply(tableRows, structLines);
                 }
             }
@@ -138,18 +136,22 @@ function ipmdChkResultToTabledata1(ipmdChkResultFsd, ipmdIdFilter, ipmdTechRefFs
 }
 exports.ipmdChkResultToTabledata1 = ipmdChkResultToTabledata1;
 function _generateXMPstructlines(ipmdChkResultFsd, ipmdChkResultFsdPathToStruct, ipmdTechRefFsdPathToStruct, parentRowFields, proplevel, ipmdTechRefFsd) {
-    let ipmdDataState = ipmdChkResultFsd.getFsData(ipmdChkResultFsdPathToStruct)['value'];
-    let statestructIpmdIds = Object.keys(ipmdDataState);
-    let tableRows = [];
+    const ipmdDataState = ipmdChkResultFsd.getFsData(ipmdChkResultFsdPathToStruct)["value"];
+    const statestructIpmdIds = Object.keys(ipmdDataState);
+    const tableRows = [];
     statestructIpmdIds.forEach(function (ipmdId) {
-        let rowFields = new Row1Fields();
+        const rowFields = new Row1Fields();
         // get reference data:
-        let propIpmdRefData = ipmdTechRefFsd.getFsData(ipmdTechRefFsdPathToStruct + fsdLsep + ipmdId)['value'];
+        const propIpmdRefData = ipmdTechRefFsd.getFsData(ipmdTechRefFsdPathToStruct + fsdLsep + ipmdId)["value"];
         // get state data:
-        let propImpdStateData = ipmdChkResultFsd.getFsData(ipmdChkResultFsdPathToStruct + fsdLsep + ipmdId
-            + fsdLsep + icc.ipmdcrSData)['value'];
+        const propImpdStateData = ipmdChkResultFsd.getFsData(ipmdChkResultFsdPathToStruct +
+            fsdLsep +
+            ipmdId +
+            fsdLsep +
+            icc.ipmdcrSData)["value"];
         rowFields.topic = parentRowFields.topic;
-        rowFields.sortorder = parentRowFields.sortorder + '-' + propIpmdRefData[icc.itgSortorder];
+        rowFields.sortorder =
+            parentRowFields.sortorder + "-" + propIpmdRefData[icc.itgSortorder];
         switch (proplevel) {
             case 2:
                 rowFields.nameL1 = parentRowFields.nameL1;
@@ -176,7 +178,7 @@ function _generateXMPstructlines(ipmdChkResultFsd, ipmdChkResultFsdPathToStruct,
         }
         if (propImpdStateData[icc.ipmdcrSDxmp] > 0)
             rowFields.xmpprop = propFound;
-        if (propImpdStateData[icc.ipmdcrSDxmp] == 0)
+        if (propImpdStateData[icc.ipmdcrSDxmp] === 0)
             rowFields.xmpprop = propMissing;
         if (icc.ipmdcrSDiim in propImpdStateData) {
             if (propImpdStateData[icc.ipmdcrSDiim] > 0)
@@ -194,13 +196,17 @@ function _generateXMPstructlines(ipmdChkResultFsd, ipmdChkResultFsdPathToStruct,
         }
         tableRows.push(rowFields);
         if (propIpmdRefData[icc.itgDatatype] === icc.itgDtStruct) {
-            let structId = propIpmdRefData[icc.itgDataformat];
-            if (structId !== 'AltLang') {
-                let structRefPath = icc.itgIpmdStruct + fsdLsep + structId;
-                let structResultPath = ipmdChkResultFsdPathToStruct + fsdLsep + ipmdId + fsdLsep + icc.ipmdcrSStruct;
-                let propImpdStateStruct = ipmdChkResultFsd.getFsData(structResultPath);
-                if (propImpdStateStruct['state'] === 'FOUND') {
-                    let structLines = _generateXMPstructlines(ipmdChkResultFsd, structResultPath, structRefPath, rowFields, proplevel + 1, ipmdTechRefFsd);
+            const structId = propIpmdRefData[icc.itgDataformat];
+            if (structId !== "AltLang") {
+                const structRefPath = icc.itgIpmdStruct + fsdLsep + structId;
+                const structResultPath = ipmdChkResultFsdPathToStruct +
+                    fsdLsep +
+                    ipmdId +
+                    fsdLsep +
+                    icc.ipmdcrSStruct;
+                const propImpdStateStruct = ipmdChkResultFsd.getFsData(structResultPath);
+                if (propImpdStateStruct["state"] === "FOUND") {
+                    const structLines = _generateXMPstructlines(ipmdChkResultFsd, structResultPath, structRefPath, rowFields, proplevel + 1, ipmdTechRefFsd);
                     Array.prototype.push.apply(tableRows, structLines);
                 }
             }
@@ -214,9 +220,9 @@ function _generateXMPstructlines(ipmdChkResultFsd, ipmdChkResultFsdPathToStruct,
  * @param csv1Options
  */
 function tabledata1ToCsvdata1(tableRows, csv1Options) {
-    let csvLines = [];
-    tableRows.forEach(lineCsvFields => {
-        let line = row1FieldsToCsvLine(lineCsvFields, csv1Options.fieldsep);
+    const csvLines = [];
+    tableRows.forEach((lineCsvFields) => {
+        const line = row1FieldsToCsvLine(lineCsvFields, csv1Options.fieldsep);
         csvLines.push(line);
     });
     return csvLines;
@@ -228,10 +234,10 @@ exports.tabledata1ToCsvdata1 = tabledata1ToCsvdata1;
  * @param csv1Options
  */
 function tabledata1ToCsvstring1(tableRows, csv1Options) {
-    let csvString = '';
-    tableRows.forEach(lineCsvFields => {
-        let line = row1FieldsToCsvLine(lineCsvFields, csv1Options.fieldsep);
-        csvString += line + '\n';
+    let csvString = "";
+    tableRows.forEach((lineCsvFields) => {
+        const line = row1FieldsToCsvLine(lineCsvFields, csv1Options.fieldsep);
+        csvString += line + "\n";
     });
     return csvString;
 }
@@ -256,8 +262,8 @@ exports.ipmdChkResultToIpmd = ipmdChkResultToIpmd;
  */
 function ipmdcVal2ipmd(ipmdcVals, fmtPref, thisFmtOnly) {
     if (Array.isArray(ipmdcVals)) {
-        let ipmdArr = [];
-        ipmdcVals.forEach(ipmdcValsObj => {
+        const ipmdArr = [];
+        ipmdcVals.forEach((ipmdcValsObj) => {
             const ipmdObj = ipmdcVal2ipmd(ipmdcValsObj, fmtPref, thisFmtOnly);
             if (!util.objectIsEmpty(ipmdObj))
                 ipmdArr.push(ipmdObj);
@@ -265,11 +271,11 @@ function ipmdcVal2ipmd(ipmdcVals, fmtPref, thisFmtOnly) {
         return ipmdArr;
     }
     else {
-        let ipmdObj = {};
+        const ipmdObj = {};
         for (const ipmdpropid in ipmdcVals) {
             if (ipmdcVals.hasOwnProperty(ipmdpropid)) {
-                if (ipmdcVals[ipmdpropid].hasOwnProperty('struct')) {
-                    let tranRes = ipmdcVal2ipmd(ipmdcVals[ipmdpropid]['struct'], fmtPref, thisFmtOnly);
+                if (ipmdcVals[ipmdpropid].hasOwnProperty("struct")) {
+                    const tranRes = ipmdcVal2ipmd(ipmdcVals[ipmdpropid]["struct"], fmtPref, thisFmtOnly);
                     if (Array.isArray(tranRes)) {
                         if (tranRes.length > 0)
                             ipmdObj[ipmdpropid] = tranRes;
@@ -279,7 +285,8 @@ function ipmdcVal2ipmd(ipmdcVals, fmtPref, thisFmtOnly) {
                             ipmdObj[ipmdpropid] = tranRes;
                     }
                 }
-                else { // a single plain value
+                else {
+                    // a single plain value
                     switch (fmtPref) {
                         case icc.ipmdcrVxmp:
                             if (ipmdcVals[ipmdpropid].hasOwnProperty(icc.ipmdcrVxmp)) {
@@ -316,22 +323,22 @@ function ipmdcVal2ipmd(ipmdcVals, fmtPref, thisFmtOnly) {
 }
 /*  H E L P E R  F U N C T I O N S */
 function createTable1Header() {
-    let headerfields = new Row1Fields();
-    headerfields.topic = 'Topic';
-    headerfields.sortorder = 'Sortorder';
-    headerfields.nameL1 = 'IPTC Name L1';
-    headerfields.nameL2 = 'IPTC Name L2';
-    headerfields.nameL3 = 'IPTC Name L3';
-    headerfields.nameL4 = 'IPTC Name L4';
-    headerfields.nameL5 = 'IPTC Name L5';
-    headerfields.xmpprop = 'XMP Value';
-    headerfields.iimprop = 'IIM Value';
-    headerfields.valuesinsync = 'Sync Values';
-    headerfields.comments = 'Comments';
+    const headerfields = new Row1Fields();
+    headerfields.topic = "Topic";
+    headerfields.sortorder = "Sortorder";
+    headerfields.nameL1 = "IPTC Name L1";
+    headerfields.nameL2 = "IPTC Name L2";
+    headerfields.nameL3 = "IPTC Name L3";
+    headerfields.nameL4 = "IPTC Name L4";
+    headerfields.nameL5 = "IPTC Name L5";
+    headerfields.xmpprop = "XMP Value";
+    headerfields.iimprop = "IIM Value";
+    headerfields.valuesinsync = "Sync Values";
+    headerfields.comments = "Comments";
     return headerfields;
 }
 function row1FieldsToCsvLine(fields, fieldsep) {
-    let line = '';
+    let line = "";
     line += fields.topic + fieldsep;
     line += fields.sortorder + fieldsep;
     line += fields.nameL1 + fieldsep;

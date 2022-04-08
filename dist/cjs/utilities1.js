@@ -37,7 +37,7 @@ const icc = __importStar(require("./constants"));
 function loadFromJson(jsonFp) {
     if (!fs_1.default.existsSync(jsonFp))
         return {};
-    let stringdata = fs_1.default.readFileSync(jsonFp, { "encoding": "utf-8" });
+    const stringdata = fs_1.default.readFileSync(jsonFp, { encoding: "utf-8" });
     let loadedObject;
     try {
         loadedObject = JSON.parse(stringdata);
@@ -70,24 +70,43 @@ exports.writeAsJson = writeAsJson;
  * @param ipmdTechRefData Object of the IPTC PMD TechGuide file
  */
 function generateIpmdChkResultsStateTemplate(ipmdTechRefData) {
-    let reftop = ipmdTechRefData[icc.itgIpmdTop];
+    const reftop = ipmdTechRefData[icc.itgIpmdTop];
     if (reftop === {})
         return {};
-    let refstruct = ipmdTechRefData[icc.itgIpmdStruct];
+    const refstruct = ipmdTechRefData[icc.itgIpmdStruct];
     if (refstruct === {})
         return {};
-    let stateStruct = {};
+    const stateStruct = {};
     // presets
-    let dataStructXmp = { "XMP": 0 };
-    let dataStructXmpMulti = { "XMP": 0, "XMPVALOCCUR": -1 };
-    let dataStructXmpIim = { "XMP": 0, "IIM": 0, "INSYNC": -1 };
-    let dataStructXmpIimMulti = { "XMP": 0, "XMPVALOCCUR": -1, "IIM": 0, "INSYNC": -1 };
-    let dataStructXmpIimExif = { "XMP": 0, "IIM": 0, "EXIF": 0, "INSYNC": -1, "MAPINSYNC": -1 };
-    let dataStructXmpIimExifMulti = { "XMP": 0, "XMPVALOCCUR": -1, "IIM": 0, "EXIF": 0, "INSYNC": -1, "MAPINSYNC": -1 };
-    let reftopkeys = Object.keys(reftop);
+    const dataStructXmp = { XMP: 0 };
+    const dataStructXmpMulti = { XMP: 0, XMPVALOCCUR: -1 };
+    const dataStructXmpIim = { XMP: 0, IIM: 0, INSYNC: -1 };
+    const dataStructXmpIimMulti = {
+        XMP: 0,
+        XMPVALOCCUR: -1,
+        IIM: 0,
+        INSYNC: -1,
+    };
+    const dataStructXmpIimExif = {
+        XMP: 0,
+        IIM: 0,
+        EXIF: 0,
+        INSYNC: -1,
+        MAPINSYNC: -1,
+    };
+    const dataStructXmpIimExifMulti = {
+        XMP: 0,
+        XMPVALOCCUR: -1,
+        IIM: 0,
+        EXIF: 0,
+        INSYNC: -1,
+        MAPINSYNC: -1,
+    };
+    const reftopkeys = Object.keys(reftop);
     reftopkeys.forEach(function (reftopkey) {
         stateStruct[reftopkey] = {};
-        if (reftop[reftopkey][icc.itgXmpid] !== undefined && reftop[reftopkey][icc.itgIimid] !== undefined &&
+        if (reftop[reftopkey][icc.itgXmpid] !== undefined &&
+            reftop[reftopkey][icc.itgIimid] !== undefined &&
             reftop[reftopkey][icc.itgExifid] !== undefined) {
             if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurSingle) {
                 stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpIimExif;
@@ -97,7 +116,8 @@ function generateIpmdChkResultsStateTemplate(ipmdTechRefData) {
             }
         }
         else {
-            if (reftop[reftopkey][icc.itgXmpid] !== undefined && reftop[reftopkey][icc.itgIimid] !== undefined) {
+            if (reftop[reftopkey][icc.itgXmpid] !== undefined &&
+                reftop[reftopkey][icc.itgIimid] !== undefined) {
                 if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurSingle) {
                     stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpIim;
                 }
@@ -118,11 +138,11 @@ function generateIpmdChkResultsStateTemplate(ipmdTechRefData) {
         }
         if (reftop[reftopkey][icc.itgDatatype] === "struct") {
             if (reftop[reftopkey][icc.itgDataformat] !== undefined) {
-                let structId = reftop[reftopkey][icc.itgDataformat];
+                const structId = reftop[reftopkey][icc.itgDataformat];
                 if (structId !== "AltLang") {
                     if (refstruct[structId] !== undefined) {
-                        let generateStruct = refstruct[structId];
-                        let structSub = generateIpmdRefStateStructOfStruct(generateStruct, refstruct);
+                        const generateStruct = refstruct[structId];
+                        const structSub = generateIpmdRefStateStructOfStruct(generateStruct, refstruct);
                         if (!objectIsEmpty(structSub)) {
                             stateStruct[reftopkey][icc.ipmdcrSStruct] = structSub;
                         }
@@ -141,29 +161,39 @@ exports.generateIpmdChkResultsStateTemplate = generateIpmdChkResultsStateTemplat
  * @param toprefstruct
  */
 function generateIpmdRefStateStructOfStruct(refstruct, toprefstruct) {
-    let stateStruct = {};
+    const stateStruct = {};
     // presets
-    let dataStructXmp = { "XMP": 0 };
-    let dataStructXmpMulti = { "XMP": 0, "XMPVALOCCUR": -1 };
-    let dataStructXmpIim = { "XMP": 0, "IIM": 0, "INSYNC": -1 };
-    let dataStructXmpIimExif = { "XMP": 0, "IIM": 0, "EXIF": 0, "INSYNC": -1, "MAPINSYNC": -1 };
-    let refstructkeys = Object.keys(refstruct);
+    const dataStructXmp = { XMP: 0 };
+    const dataStructXmpMulti = { XMP: 0, XMPVALOCCUR: -1 };
+    const dataStructXmpIim = { XMP: 0, IIM: 0, INSYNC: -1 };
+    const dataStructXmpIimExif = {
+        XMP: 0,
+        IIM: 0,
+        EXIF: 0,
+        INSYNC: -1,
+        MAPINSYNC: -1,
+    };
+    const refstructkeys = Object.keys(refstruct);
     refstructkeys.forEach(function (refstructkey) {
         stateStruct[refstructkey] = {};
-        if (refstruct[refstructkey][icc.itgXmpid] !== undefined && refstruct[refstructkey][icc.itgIimid] !== undefined &&
+        if (refstruct[refstructkey][icc.itgXmpid] !== undefined &&
+            refstruct[refstructkey][icc.itgIimid] !== undefined &&
             refstruct[refstructkey][icc.itgExifid] !== undefined) {
             stateStruct[refstructkey][icc.ipmdcrSData] = dataStructXmpIimExif;
         }
         else {
-            if (refstruct[refstructkey][icc.itgXmpid] !== undefined && refstruct[refstructkey][icc.itgIimid] !== undefined) {
+            if (refstruct[refstructkey][icc.itgXmpid] !== undefined &&
+                refstruct[refstructkey][icc.itgIimid] !== undefined) {
                 stateStruct[refstructkey][icc.ipmdcrSData] = dataStructXmpIim;
             }
             else {
                 if (refstruct[refstructkey][icc.itgXmpid] !== undefined) {
-                    if (refstruct[refstructkey][icc.itgPropoccurrence] === icc.itgPropoccurSingle) {
+                    if (refstruct[refstructkey][icc.itgPropoccurrence] ===
+                        icc.itgPropoccurSingle) {
                         stateStruct[refstructkey][icc.ipmdcrSData] = dataStructXmp;
                     }
-                    if (refstruct[refstructkey][icc.itgPropoccurrence] === icc.itgPropoccurMulti) {
+                    if (refstruct[refstructkey][icc.itgPropoccurrence] ===
+                        icc.itgPropoccurMulti) {
                         stateStruct[refstructkey][icc.ipmdcrSData] = dataStructXmpMulti;
                     }
                 }
@@ -171,11 +201,11 @@ function generateIpmdRefStateStructOfStruct(refstruct, toprefstruct) {
         }
         if (refstruct[refstructkey][icc.itgDatatype] === "struct") {
             if (refstruct[refstructkey][icc.itgDataformat] !== undefined) {
-                let structId = refstruct[refstructkey][icc.itgDataformat];
+                const structId = refstruct[refstructkey][icc.itgDataformat];
                 if (structId !== "AltLang") {
                     if (toprefstruct[structId] !== undefined) {
-                        let generateStruct = toprefstruct[structId];
-                        let structSub = generateIpmdRefStateStructOfStruct(generateStruct, toprefstruct);
+                        const generateStruct = toprefstruct[structId];
+                        const structSub = generateIpmdRefStateStructOfStruct(generateStruct, toprefstruct);
                         if (!objectIsEmpty(structSub)) {
                             stateStruct[refstructkey][icc.ipmdcrSStruct] = structSub;
                         }
@@ -208,7 +238,7 @@ function arraysEqual(a, b) {
         return false;
     if (a.length !== b.length)
         return false;
-    for (var i = 0; i < a.length; ++i) {
+    for (let i = 0; i < a.length; ++i) {
         if (a[i] !== b[i])
             return false;
     }
@@ -241,53 +271,58 @@ exports.etTagColon = etTagColon;
  * @param xmpIsoDt
  */
 function xmpIsoDatetime2etDatetime(xmpIsoDt) {
-    let etDt = '';
-    if (xmpIsoDt == undefined)
+    let etDt = "";
+    if (xmpIsoDt === undefined)
         return etDt;
-    if (xmpIsoDt == '')
+    if (xmpIsoDt === "")
         return etDt;
-    let etYear = '';
-    let etMonth = '01';
-    let etDay = '01';
-    let etTime = '00:00:00';
-    let etTz = '+00:00';
+    let etYear = "";
+    let etMonth = "01";
+    let etDay = "01";
+    let etTime = "00:00:00";
+    let etTz = "+00:00";
     // full ISO DT: 2022-03-04T12:02:07+00:00 full-len=25, D+T-len=19 D-len=10
-    let xmpIsoDtLen = xmpIsoDt.length;
+    const xmpIsoDtLen = xmpIsoDt.length;
     if (xmpIsoDtLen < 4)
         return etDt;
-    if (xmpIsoDtLen == 4) { // year only
+    if (xmpIsoDtLen === 4) {
+        // year only
         etYear = xmpIsoDt;
-        etDt = etYear + ':' + etMonth + ':' + etDay + ' ' + etTime + etTz;
+        etDt = etYear + ":" + etMonth + ":" + etDay + " " + etTime + etTz;
         return etDt;
     }
-    if (xmpIsoDtLen == 7) { // year + month only
+    if (xmpIsoDtLen === 7) {
+        // year + month only
         etYear = xmpIsoDt.substring(0, 4);
         etMonth = xmpIsoDt.substring(5, 7);
-        etDt = etYear + ':' + etMonth + ':' + etDay + ' ' + etTime + etTz;
+        etDt = etYear + ":" + etMonth + ":" + etDay + " " + etTime + etTz;
         return etDt;
     }
-    if (xmpIsoDtLen == 10) { // year + month + day only
+    if (xmpIsoDtLen === 10) {
+        // year + month + day only
         etYear = xmpIsoDt.substring(0, 4);
         etMonth = xmpIsoDt.substring(5, 7);
         etDay = xmpIsoDt.substring(8, 19);
-        etDt = etYear + ':' + etMonth + ':' + etDay + ' ' + etTime + etTz;
+        etDt = etYear + ":" + etMonth + ":" + etDay + " " + etTime + etTz;
         return etDt;
     }
-    if (xmpIsoDtLen == 19) { // day date + time only
+    if (xmpIsoDtLen === 19) {
+        // day date + time only
         etYear = xmpIsoDt.substring(0, 4);
         etMonth = xmpIsoDt.substring(5, 7);
         etDay = xmpIsoDt.substring(8, 10);
         etTime = xmpIsoDt.substring(11, 19);
-        etDt = etYear + ':' + etMonth + ':' + etDay + ' ' + etTime + etTz;
+        etDt = etYear + ":" + etMonth + ":" + etDay + " " + etTime + etTz;
         return etDt;
     }
-    if (xmpIsoDtLen == 25) { // day date + time + time zone
+    if (xmpIsoDtLen === 25) {
+        // day date + time + time zone
         etYear = xmpIsoDt.substring(0, 4);
         etMonth = xmpIsoDt.substring(5, 7);
         etDay = xmpIsoDt.substring(8, 10);
         etTime = xmpIsoDt.substring(11, 19);
         etTz = xmpIsoDt.substring(19);
-        etDt = etYear + ':' + etMonth + ':' + etDay + ' ' + etTime + etTz;
+        etDt = etYear + ":" + etMonth + ":" + etDay + " " + etTime + etTz;
         return etDt;
     }
     // the xmpIsoDt had no matching length, return an empty value

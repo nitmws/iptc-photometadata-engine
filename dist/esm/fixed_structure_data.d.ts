@@ -1,4 +1,4 @@
-import { MdStruct } from './incommon';
+import { MdStruct } from "./incommon";
 /**
  * Class to read or write values of properties/keys in a fixed structure (= an object) of data:
  * The structure is set during initialization and cannot be changed in readAndWrite mode - and should not be

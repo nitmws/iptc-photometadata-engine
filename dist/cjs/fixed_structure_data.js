@@ -40,17 +40,17 @@ class FixedStructureData {
      * @param levelsep Character used for separating the names of different hierarchical levels
      * @param indexsep Character used to separate a property name/key from a suffixed numeric index of an array
      */
-    getFsData(selectpath, levelsep = '/', indexsep = '#') {
-        let result = {};
-        result['state'] = 'ERROR';
+    getFsData(selectpath, levelsep = "/", indexsep = "#") {
+        const result = {};
+        result["state"] = "ERROR";
         // result['value'] = '';
-        if (selectpath === '') {
-            result['msg'] = 'Function parameter selectpath is an empty string';
+        if (selectpath === "") {
+            result["msg"] = "Function parameter selectpath is an empty string";
             return result;
         }
-        let selectors = selectpath.split(levelsep);
-        let startResult = { 'state': 'SEARCHING' };
-        let returnObj = this._digGetFsData(1, selectors, indexsep, this._fsData, startResult);
+        const selectors = selectpath.split(levelsep);
+        const startResult = { state: "SEARCHING" };
+        const returnObj = this._digGetFsData(1, selectors, indexsep, this._fsData, startResult);
         return returnObj;
     }
     /**
@@ -64,10 +64,10 @@ class FixedStructureData {
     _digGetFsData(level, selectors, indexsep, digFsData, parentResult) {
         let thisResult = parentResult;
         if (selectors.length > 0) {
-            let selectorRaw = selectors.shift();
+            const selectorRaw = selectors.shift();
             if (selectorRaw === undefined) {
-                thisResult['state'] = 'ERROR';
-                thisResult['msg'] = 'Level ' + level.toString() + ': Empty selector';
+                thisResult["state"] = "ERROR";
+                thisResult["msg"] = "Level " + level.toString() + ": Empty selector";
                 return thisResult;
             }
             // set default values
@@ -77,7 +77,7 @@ class FixedStructureData {
             // check: is the index of an array item addressed, or not
             if (selectorRaw.includes(indexsep)) {
                 selAddressesArray = true;
-                let selectorParts = selectorRaw.split(indexsep);
+                const selectorParts = selectorRaw.split(indexsep);
                 selector = selectorParts[0];
                 if (selectorParts.length > 1) {
                     const parsedInt = parseInt(selectorParts[1]);
@@ -99,56 +99,63 @@ class FixedStructureData {
                 if (selAddressesArray) {
                     if (Array.isArray(digFsData[selector])) {
                         if (digFsData[selector].length > selectorIdx) {
-                            let selectedDigFsData;
-                            selectedDigFsData = digFsData[selector][selectorIdx];
+                            const selectedDigFsData = digFsData[selector][selectorIdx];
                             if (selectors.length === 0) {
-                                thisResult['state'] = 'FOUND';
-                                thisResult['value'] = selectedDigFsData;
+                                thisResult["state"] = "FOUND";
+                                thisResult["value"] = selectedDigFsData;
                                 return thisResult;
                             }
                             else {
-                                thisResult =
-                                    this._digGetFsData(level + 1, selectors, indexsep, selectedDigFsData, thisResult);
+                                thisResult = this._digGetFsData(level + 1, selectors, indexsep, selectedDigFsData, thisResult);
                                 return thisResult;
                             }
                         }
                         else {
-                            thisResult['state'] = 'ERROR';
-                            thisResult['msg'] = 'Level ' + level.toString() +
-                                ': Array index set, but FsData doesnot have that many items';
+                            thisResult["state"] = "ERROR";
+                            thisResult["msg"] =
+                                "Level " +
+                                    level.toString() +
+                                    ": Array index set, but FsData doesnot have that many items";
                             return thisResult;
                         }
                     }
                     else {
-                        thisResult['state'] = 'ERROR';
-                        thisResult['msg'] = 'Level ' + level.toString() +
-                            ': Array index set, but FsData object is not an array';
+                        thisResult["state"] = "ERROR";
+                        thisResult["msg"] =
+                            "Level " +
+                                level.toString() +
+                                ": Array index set, but FsData object is not an array";
                         return thisResult;
                     }
                 }
-                else { // not addressing an array
+                else {
+                    // not addressing an array
                     if (selectors.length === 0) {
-                        thisResult['state'] = 'FOUND';
-                        thisResult['value'] = digFsData[selector];
+                        thisResult["state"] = "FOUND";
+                        thisResult["value"] = digFsData[selector];
                         return thisResult;
                     }
                     else {
-                        thisResult =
-                            this._digGetFsData(level + 1, selectors, indexsep, digFsData[selector], thisResult);
+                        thisResult = this._digGetFsData(level + 1, selectors, indexsep, digFsData[selector], thisResult);
                         return thisResult;
                     }
                 }
             }
             else {
-                thisResult['state'] = 'ERROR';
-                thisResult['msg'] = 'Level ' + level.toString() +
-                    ': Selector <' + selector + '> does not exist at this level of the object';
+                thisResult["state"] = "ERROR";
+                thisResult["msg"] =
+                    "Level " +
+                        level.toString() +
+                        ": Selector <" +
+                        selector +
+                        "> does not exist at this level of the object";
                 return thisResult;
             }
         }
         else {
-            thisResult['state'] = 'ERROR';
-            thisResult['msg'] = 'Level ' + level.toString() + ': Array of selectors has no items';
+            thisResult["state"] = "ERROR";
+            thisResult["msg"] =
+                "Level " + level.toString() + ": Array of selectors has no items";
             return thisResult;
         }
     }
@@ -165,20 +172,20 @@ class FixedStructureData {
      * @param levelsep Character used for separating the names of different hierarchical levels
      * @param indexsep Character used to separate a property name/key from a suffixed numeric index of an array
      */
-    setFsData(setvalue, selectpath, levelsep = '/', indexsep = '#') {
-        let result = {};
+    setFsData(setvalue, selectpath, levelsep = "/", indexsep = "#") {
+        const result = {};
         if (!this._readAndWrite) {
-            result['state'] = 'READONLY';
-            result['msg'] = 'ReadOnly mode, no setting of values';
+            result["state"] = "READONLY";
+            result["msg"] = "ReadOnly mode, no setting of values";
             return result;
         }
-        if (selectpath === '') {
-            result['state'] = 'ERROR';
-            result['msg'] = 'selectpath argument is empty';
+        if (selectpath === "") {
+            result["state"] = "ERROR";
+            result["msg"] = "selectpath argument is empty";
             return result;
         }
-        let selectors = selectpath.split(levelsep);
-        let startResult = { 'state': 'SEARCHING' };
+        const selectors = selectpath.split(levelsep);
+        const startResult = { state: "SEARCHING" };
         return this._digSetFsData(1, selectors, indexsep, this._fsData, startResult, setvalue);
     }
     /**
@@ -193,10 +200,10 @@ class FixedStructureData {
     _digSetFsData(level, selectors, indexsep, digFsData, parentResult, setvalue) {
         let thisResult = parentResult;
         if (selectors.length > 0) {
-            let selectorRaw = selectors.shift();
+            const selectorRaw = selectors.shift();
             if (selectorRaw === undefined) {
-                thisResult['state'] = 'ERROR';
-                thisResult['msg'] = 'Level ' + level.toString() + ': Empty selector';
+                thisResult["state"] = "ERROR";
+                thisResult["msg"] = "Level " + level.toString() + ": Empty selector";
                 return thisResult;
             }
             // set default values
@@ -206,7 +213,7 @@ class FixedStructureData {
             // check: is the index of an array item addressed, or not
             if (selectorRaw.includes(indexsep)) {
                 selArray = true;
-                let selectorParts = selectorRaw.split(indexsep);
+                const selectorParts = selectorRaw.split(indexsep);
                 selector = selectorParts[0];
                 if (selectorParts.length > 1) {
                     const parsedInt = parseInt(selectorParts[1]);
@@ -231,16 +238,20 @@ class FixedStructureData {
                         activeDigFsData = digFsData[selectorIdx];
                     }
                     else {
-                        thisResult['state'] = 'ERROR';
-                        thisResult['msg'] = 'Level ' + level.toString() +
-                            ': Array index set, but FsData does not have that many items';
+                        thisResult["state"] = "ERROR";
+                        thisResult["msg"] =
+                            "Level " +
+                                level.toString() +
+                                ": Array index set, but FsData does not have that many items";
                         return thisResult;
                     }
                 }
                 else {
-                    thisResult['state'] = 'ERROR';
-                    thisResult['msg'] = 'Level ' + level.toString() +
-                        ': Array index set, but FsData object is not an array';
+                    thisResult["state"] = "ERROR";
+                    thisResult["msg"] =
+                        "Level " +
+                            level.toString() +
+                            ": Array index set, but FsData object is not an array";
                     return thisResult;
                 }
             }
@@ -250,25 +261,28 @@ class FixedStructureData {
             if (activeDigFsData.hasOwnProperty(selector)) {
                 if (selectors.length === 0) {
                     activeDigFsData[selector] = setvalue;
-                    thisResult['state'] = 'SET';
+                    thisResult["state"] = "SET";
                     return thisResult;
                 }
                 else {
-                    thisResult =
-                        this._digSetFsData(level + 1, selectors, indexsep, activeDigFsData[selector], thisResult, setvalue);
+                    thisResult = this._digSetFsData(level + 1, selectors, indexsep, activeDigFsData[selector], thisResult, setvalue);
                     return thisResult;
                 }
             }
             else {
-                thisResult['state'] = 'ERROR';
-                thisResult['msg'] = 'Level ' + level.toString() +
-                    ': Selector <' + selector + '> does not exist in this part of the object';
+                thisResult["state"] = "ERROR";
+                thisResult["msg"] =
+                    "Level " +
+                        level.toString() +
+                        ": Selector <" +
+                        selector +
+                        "> does not exist in this part of the object";
                 return thisResult;
             }
         }
         else {
-            thisResult['state'] = 'ERROR';
-            thisResult['msg'] = 'Level ' + level.toString() + ': Selectors is empty';
+            thisResult["state"] = "ERROR";
+            thisResult["msg"] = "Level " + level.toString() + ": Selectors is empty";
             return thisResult;
         }
     }

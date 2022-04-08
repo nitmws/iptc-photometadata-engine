@@ -1,5 +1,5 @@
-import { MdStruct } from './incommon';
-import * as pn1 from './propnodes1';
+import { MdStruct } from "./incommon";
+import * as pn1 from "./propnodes1";
 /**
  * Loads a file and tries to parse it as serialized JSON.
  * Returns: loaded and parsed object

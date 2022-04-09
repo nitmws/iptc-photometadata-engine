@@ -1,0 +1,278 @@
+{
+    "altTextAccessibility": "AltLang multilanguage example: Some text in the default language{@en}Some text explicitly in English{@de}Ein wenig Text in Deutsch",
+    "cityName": "string value",
+    "copyrightNotice": "AltLang string value",
+    "countryName": "string value",
+    "countryCode": "ABC",
+    "creatorNames": [
+        "string value 1"
+    ],
+    "creatorContactInfo": {
+        "address": "string value",
+        "city": "string value",
+        "country": "string value",
+        "emailwork": "string value",
+        "phonework": "string value",
+        "postalCode": "string value",
+        "region": "string value",
+        "weburlwork": "https://example.com/aURL"
+    },
+    "jobtitle": "string value",
+    "creditLine": "string value",
+    "dateCreated": "2022-03-12T05:06:07+00:00",
+    "description": "AltLang string value",
+    "captionWriter": "string value",
+    "extDescrAccessibility": "AltLang string value",
+    "headline": "AltLang string value",
+    "instructions": "string value",
+    "intellectualGenre": "010203",
+    "jobid": "string value",
+    "keywords": [
+        "string value 1"
+    ],
+    "provinceState": "string value",
+    "usageTerms": "AltLang string value",
+    "sceneCodes": [
+        "string value 1"
+    ],
+    "source": "string value",
+    "subjectCodes": [
+        "01002003",
+        "04005006"
+    ],
+    "sublocationName": "string value",
+    "title": "AltLang string value",
+    "eventId": [
+        "https://example.com/URL1",
+        "https://example.com/URL2"
+    ],
+    "eventName": "AltLang string value",
+    "additionalModelInfo": "string value",
+    "artworkOrObjects": [
+        {
+            "circaDateCreated": "string value",
+            "contentDescription": "AltLang string value",
+            "contributionDescription": "AltLang string value",
+            "copyrightNotice": "string value",
+            "creatorNames": [
+                "string value 1"
+            ],
+            "creatorIdentifiers": [
+                "https://example.com/URL1",
+                "https://example.com/URL2"
+            ],
+            "currentCopyrightOwnerIdentifier": "https://example.com/aURL",
+            "currentCopyrightOwnerName": "string value",
+            "currentLicensorIdentifier": "https://example.com/aURL",
+            "currentLicensorName": "string value",
+            "dateCreated": "1922-03-04T05:06:07+00:00",
+            "physicalDescription": "AltLang string value",
+            "source": "string value",
+            "sourceInventoryNr": "string value",
+            "sourceInventoryUrl": "https://example.com/aURL",
+            "stylePeriod": [
+                "string value 1"
+            ],
+            "title": "AltLang string value"
+        }
+    ],
+    "organisationInImageCodes": [
+        "string value 1"
+    ],
+    "copyrightOwners": [
+        {
+            "copyrightOwnerId": "string value",
+            "copyrightOwnerName": "string value"
+        }
+    ],
+    "aboutCvTerms": [
+        {
+            "cvId": "https://example.com/aURL",
+            "cvTermId": "https://example.com/aURL",
+            "cvTermName": "AltLang string value",
+            "cvTermRefinedAbout": "https://example.com/aURL"
+        }
+    ],
+    "digitalImageGuid": "string value",
+    "digitalSourceType": "https://example.com/aURL",
+    "embdEncRightsExprs": [
+        {
+            "rightsExprLangId": "https://example.com/aURL",
+            "rightsExprEncType": "string value",
+            "encRightsExpr": "string value"
+        }
+    ],
+    "genres": [
+        {
+            "cvId": "https://example.com/aURL",
+            "cvTermId": "https://example.com/aURL",
+            "cvTermName": "AltLang string value",
+            "cvTermRefinedAbout": "https://example.com/aURL"
+        }
+    ],
+    "imageCreators": [
+        {
+            "imageCreatorId": "string value",
+            "imageCreatorName": "string value"
+        }
+    ],
+    "imageRating": 999,
+    "imageRegion": [
+        {
+            "regionBoundary": {
+                "rbShape": "rectangle",
+                "rbUnit": "pixel",
+                "rbX": 999,
+                "rbY": 999,
+                "rbW": 999,
+                "rbH": 999,
+                "rbRx": 999,
+                "rbVertices": [
+                    {
+                        "rbX": 999,
+                        "rbY": 999
+                    }
+                ]
+            },
+            "rId": "string value",
+            "name": "AltLang string value",
+            "rCtype": [
+                {
+                    "identifiers": [
+                        "https://example.com/URL1",
+                        "https://example.com/URL2"
+                    ],
+                    "name": "AltLang string value"
+                }
+            ],
+            "rRole": [
+                {
+                    "identifiers": [
+                        "https://example.com/URL1",
+                        "https://example.com/URL2"
+                    ],
+                    "name": "AltLang string value"
+                }
+            ]
+        }
+    ],
+    "registryEntries": [
+        {
+            "assetIdentifier": "string value",
+            "registryIdentifier": "string value",
+            "role": "https://example.com/aURL"
+        }
+    ],
+    "suppliers": [
+        {
+            "imageSupplierId": "string value",
+            "imageSupplierName": "string value"
+        }
+    ],
+    "imageSupplierImageId": "string value",
+    "licensors": [
+        {
+            "licensorId": "string value",
+            "licensorName": "string value",
+            "licensorAddress": "string value",
+            "licensorAddressDetail": "string value",
+            "licensorCity": "string value",
+            "licensorStateProvince": "string value",
+            "licensorPostalCode": "string value",
+            "licensorCountryName": "string value",
+            "licensorTelephoneType1": "http://ns.useplus.org/ldf/vocab/work",
+            "licensorTelephone1": "string value",
+            "licensorTelephoneType2": "http://ns.useplus.org/ldf/vocab/cell",
+            "licensorTelephone2": "string value",
+            "licensorEmail": "string value",
+            "licensorUrl": "https://example.com/aURL"
+        }
+    ],
+    "linkedEncRightsExprs": [
+        {
+            "rightsExprLangId": "https://example.com/aURL",
+            "rightsExprEncType": "https://example.com/aURL",
+            "linkedRightsExpr": "https://example.com/aURL"
+        }
+    ],
+    "locationCreated": {
+        "city": "string value",
+        "countryCode": "string value",
+        "countryName": "string value",
+        "gpsAltitude": 999,
+        "gpsLatitude": 999,
+        "gpsLongitude": 999,
+        "identifiers": [
+            "https://example.com/URL1",
+            "https://example.com/URL2"
+        ],
+        "name": "AltLang string value",
+        "provinceState": "string value",
+        "sublocation": "string value",
+        "worldRegion": "string value"
+    },
+    "locationsShown": [
+        {
+            "city": "string value",
+            "countryCode": "string value",
+            "countryName": "string value",
+            "gpsAltitude": 999,
+            "gpsLatitude": 999,
+            "gpsLongitude": 999,
+            "identifiers": [
+                "https://example.com/URL1",
+                "https://example.com/URL2"
+            ],
+            "name": "AltLang string value",
+            "provinceState": "string value",
+            "sublocation": "string value",
+            "worldRegion": "string value"
+        }
+    ],
+    "maxAvailHeight": 999,
+    "maxAvailWidth": 999,
+    "minorModelAgeDisclosure": "http://ns.useplus.org/ldf/vocab/AG-A25",
+    "modelAges": [
+        999
+    ],
+    "modelReleaseDocuments": [
+        "string value 1"
+    ],
+    "modelReleaseStatus": "http://ns.useplus.org/ldf/vocab/MR-NAP",
+    "organisationInImageNames": [
+        "string value 1"
+    ],
+    "personInImageNames": [
+        "string value 1"
+    ],
+    "personsShown": [
+        {
+            "characteristics": [
+                {
+                    "cvId": "https://example.com/aURL",
+                    "cvTermId": "https://example.com/aURL",
+                    "cvTermName": "AltLang string value",
+                    "cvTermRefinedAbout": "https://example.com/aURL"
+                }
+            ],
+            "description": "AltLang string value",
+            "identifiers": [
+                "https://example.com/URL1",
+                "https://example.com/URL2"
+            ],
+            "name": "AltLang string value"
+        }
+    ],
+    "productsShown": [
+        {
+            "description": "AltLang string value",
+            "gtin": "string value",
+            "name": "AltLang string value"
+        }
+    ],
+    "propertyReleaseDocuments": [
+        "string value 1"
+    ],
+    "propertyReleaseStatus": "http://ns.useplus.org/ldf/vocab/PR-NAP",
+    "webstatementRights": "https://example.com/aURL"
+}

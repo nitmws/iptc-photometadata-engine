@@ -1,0 +1,340 @@
+[{
+  "SourceFile": "IPTC-PhotometadataRef-Std2021.1.jpg",
+  "ExifTool:ExifToolVersion": 12.40,
+  "System:FileName": "IPTC-PhotometadataRef-Std2021.1.jpg",
+  "System:Directory": ".",
+  "System:FileSize": 133901,
+  "System:FileModifyDate": "2022:03:03 19:17:37+01:00",
+  "System:FileAccessDate": "2022:04:09 12:28:24+02:00",
+  "System:FileCreateDate": "2022:04:09 12:28:24+02:00",
+  "System:FilePermissions": 100666,
+  "File:FileType": "JPEG",
+  "File:FileTypeExtension": "JPG",
+  "File:MIMEType": "image/jpeg",
+  "File:ExifByteOrder": "MM",
+  "File:CurrentIPTCDigest": "16733efc52a601ef54ccf5b9a0baecc6",
+  "File:Comment": "IPTC Photo Metadata Standard 2021.1 reference image file - release 1, of 2021-11-07",
+  "File:ImageWidth": 2000,
+  "File:ImageHeight": 1000,
+  "File:EncodingProcess": 2,
+  "File:BitsPerSample": 8,
+  "File:ColorComponents": 3,
+  "File:YCbCrSubSampling": "2 2",
+  "IFD0:ImageDescription": "The description aka caption (ref2021.1)",
+  "IFD0:XResolution": 72,
+  "IFD0:YResolution": 72,
+  "IFD0:ResolutionUnit": 2,
+  "IFD0:Artist": "Creator1 (ref2021.1)",
+  "IFD0:YCbCrPositioning": 1,
+  "IFD0:Copyright": "Copyright (Notice) 2021.1 IPTC - www.iptc.org  (ref2021.1)",
+  "ExifIFD:ExifVersion": "0232",
+  "ExifIFD:DateTimeOriginal": "2021:10:20 21:01:01",
+  "ExifIFD:OffsetTimeOriginal": "+00:00",
+  "ExifIFD:ComponentsConfiguration": "1 2 3 0",
+  "ExifIFD:FlashpixVersion": "0100",
+  "ExifIFD:ColorSpace": 65535,
+  "IPTC:ObjectAttributeReference": "A Genre (ref2021.1)",
+  "IPTC:ObjectName": "The Title (ref2021.1)",
+  "IPTC:SubjectReference": ["IPTC:1ref2021.1","IPTC:2ref2021.1","IPTC:3ref2021.1"],
+  "IPTC:Keywords": ["Keyword1ref2021.1","Keyword2ref2021.1","Keyword3ref2021.1"],
+  "IPTC:SpecialInstructions": "An Instruction (ref2021.1)",
+  "IPTC:DateCreated": "2021:10:20",
+  "IPTC:TimeCreated": "21:01:01+00:00",
+  "IPTC:By-line": "Creator1 (ref2021.1)",
+  "IPTC:By-lineTitle": "Creator's Job Title  (ref2021.1)",
+  "IPTC:City": "City (Core) (ref2021.1)",
+  "IPTC:Sub-location": "Sublocation (Core) (ref2021.1)",
+  "IPTC:Province-State": "Province/State(Core)(ref2021.1)",
+  "IPTC:Country-PrimaryLocationCode": "R21",
+  "IPTC:Country-PrimaryLocationName": "Country (Core) (ref2021.1)",
+  "IPTC:OriginalTransmissionReference": "Job Id (ref2021.1)",
+  "IPTC:Headline": "The Headline (ref2021.1)",
+  "IPTC:Credit": "Credit Line (ref2021.1)",
+  "IPTC:Source": "Source (ref2021.1)",
+  "IPTC:CopyrightNotice": "Copyright (Notice) 2021.1 IPTC - www.iptc.org  (ref2021.1)",
+  "IPTC:Caption-Abstract": "The description aka caption (ref2021.1)",
+  "IPTC:Writer-Editor": "Description Writer (ref2021.1)",
+  "IPTC:ApplicationRecordVersion": 4,
+  "XMP-x:XMPToolkit": "Image::ExifTool 12.34",
+  "XMP-iptcCore:AltTextAccessibility": "This is the Alt Text description to support accessibility in 2021.1",
+  "XMP-iptcCore:CountryCode": "R21",
+  "XMP-iptcCore:CreatorContactInfo": {
+    "CiAdrCity": "Creator's CI: City (ref2021.1)",
+    "CiAdrCtry": "Creator's CI: Country (ref2021.1)",
+    "CiAdrExtadr": "Creator's CI: Address, line 1 (ref2021.1)",
+    "CiAdrPcode": "Creator's CI: Postcode (ref2021.1)",
+    "CiAdrRegion": "Creator's CI: State/Province (ref2021.1)",
+    "CiEmailWork": "Creator's CI: Email@1, Email@2 (ref2021.1)",
+    "CiTelWork": "Creator's CI: Phone # 1, Phone # 2 (ref2021.1)",
+    "CiUrlWork": "http://www.Creators.CI/WebAddress/ref2021.1"
+  },
+  "XMP-iptcCore:ExtDescrAccessibility": "This is the Extended Description to support accessibility in 2021.1",
+  "XMP-iptcCore:IntellectualGenre": "A Genre (ref2021.1)",
+  "XMP-iptcCore:Location": "Sublocation (Core) (ref2021.1)",
+  "XMP-iptcCore:Scene": ["IPTC-Scene-Code1 (ref2021.1)","IPTC-Scene-Code2 (ref2021.1)"],
+  "XMP-iptcCore:SubjectCode": ["1ref2021.1","2ref2021.1","3ref2021.1"],
+  "XMP-iptcExt:AboutCvTerm": [{
+    "CvId": "http://example.com/cv/about/ref2021.1",
+    "CvTermId": "http://example.com/cv/about/ref2021.1/code987",
+    "CvTermName": "CV-Term Name 1 (ref2021.1)",
+    "CvTermRefinedAbout": "http://example.com/cv/refinements2/ref2021.1/codeX145"
+  }],
+  "XMP-iptcExt:AdditionalModelInformation": "Additional Model Info (ref2021.1)",
+  "XMP-iptcExt:ArtworkOrObject": [{
+    "AOCircaDateCreated": "AO Circa Date: between 1550 and 1600 (ref2021.1)",
+    "AOContentDescription": "AO Content Description 1 (ref2021.1)",
+    "AOContributionDescription": "AO Contribution Description 1 (ref2021.1)",
+    "AOCopyrightNotice": "AO Copyright Notice 1 (ref2021.1)",
+    "AOCreator": ["AO Creator Name 1a (ref2021.1)","AO Creator Name 1b (ref2021.1)"],
+    "AOCreatorId": ["AO Creator Id 1a (ref2021.1)","AO Creator Id 1b (ref2021.1)"],
+    "AOCurrentCopyrightOwnerId": "AO Current Copyright Owner ID 1 (ref2021.1)",
+    "AOCurrentCopyrightOwnerName": "AO Current Copyright Owner Name 1 (ref2021.1)",
+    "AOCurrentLicensorId": "AO Current Licensor ID 1 (ref2021.1)",
+    "AOCurrentLicensorName": "AO Current Licensor Name 1 (ref2021.1)",
+    "AODateCreated": "1921:10:20 21:01:00+00:00",
+    "AOPhysicalDescription": "AO Physical Description 1 (ref2021.1)",
+    "AOSource": "AO Source 1 (ref2021.1)",
+    "AOSourceInvNo": "AO Source Inventory No 1 (ref2021.1)",
+    "AOSourceInvURL": "AO Source Inventory URL (ref2021.1)",
+    "AOStylePeriod": ["AO Style Baroque (ref2021.1)","AO Style Italian Baroque (ref2021.1)"],
+    "AOTitle": "AO Title 1 (ref2021.1)"
+  }],
+  "XMP-iptcExt:DigitalImageGUID": "http://example.com/imageGUIDs/TestGUID12345/ref2021.1",
+  "XMP-iptcExt:DigitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/softwareImage",
+  "XMP-iptcExt:EmbdEncRightsExpr": [{
+    "EncRightsExpr": "The Encoded Rights Expression (ref2021.1)",
+    "RightsExprEncType": "IANA Media Type of ERE (ref2021.1)",
+    "RightsExprLangId": "http://example.org/RELids/id4711/ref2021.1"
+  }],
+  "XMP-iptcExt:Event": "Event Name (ref2021.1)",
+  "XMP-iptcExt:EventID": ["https://example.com/events/id2021.1a","https://example.com/events/id2021.1b"],
+  "XMP-iptcExt:Genre": [{
+    "CvId": "http://example.com/cv/genre/ref2021.1",
+    "CvTermId": "http://example.com/cv/genre/ref2021.1/code1369",
+    "CvTermName": "Genre CV-Term Name 1 (ref2021.1)",
+    "CvTermRefinedAbout": "http://example.com/cv/genrerefinements2/ref2021.1/codeY864"
+  }],
+  "XMP-iptcExt:ImageRegion": [{
+    "Name": "Listener 1",
+    "OrganisationInImageName": ["Organisation name no 1 in region persltr2 (ref2021.1)"],
+    "PersonInImage": ["Person name no 1 in region persltr2 (ref2021.1)"],
+    "RCtype": [{
+      "Identifier": ["https://example.org/rctype/type2021.1a","https://example.org/rctype/type2021.1b"],
+      "Name": "Region Boundary Content Type Name (ref2021.1)"
+    }],
+    "RId": "persltr2",
+    "RRole": [{
+      "Identifier": ["https://example.org/rrole/role2021.1a","https://example.org/rrole/role2021.1b"],
+      "Name": "Region Boundary Content Role Name (ref2021.1)"
+    }],
+    "RegionBoundary": {
+      "RbH": 0.385,
+      "RbShape": "rectangle",
+      "RbUnit": "relative",
+      "RbW": 0.127,
+      "RbX": 0.31,
+      "RbY": 0.18
+    }
+  },{
+    "Name": "Listener 2",
+    "OrganisationInImageName": ["Organisation name no 1 in region persltr2 (ref2021.1)"],
+    "PersonInImage": ["Person name no 1 in region persltr3 (ref2021.1)"],
+    "RCtype": [{
+      "Identifier": ["https://example.org/rctype/type2021.1a","https://example.org/rctype/type2021.1b"],
+      "Name": "Region Boundary Content Type Name (ref2021.1)"
+    }],
+    "RId": "persltr3",
+    "RRole": [{
+      "Identifier": ["https://example.org/rrole/role2021.1a","https://example.org/rrole/role2021.1b"],
+      "Name": "Region Boundary Content Role Name (ref2021.1)"
+    }],
+    "RegionBoundary": {
+      "RbRx": 0.068,
+      "RbShape": "circle",
+      "RbUnit": "relative",
+      "RbX": 0.59,
+      "RbY": 0.426
+    }
+  },{
+    "Name": "Speaker 1",
+    "OrganisationInImageName": ["Organisation name no 1 in region persltr3 (ref2021.1)"],
+    "PersonInImage": ["Person name no 1 in region persltr1 (ref2021.1)"],
+    "RCtype": [{
+      "Identifier": ["https://example.org/rctype/type2021.1a","https://example.org/rctype/type2021.1b"],
+      "Name": "Region Boundary Content Type Name (ref2021.1)"
+    }],
+    "RId": "persltr1",
+    "RRole": [{
+      "Identifier": ["https://example.org/rrole/role2021.1a","https://example.org/rrole/role2021.1b"],
+      "Name": "Region Boundary Content Role Name (ref2021.1)"
+    }],
+    "RegionBoundary": {
+      "RbShape": "polygon",
+      "RbUnit": "relative",
+      "RbVertices": [{
+        "RbX": 0.05,
+        "RbY": 0.713
+      },{
+        "RbX": 0.148,
+        "RbY": 0.041
+      },{
+        "RbX": 0.375,
+        "RbY": 0.863
+      }]
+    }
+  }],
+  "XMP-iptcExt:LinkedEncRightsExpr": [{
+    "LinkedRightsExpr": "http://example.org/linkedrightsexpression/id986/ref2021.1",
+    "RightsExprEncType": "IANA Media Type of ERE (ref2021.1)",
+    "RightsExprLangId": "http://example.org/RELids/id4712/ref2021.1"
+  }],
+  "XMP-iptcExt:LocationCreated": [{
+    "City": "City (Location created1) (ref2021.1)",
+    "CountryCode": "R17",
+    "CountryName": "CountryName (Location created1) (ref2021.1)",
+    "GPSAltitude": 480,
+    "GPSLatitude": 48.275,
+    "GPSLongitude": 16.338,
+    "LocationId": ["Location Id (Location created1) (ref2021.1)"],
+    "LocationName": "Location Name (Location created1) (ref2021.1)",
+    "ProvinceState": "Province/State (Location created1) (ref2021.1)",
+    "Sublocation": "Sublocation (Location created1) (ref2021.1)",
+    "WorldRegion": "Worldregion (Location created1) (ref2021.1)"
+  }],
+  "XMP-iptcExt:LocationShown": [{
+    "City": "City (Location shown1) (ref2021.1)",
+    "CountryCode": "R17",
+    "CountryName": "CountryName (Location shown1) (ref2021.1)",
+    "GPSAltitude": 140,
+    "GPSLatitude": 48.147,
+    "GPSLongitude": 17.098,
+    "LocationId": ["Location Id 1a(Location shown1) (ref2021.1)","Location Id 1b(Location shown1) (ref2021.1)"],
+    "LocationName": "Location Name (Location shown1) (ref2021.1)",
+    "ProvinceState": "Province/State (Location shown1) (ref2021.1)",
+    "Sublocation": "Sublocation (Location shown1) (ref2021.1)",
+    "WorldRegion": "Worldregion (Location shown1) (ref2021.1)"
+  },{
+    "City": "City (Location shown2) (ref2021.1)",
+    "CountryCode": "R17",
+    "CountryName": "CountryName (Location shown2) (ref2021.1)",
+    "GPSAltitude": 120,
+    "GPSLatitude": 47.952,
+    "GPSLongitude": 16.83,
+    "LocationId": ["Location Id 2a(Location shown2) (ref2021.1)","Location Id 2b(Location shown2) (ref2021.1)"],
+    "LocationName": "Location Name (Location shown2) (ref2021.1)",
+    "ProvinceState": "Province/State (Location shown2) (ref2021.1)",
+    "Sublocation": "Sublocation (Location shown2) (ref2021.1)",
+    "WorldRegion": "Worldregion (Location shown2) (ref2021.1)"
+  }],
+  "XMP-iptcExt:MaxAvailHeight": 20,
+  "XMP-iptcExt:MaxAvailWidth": 21,
+  "XMP-iptcExt:ModelAge": [25,27,30],
+  "XMP-iptcExt:OrganisationInImageCode": ["Organisation Code 1 (ref2021.1)","Organisation Code 2 (ref2021.1)","Organisation Code 3 (ref2021.1)"],
+  "XMP-iptcExt:OrganisationInImageName": ["Organisation Name 1 (ref2021.1)","Organisation Name 2 (ref2021.1)","Organisation Name 3 (ref2021.1)"],
+  "XMP-iptcExt:PersonInImage": ["Person Shown 1 (ref2021.1)","Person Shown 2 (ref2021.1)"],
+  "XMP-iptcExt:PersonInImageWDetails": [{
+    "PersonCharacteristic": [{
+      "CvId": "http://example.com/cv/test99/ref2021.1",
+      "CvTermId": "http://example.com/cv/test99/code987/ref2021.1",
+      "CvTermName": "Person Characteristic Name 1 (ref2021.1)",
+      "CvTermRefinedAbout": "http://example.com/cv/refinements987/codeY765/ref2021.1"
+    }],
+    "PersonDescription": "Person Description 1 (ref2021.1)",
+    "PersonId": ["http://wikidata.org/item/Q123456789/ref2021.1","http://freebase.com/m/987654321/ref2021.1"],
+    "PersonName": "Person Name 1 (ref2021.1)"
+  }],
+  "XMP-iptcExt:ProductInImage": [{
+    "ProductDescription": "Product Description 1 (ref2021.1)",
+    "ProductGTIN": 123456782021.1,
+    "ProductName": "Product Name 1 (ref2021.1)"
+  }],
+  "XMP-iptcExt:RegistryID": [{
+    "RegEntryRole": "Registry Entry Role ID 1 (ref2021.1)",
+    "RegItemId": "Registry Image ID 1 (ref2021.1)",
+    "RegOrgId": "Registry Organisation ID 1 (ref2021.1)"
+  },{
+    "RegEntryRole": "Registry Entry Role ID 2 (ref2021.1)",
+    "RegItemId": "Registry Image ID 2 (ref2021.1)",
+    "RegOrgId": "Registry Organisation ID 2 (ref2021.1)"
+  }],
+  "XMP-dc:Creator": ["Creator1 (ref2021.1)"],
+  "XMP-dc:Description": "The description aka caption (ref2021.1)",
+  "XMP-dc:Rights": "Copyright (Notice) 2021.1 IPTC - www.iptc.org  (ref2021.1)",
+  "XMP-dc:Subject": ["Keyword1ref2021.1","Keyword2ref2021.1","Keyword3ref2021.1"],
+  "XMP-dc:Title": "The Title (ref2021.1)",
+  "XMP-photoshop:AuthorsPosition": "Creator's Job Title  (ref2021.1)",
+  "XMP-photoshop:CaptionWriter": "Description Writer (ref2021.1)",
+  "XMP-photoshop:City": "City (Core) (ref2021.1)",
+  "XMP-photoshop:Country": "Country (Core) (ref2021.1)",
+  "XMP-photoshop:Credit": "Credit Line (ref2021.1)",
+  "XMP-photoshop:DateCreated": "2021:10:20 21:01:01+00:00",
+  "XMP-photoshop:Headline": "The Headline (ref2021.1)",
+  "XMP-photoshop:Instructions": "An Instruction (ref2021.1)",
+  "XMP-photoshop:Source": "Source (ref2021.1)",
+  "XMP-photoshop:State": "Province/State(Core)(ref2021.1)",
+  "XMP-photoshop:TransmissionReference": "Job Id (ref2021.1)",
+  "XMP-plus:CopyrightOwner": [{
+    "CopyrightOwnerID": "Copyright Owner Id 1 (ref2021.1)",
+    "CopyrightOwnerName": "Copyright Owner Name 1 (ref2021.1)"
+  },{
+    "CopyrightOwnerID": "Copyright Owner Id 2 (ref2021.1)",
+    "CopyrightOwnerName": "Copyright Owner Name 2 (ref2021.1)"
+  }],
+  "XMP-plus:ImageCreator": [{
+    "ImageCreatorID": "Image Creator Id 1 (ref2021.1)",
+    "ImageCreatorName": "Image Creator Name 1 (ref2021.1)"
+  }],
+  "XMP-plus:ImageCreatorImageID": "Image Creator Image ID (ref2021.1)",
+  "XMP-plus:ImageSupplier": [{
+    "ImageSupplierID": "Image Supplier Id (ref2021.1)",
+    "ImageSupplierName": "Image Supplier Name (ref2021.1)"
+  }],
+  "XMP-plus:ImageSupplierImageID": "Image Supplier Image ID (ref2021.1)",
+  "XMP-plus:Licensor": [{
+    "LicensorCity": "Licensor City 1 (ref2021.1)",
+    "LicensorCountry": "Licensor Country 1 (ref2021.1)",
+    "LicensorEmail": "Licensor Email 1 (ref2021.1)",
+    "LicensorExtendedAddress": "Licensor Ext Addr 1 (ref2021.1)",
+    "LicensorID": "Licensor ID 1 (ref2021.1)",
+    "LicensorName": "Licensor Name 1 (ref2021.1)",
+    "LicensorPostalCode": "Licensor Postcode 1 (ref2021.1)",
+    "LicensorRegion": "Licensor Region 1 (ref2021.1)",
+    "LicensorStreetAddress": "Licensor Street Addr 1 (ref2021.1)",
+    "LicensorTelephone1": "Licensor Phone1 1 (ref2021.1)",
+    "LicensorTelephone2": "Licensor Phone2 1 (ref2021.1)",
+    "LicensorTelephoneType1": "work",
+    "LicensorTelephoneType2": "cell",
+    "LicensorURL": "Licensor URL 1 (ref2021.1)"
+  },{
+    "LicensorCity": "Licensor City 2 (ref2021.1)",
+    "LicensorCountry": "Licensor Country 2 (ref2021.1)",
+    "LicensorEmail": "Licensor Email 2 (ref2021.1)",
+    "LicensorExtendedAddress": "Licensor Ext Addr 2 (ref2021.1)",
+    "LicensorID": "Licensor ID 2 (ref2021.1)",
+    "LicensorName": "Licensor Name 2 (ref2021.1)",
+    "LicensorPostalCode": "Licensor Postcode 2 (ref2021.1)",
+    "LicensorRegion": "Licensor Region 2 (ref2021.1)",
+    "LicensorStreetAddress": "Licensor Street Addr 2 (ref2021.1)",
+    "LicensorTelephone1": "Licensor Phone1 2 (ref2021.1)",
+    "LicensorTelephone2": "Licensor Phone2 2 (ref2021.1)",
+    "LicensorTelephoneType1": "work",
+    "LicensorTelephoneType2": "cell",
+    "LicensorURL": "Licensor URL 2 (ref2021.1)"
+  }],
+  "XMP-plus:MinorModelAgeDisclosure": "AG-A25",
+  "XMP-plus:ModelReleaseID": ["Model Release ID 1 (ref2021.1)","Model Release ID 2 (ref2021.1)"],
+  "XMP-plus:ModelReleaseStatus": "MR-NAP",
+  "XMP-plus:PropertyReleaseID": ["Property Release ID 1 (ref2021.1)","Property Release ID 2 (ref2021.1)"],
+  "XMP-plus:PropertyReleaseStatus": "PR-NAP",
+  "XMP-xmp:Rating": 1.0,
+  "XMP-xmpRights:UsageTerms": "Rights Usage Terms (ref2021.1)",
+  "XMP-xmpRights:WebStatement": "http://www.WebStatementOfRights.org/2021.1",
+  "Adobe:DCTEncodeVersion": 100,
+  "Adobe:APP14Flags0": 32768,
+  "Adobe:APP14Flags1": 0,
+  "Adobe:ColorTransform": 1,
+  "Composite:ImageSize": "2000 1000",
+  "Composite:Megapixels": 2,
+  "Composite:SubSecDateTimeOriginal": "2021:10:20 21:01:01+00:00",
+  "Composite:DateTimeCreated": "2021:10:20 21:01:01+00:00"
+}]

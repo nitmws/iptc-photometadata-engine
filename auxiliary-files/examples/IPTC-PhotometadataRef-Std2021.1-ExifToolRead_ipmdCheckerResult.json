@@ -1,0 +1,1919 @@
+{
+  "state": {
+    "altTextAccessibility": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "cityName": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "copyrightNotice": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "EXIF": 1,
+        "INSYNC": 1,
+        "MAPINSYNC": 1
+      }
+    },
+    "countryName": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "countryCode": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "creatorNames": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 1,
+        "IIM": 1,
+        "EXIF": 1,
+        "INSYNC": 1,
+        "MAPINSYNC": 1
+      }
+    },
+    "creatorContactInfo": {
+      "data": {
+        "XMP": 1
+      },
+      "struct": {
+        "address": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "city": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "country": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "emailwork": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "phonework": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "postalCode": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "region": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "weburlwork": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "jobtitle": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "creditLine": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "dateCreated": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "EXIF": 1,
+        "INSYNC": 1,
+        "MAPINSYNC": 0
+      }
+    },
+    "description": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "EXIF": 1,
+        "INSYNC": 1,
+        "MAPINSYNC": 1
+      }
+    },
+    "captionWriter": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "extDescrAccessibility": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "headline": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "instructions": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "intellectualGenre": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "jobid": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "keywords": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 3,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "provinceState": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "usageTerms": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "sceneCodes": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 2
+      }
+    },
+    "source": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "subjectCodes": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 3,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "sublocationName": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "INSYNC": 1
+      }
+    },
+    "title": {
+      "data": {
+        "XMP": 1,
+        "IIM": 1,
+        "EXIF": 0,
+        "INSYNC": 1,
+        "MAPINSYNC": -1
+      }
+    },
+    "eventId": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 2
+      }
+    },
+    "eventName": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "additionalModelInfo": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "artworkOrObjects": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 1
+      },
+      "struct": {
+        "circaDateCreated": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "contentDescription": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "contributionDescription": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "copyrightNotice": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "creatorNames": {
+          "data": {
+            "XMP": 1,
+            "XMPVALOCCUR": 2
+          }
+        },
+        "creatorIdentifiers": {
+          "data": {
+            "XMP": 1,
+            "XMPVALOCCUR": 2
+          }
+        },
+        "currentCopyrightOwnerIdentifier": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "currentCopyrightOwnerName": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "currentLicensorIdentifier": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "currentLicensorName": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "dateCreated": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "physicalDescription": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "source": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "sourceInventoryNr": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "sourceInventoryUrl": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "stylePeriod": {
+          "data": {
+            "XMP": 1,
+            "XMPVALOCCUR": 2
+          }
+        },
+        "title": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "organisationInImageCodes": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 3
+      }
+    },
+    "copyrightOwners": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 2
+      },
+      "struct": {
+        "copyrightOwnerId": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "copyrightOwnerName": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "aboutCvTerms": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 1
+      },
+      "struct": {
+        "cvId": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "cvTermId": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "cvTermName": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "cvTermRefinedAbout": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "digitalImageGuid": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "digitalSourceType": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "embdEncRightsExprs": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 1
+      },
+      "struct": {
+        "rightsExprLangId": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "rightsExprEncType": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "encRightsExpr": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "genres": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 1
+      },
+      "struct": {
+        "cvId": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "cvTermId": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "cvTermName": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "cvTermRefinedAbout": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "imageCreators": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 1
+      },
+      "struct": {
+        "imageCreatorId": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "imageCreatorName": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "imageRating": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "imageRegion": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 3
+      },
+      "struct": {
+        "regionBoundary": {
+          "data": {
+            "XMP": 1
+          },
+          "struct": {
+            "rbShape": {
+              "data": {
+                "XMP": 1
+              }
+            },
+            "rbUnit": {
+              "data": {
+                "XMP": 1
+              }
+            },
+            "rbX": {
+              "data": {
+                "XMP": 1
+              }
+            },
+            "rbY": {
+              "data": {
+                "XMP": 1
+              }
+            },
+            "rbW": {
+              "data": {
+                "XMP": 1
+              }
+            },
+            "rbH": {
+              "data": {
+                "XMP": 1
+              }
+            },
+            "rbRx": {
+              "data": {
+                "XMP": 1
+              }
+            },
+            "rbVertices": {
+              "data": {
+                "XMP": 1,
+                "XMPVALOCCUR": 3
+              },
+              "struct": {
+                "rbX": {
+                  "data": {
+                    "XMP": 1
+                  }
+                },
+                "rbY": {
+                  "data": {
+                    "XMP": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "rId": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "name": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "rCtype": {
+          "data": {
+            "XMP": 1,
+            "XMPVALOCCUR": 1
+          },
+          "struct": {
+            "identifiers": {
+              "data": {
+                "XMP": 1,
+                "XMPVALOCCUR": 2
+              }
+            },
+            "name": {
+              "data": {
+                "XMP": 1
+              }
+            }
+          }
+        },
+        "rRole": {
+          "data": {
+            "XMP": 1,
+            "XMPVALOCCUR": 1
+          },
+          "struct": {
+            "identifiers": {
+              "data": {
+                "XMP": 1,
+                "XMPVALOCCUR": 2
+              }
+            },
+            "name": {
+              "data": {
+                "XMP": 1
+              }
+            }
+          }
+        },
+        "$anypmdproperty": {
+          "data": {
+            "XMP": 0
+          }
+        }
+      }
+    },
+    "registryEntries": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 2
+      },
+      "struct": {
+        "assetIdentifier": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "registryIdentifier": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "role": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "suppliers": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 1
+      },
+      "struct": {
+        "imageSupplierId": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "imageSupplierName": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "imageSupplierImageId": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "licensors": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 2
+      },
+      "struct": {
+        "licensorId": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "licensorName": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "licensorAddress": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "licensorAddressDetail": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "licensorCity": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "licensorStateProvince": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "licensorPostalCode": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "licensorCountryName": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "licensorTelephoneType1": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "licensorTelephone1": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "licensorTelephoneType2": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "licensorTelephone2": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "licensorEmail": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "licensorUrl": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "linkedEncRightsExprs": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 1
+      },
+      "struct": {
+        "rightsExprLangId": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "rightsExprEncType": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "linkedRightsExpr": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "locationCreated": {
+      "data": {
+        "XMP": 1
+      },
+      "struct": {
+        "city": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "countryCode": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "countryName": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "gpsAltitude": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "gpsLatitude": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "gpsLongitude": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "identifiers": {
+          "data": {
+            "XMP": 1,
+            "XMPVALOCCUR": 1
+          }
+        },
+        "name": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "provinceState": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "sublocation": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "worldRegion": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "locationsShown": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 2
+      },
+      "struct": {
+        "city": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "countryCode": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "countryName": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "gpsAltitude": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "gpsLatitude": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "gpsLongitude": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "identifiers": {
+          "data": {
+            "XMP": 1,
+            "XMPVALOCCUR": 2
+          }
+        },
+        "name": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "provinceState": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "sublocation": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "worldRegion": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "maxAvailHeight": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "maxAvailWidth": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "minorModelAgeDisclosure": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "modelAges": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 3
+      }
+    },
+    "modelReleaseDocuments": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 2
+      }
+    },
+    "modelReleaseStatus": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "organisationInImageNames": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 3
+      }
+    },
+    "personInImageNames": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 2
+      }
+    },
+    "personsShown": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 1
+      },
+      "struct": {
+        "characteristics": {
+          "data": {
+            "XMP": 1,
+            "XMPVALOCCUR": 1
+          },
+          "struct": {
+            "cvId": {
+              "data": {
+                "XMP": 1
+              }
+            },
+            "cvTermId": {
+              "data": {
+                "XMP": 1
+              }
+            },
+            "cvTermName": {
+              "data": {
+                "XMP": 1
+              }
+            },
+            "cvTermRefinedAbout": {
+              "data": {
+                "XMP": 1
+              }
+            }
+          }
+        },
+        "description": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "identifiers": {
+          "data": {
+            "XMP": 1,
+            "XMPVALOCCUR": 2
+          }
+        },
+        "name": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "productsShown": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 1
+      },
+      "struct": {
+        "description": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "gtin": {
+          "data": {
+            "XMP": 1
+          }
+        },
+        "name": {
+          "data": {
+            "XMP": 1
+          }
+        }
+      }
+    },
+    "propertyReleaseDocuments": {
+      "data": {
+        "XMP": 1,
+        "XMPVALOCCUR": 2
+      }
+    },
+    "propertyReleaseStatus": {
+      "data": {
+        "XMP": 1
+      }
+    },
+    "webstatementRights": {
+      "data": {
+        "XMP": 1
+      }
+    }
+  },
+  "value": {
+    "altTextAccessibility": {
+      "XMP": "This is the Alt Text description to support accessibility in 2021.1"
+    },
+    "cityName": {
+      "XMP": "City (Core) (ref2021.1)",
+      "IIM": "City (Core) (ref2021.1)"
+    },
+    "copyrightNotice": {
+      "XMP": "Copyright (Notice) 2021.1 IPTC - www.iptc.org  (ref2021.1)",
+      "IIM": "Copyright (Notice) 2021.1 IPTC - www.iptc.org  (ref2021.1)",
+      "EXIF": "Copyright (Notice) 2021.1 IPTC - www.iptc.org  (ref2021.1)"
+    },
+    "countryName": {
+      "XMP": "Country (Core) (ref2021.1)",
+      "IIM": "Country (Core) (ref2021.1)"
+    },
+    "countryCode": {
+      "XMP": "R21",
+      "IIM": "R21"
+    },
+    "creatorNames": {
+      "XMP": [
+        "Creator1 (ref2021.1)"
+      ],
+      "IIM": [
+        "Creator1 (ref2021.1)"
+      ],
+      "EXIF": [
+        "Creator1 (ref2021.1)"
+      ]
+    },
+    "creatorContactInfo": {
+      "struct": [
+        {
+          "address": {
+            "XMP": "Creator's CI: Address, line 1 (ref2021.1)"
+          },
+          "city": {
+            "XMP": "Creator's CI: City (ref2021.1)"
+          },
+          "country": {
+            "XMP": "Creator's CI: Country (ref2021.1)"
+          },
+          "emailwork": {
+            "XMP": "Creator's CI: Email@1, Email@2 (ref2021.1)"
+          },
+          "phonework": {
+            "XMP": "Creator's CI: Phone # 1, Phone # 2 (ref2021.1)"
+          },
+          "postalCode": {
+            "XMP": "Creator's CI: Postcode (ref2021.1)"
+          },
+          "region": {
+            "XMP": "Creator's CI: State/Province (ref2021.1)"
+          },
+          "weburlwork": {
+            "XMP": "http://www.Creators.CI/WebAddress/ref2021.1"
+          }
+        }
+      ]
+    },
+    "jobtitle": {
+      "XMP": "Creator's Job Title  (ref2021.1)",
+      "IIM": "Creator's Job Title  (ref2021.1)"
+    },
+    "creditLine": {
+      "XMP": "Credit Line (ref2021.1)",
+      "IIM": "Credit Line (ref2021.1)"
+    },
+    "dateCreated": {
+      "XMP": "2021:10:20 21:01:01+00:00",
+      "IIM": "2021:10:20 21:01:01+00:00",
+      "EXIF": "2021:10:20 21:01:01"
+    },
+    "description": {
+      "XMP": "The description aka caption (ref2021.1)",
+      "IIM": "The description aka caption (ref2021.1)",
+      "EXIF": "The description aka caption (ref2021.1)"
+    },
+    "captionWriter": {
+      "XMP": "Description Writer (ref2021.1)",
+      "IIM": "Description Writer (ref2021.1)"
+    },
+    "extDescrAccessibility": {
+      "XMP": "This is the Extended Description to support accessibility in 2021.1"
+    },
+    "headline": {
+      "XMP": "The Headline (ref2021.1)",
+      "IIM": "The Headline (ref2021.1)"
+    },
+    "instructions": {
+      "XMP": "An Instruction (ref2021.1)",
+      "IIM": "An Instruction (ref2021.1)"
+    },
+    "intellectualGenre": {
+      "XMP": "A Genre (ref2021.1)",
+      "IIM": "A Genre (ref2021.1)"
+    },
+    "jobid": {
+      "XMP": "Job Id (ref2021.1)",
+      "IIM": "Job Id (ref2021.1)"
+    },
+    "keywords": {
+      "XMP": [
+        "Keyword1ref2021.1",
+        "Keyword2ref2021.1",
+        "Keyword3ref2021.1"
+      ],
+      "IIM": [
+        "Keyword1ref2021.1",
+        "Keyword2ref2021.1",
+        "Keyword3ref2021.1"
+      ]
+    },
+    "provinceState": {
+      "XMP": "Province/State(Core)(ref2021.1)",
+      "IIM": "Province/State(Core)(ref2021.1)"
+    },
+    "usageTerms": {
+      "XMP": "Rights Usage Terms (ref2021.1)"
+    },
+    "sceneCodes": {
+      "XMP": [
+        "IPTC-Scene-Code1 (ref2021.1)",
+        "IPTC-Scene-Code2 (ref2021.1)"
+      ]
+    },
+    "source": {
+      "XMP": "Source (ref2021.1)",
+      "IIM": "Source (ref2021.1)"
+    },
+    "subjectCodes": {
+      "XMP": [
+        "1ref2021.1",
+        "2ref2021.1",
+        "3ref2021.1"
+      ],
+      "IIM": [
+        "IPTC:1ref2021.1",
+        "IPTC:2ref2021.1",
+        "IPTC:3ref2021.1"
+      ]
+    },
+    "sublocationName": {
+      "XMP": "Sublocation (Core) (ref2021.1)",
+      "IIM": "Sublocation (Core) (ref2021.1)"
+    },
+    "title": {
+      "XMP": "The Title (ref2021.1)",
+      "IIM": "The Title (ref2021.1)"
+    },
+    "eventId": {
+      "XMP": [
+        "https://example.com/events/id2021.1a",
+        "https://example.com/events/id2021.1b"
+      ]
+    },
+    "eventName": {
+      "XMP": "Event Name (ref2021.1)"
+    },
+    "additionalModelInfo": {
+      "XMP": "Additional Model Info (ref2021.1)"
+    },
+    "artworkOrObjects": {
+      "struct": [
+        {
+          "circaDateCreated": {
+            "XMP": "AO Circa Date: between 1550 and 1600 (ref2021.1)"
+          },
+          "contentDescription": {
+            "XMP": "AO Content Description 1 (ref2021.1)"
+          },
+          "contributionDescription": {
+            "XMP": "AO Contribution Description 1 (ref2021.1)"
+          },
+          "copyrightNotice": {
+            "XMP": "AO Copyright Notice 1 (ref2021.1)"
+          },
+          "creatorNames": {
+            "XMP": [
+              "AO Creator Name 1a (ref2021.1)",
+              "AO Creator Name 1b (ref2021.1)"
+            ]
+          },
+          "creatorIdentifiers": {
+            "XMP": [
+              "AO Creator Id 1a (ref2021.1)",
+              "AO Creator Id 1b (ref2021.1)"
+            ]
+          },
+          "currentCopyrightOwnerIdentifier": {
+            "XMP": "AO Current Copyright Owner ID 1 (ref2021.1)"
+          },
+          "currentCopyrightOwnerName": {
+            "XMP": "AO Current Copyright Owner Name 1 (ref2021.1)"
+          },
+          "currentLicensorIdentifier": {
+            "XMP": "AO Current Licensor ID 1 (ref2021.1)"
+          },
+          "currentLicensorName": {
+            "XMP": "AO Current Licensor Name 1 (ref2021.1)"
+          },
+          "dateCreated": {
+            "XMP": "1921:10:20 21:01:00+00:00"
+          },
+          "physicalDescription": {
+            "XMP": "AO Physical Description 1 (ref2021.1)"
+          },
+          "source": {
+            "XMP": "AO Source 1 (ref2021.1)"
+          },
+          "sourceInventoryNr": {
+            "XMP": "AO Source Inventory No 1 (ref2021.1)"
+          },
+          "sourceInventoryUrl": {
+            "XMP": "AO Source Inventory URL (ref2021.1)"
+          },
+          "stylePeriod": {
+            "XMP": [
+              "AO Style Baroque (ref2021.1)",
+              "AO Style Italian Baroque (ref2021.1)"
+            ]
+          },
+          "title": {
+            "XMP": "AO Title 1 (ref2021.1)"
+          }
+        }
+      ]
+    },
+    "organisationInImageCodes": {
+      "XMP": [
+        "Organisation Code 1 (ref2021.1)",
+        "Organisation Code 2 (ref2021.1)",
+        "Organisation Code 3 (ref2021.1)"
+      ]
+    },
+    "copyrightOwners": {
+      "struct": [
+        {
+          "copyrightOwnerId": {
+            "XMP": "Copyright Owner Id 1 (ref2021.1)"
+          },
+          "copyrightOwnerName": {
+            "XMP": "Copyright Owner Name 1 (ref2021.1)"
+          }
+        },
+        {
+          "copyrightOwnerId": {
+            "XMP": "Copyright Owner Id 2 (ref2021.1)"
+          },
+          "copyrightOwnerName": {
+            "XMP": "Copyright Owner Name 2 (ref2021.1)"
+          }
+        }
+      ]
+    },
+    "aboutCvTerms": {
+      "struct": [
+        {
+          "cvId": {
+            "XMP": "http://example.com/cv/about/ref2021.1"
+          },
+          "cvTermId": {
+            "XMP": "http://example.com/cv/about/ref2021.1/code987"
+          },
+          "cvTermName": {
+            "XMP": "CV-Term Name 1 (ref2021.1)"
+          },
+          "cvTermRefinedAbout": {
+            "XMP": "http://example.com/cv/refinements2/ref2021.1/codeX145"
+          }
+        }
+      ]
+    },
+    "digitalImageGuid": {
+      "XMP": "http://example.com/imageGUIDs/TestGUID12345/ref2021.1"
+    },
+    "digitalSourceType": {
+      "XMP": "http://cv.iptc.org/newscodes/digitalsourcetype/softwareImage"
+    },
+    "embdEncRightsExprs": {
+      "struct": [
+        {
+          "rightsExprLangId": {
+            "XMP": "The Encoded Rights Expression (ref2021.1)"
+          },
+          "rightsExprEncType": {
+            "XMP": "IANA Media Type of ERE (ref2021.1)"
+          },
+          "encRightsExpr": {
+            "XMP": "http://example.org/RELids/id4711/ref2021.1"
+          }
+        }
+      ]
+    },
+    "genres": {
+      "struct": [
+        {
+          "cvId": {
+            "XMP": "http://example.com/cv/genre/ref2021.1"
+          },
+          "cvTermId": {
+            "XMP": "http://example.com/cv/genre/ref2021.1/code1369"
+          },
+          "cvTermName": {
+            "XMP": "Genre CV-Term Name 1 (ref2021.1)"
+          },
+          "cvTermRefinedAbout": {
+            "XMP": "http://example.com/cv/genrerefinements2/ref2021.1/codeY864"
+          }
+        }
+      ]
+    },
+    "imageCreators": {
+      "struct": [
+        {
+          "imageCreatorId": {
+            "XMP": "Image Creator Id 1 (ref2021.1)"
+          },
+          "imageCreatorName": {
+            "XMP": "Image Creator Name 1 (ref2021.1)"
+          }
+        }
+      ]
+    },
+    "imageRating": {
+      "XMP": 1
+    },
+    "imageRegion": {
+      "struct": [
+        {
+          "regionBoundary": {
+            "struct": [
+              {
+                "rbShape": {
+                  "XMP": "rectangle"
+                },
+                "rbUnit": {
+                  "XMP": "relative"
+                },
+                "rbX": {
+                  "XMP": 0.31
+                },
+                "rbY": {
+                  "XMP": 0.18
+                },
+                "rbW": {
+                  "XMP": 0.127
+                },
+                "rbH": {
+                  "XMP": 0.385
+                },
+                "rbRx": {},
+                "rbVertices": {}
+              }
+            ]
+          },
+          "rId": {
+            "XMP": "persltr2"
+          },
+          "name": {
+            "XMP": "Listener 1"
+          },
+          "rCtype": {
+            "struct": [
+              {
+                "identifiers": {
+                  "XMP": [
+                    "https://example.org/rctype/type2021.1a",
+                    "https://example.org/rctype/type2021.1b"
+                  ]
+                },
+                "name": {
+                  "XMP": "Region Boundary Content Type Name (ref2021.1)"
+                }
+              }
+            ]
+          },
+          "rRole": {
+            "struct": [
+              {
+                "identifiers": {
+                  "XMP": [
+                    "https://example.org/rrole/role2021.1a",
+                    "https://example.org/rrole/role2021.1b"
+                  ]
+                },
+                "name": {
+                  "XMP": "Region Boundary Content Role Name (ref2021.1)"
+                }
+              }
+            ]
+          },
+          "$anypmdproperty": {}
+        },
+        {
+          "regionBoundary": {
+            "struct": [
+              {
+                "rbShape": {
+                  "XMP": "circle"
+                },
+                "rbUnit": {
+                  "XMP": "relative"
+                },
+                "rbX": {
+                  "XMP": 0.59
+                },
+                "rbY": {
+                  "XMP": 0.426
+                },
+                "rbW": {},
+                "rbH": {},
+                "rbRx": {
+                  "XMP": 0.068
+                },
+                "rbVertices": {}
+              }
+            ]
+          },
+          "rId": {
+            "XMP": "persltr3"
+          },
+          "name": {
+            "XMP": "Listener 2"
+          },
+          "rCtype": {
+            "struct": [
+              {
+                "identifiers": {
+                  "XMP": [
+                    "https://example.org/rctype/type2021.1a",
+                    "https://example.org/rctype/type2021.1b"
+                  ]
+                },
+                "name": {
+                  "XMP": "Region Boundary Content Type Name (ref2021.1)"
+                }
+              }
+            ]
+          },
+          "rRole": {
+            "struct": [
+              {
+                "identifiers": {
+                  "XMP": [
+                    "https://example.org/rrole/role2021.1a",
+                    "https://example.org/rrole/role2021.1b"
+                  ]
+                },
+                "name": {
+                  "XMP": "Region Boundary Content Role Name (ref2021.1)"
+                }
+              }
+            ]
+          },
+          "$anypmdproperty": {}
+        },
+        {
+          "regionBoundary": {
+            "struct": [
+              {
+                "rbShape": {
+                  "XMP": "polygon"
+                },
+                "rbUnit": {
+                  "XMP": "relative"
+                },
+                "rbX": {},
+                "rbY": {},
+                "rbW": {},
+                "rbH": {},
+                "rbRx": {},
+                "rbVertices": {
+                  "struct": [
+                    {
+                      "rbX": {
+                        "XMP": 0.05
+                      },
+                      "rbY": {
+                        "XMP": 0.713
+                      }
+                    },
+                    {
+                      "rbX": {
+                        "XMP": 0.148
+                      },
+                      "rbY": {
+                        "XMP": 0.041
+                      }
+                    },
+                    {
+                      "rbX": {
+                        "XMP": 0.375
+                      },
+                      "rbY": {
+                        "XMP": 0.863
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "rId": {
+            "XMP": "persltr1"
+          },
+          "name": {
+            "XMP": "Speaker 1"
+          },
+          "rCtype": {
+            "struct": [
+              {
+                "identifiers": {
+                  "XMP": [
+                    "https://example.org/rctype/type2021.1a",
+                    "https://example.org/rctype/type2021.1b"
+                  ]
+                },
+                "name": {
+                  "XMP": "Region Boundary Content Type Name (ref2021.1)"
+                }
+              }
+            ]
+          },
+          "rRole": {
+            "struct": [
+              {
+                "identifiers": {
+                  "XMP": [
+                    "https://example.org/rrole/role2021.1a",
+                    "https://example.org/rrole/role2021.1b"
+                  ]
+                },
+                "name": {
+                  "XMP": "Region Boundary Content Role Name (ref2021.1)"
+                }
+              }
+            ]
+          },
+          "$anypmdproperty": {}
+        }
+      ]
+    },
+    "registryEntries": {
+      "struct": [
+        {
+          "assetIdentifier": {
+            "XMP": "Registry Image ID 1 (ref2021.1)"
+          },
+          "registryIdentifier": {
+            "XMP": "Registry Organisation ID 1 (ref2021.1)"
+          },
+          "role": {
+            "XMP": "Registry Entry Role ID 1 (ref2021.1)"
+          }
+        },
+        {
+          "assetIdentifier": {
+            "XMP": "Registry Image ID 2 (ref2021.1)"
+          },
+          "registryIdentifier": {
+            "XMP": "Registry Organisation ID 2 (ref2021.1)"
+          },
+          "role": {
+            "XMP": "Registry Entry Role ID 2 (ref2021.1)"
+          }
+        }
+      ]
+    },
+    "suppliers": {
+      "struct": [
+        {
+          "imageSupplierId": {
+            "XMP": "Image Supplier Id (ref2021.1)"
+          },
+          "imageSupplierName": {
+            "XMP": "Image Supplier Name (ref2021.1)"
+          }
+        }
+      ]
+    },
+    "imageSupplierImageId": {
+      "XMP": "Image Supplier Image ID (ref2021.1)"
+    },
+    "licensors": {
+      "struct": [
+        {
+          "licensorId": {
+            "XMP": "Licensor ID 1 (ref2021.1)"
+          },
+          "licensorName": {
+            "XMP": "Licensor Name 1 (ref2021.1)"
+          },
+          "licensorAddress": {
+            "XMP": "Licensor Street Addr 1 (ref2021.1)"
+          },
+          "licensorAddressDetail": {
+            "XMP": "Licensor Ext Addr 1 (ref2021.1)"
+          },
+          "licensorCity": {
+            "XMP": "Licensor City 1 (ref2021.1)"
+          },
+          "licensorStateProvince": {
+            "XMP": "Licensor Region 1 (ref2021.1)"
+          },
+          "licensorPostalCode": {
+            "XMP": "Licensor Postcode 1 (ref2021.1)"
+          },
+          "licensorCountryName": {
+            "XMP": "Licensor Country 1 (ref2021.1)"
+          },
+          "licensorTelephoneType1": {
+            "XMP": "work"
+          },
+          "licensorTelephone1": {
+            "XMP": "Licensor Phone1 1 (ref2021.1)"
+          },
+          "licensorTelephoneType2": {
+            "XMP": "cell"
+          },
+          "licensorTelephone2": {
+            "XMP": "Licensor Phone2 1 (ref2021.1)"
+          },
+          "licensorEmail": {
+            "XMP": "Licensor Email 1 (ref2021.1)"
+          },
+          "licensorUrl": {
+            "XMP": "Licensor URL 1 (ref2021.1)"
+          }
+        },
+        {
+          "licensorId": {
+            "XMP": "Licensor ID 2 (ref2021.1)"
+          },
+          "licensorName": {
+            "XMP": "Licensor Name 2 (ref2021.1)"
+          },
+          "licensorAddress": {
+            "XMP": "Licensor Street Addr 2 (ref2021.1)"
+          },
+          "licensorAddressDetail": {
+            "XMP": "Licensor Ext Addr 2 (ref2021.1)"
+          },
+          "licensorCity": {
+            "XMP": "Licensor City 2 (ref2021.1)"
+          },
+          "licensorStateProvince": {
+            "XMP": "Licensor Region 2 (ref2021.1)"
+          },
+          "licensorPostalCode": {
+            "XMP": "Licensor Postcode 2 (ref2021.1)"
+          },
+          "licensorCountryName": {
+            "XMP": "Licensor Country 2 (ref2021.1)"
+          },
+          "licensorTelephoneType1": {
+            "XMP": "work"
+          },
+          "licensorTelephone1": {
+            "XMP": "Licensor Phone1 2 (ref2021.1)"
+          },
+          "licensorTelephoneType2": {
+            "XMP": "cell"
+          },
+          "licensorTelephone2": {
+            "XMP": "Licensor Phone2 2 (ref2021.1)"
+          },
+          "licensorEmail": {
+            "XMP": "Licensor Email 2 (ref2021.1)"
+          },
+          "licensorUrl": {
+            "XMP": "Licensor URL 2 (ref2021.1)"
+          }
+        }
+      ]
+    },
+    "linkedEncRightsExprs": {
+      "struct": [
+        {
+          "rightsExprLangId": {
+            "XMP": "IANA Media Type of ERE (ref2021.1)"
+          },
+          "rightsExprEncType": {
+            "XMP": "http://example.org/linkedrightsexpression/id986/ref2021.1"
+          },
+          "linkedRightsExpr": {
+            "XMP": "http://example.org/RELids/id4712/ref2021.1"
+          }
+        }
+      ]
+    },
+    "locationCreated": {
+      "struct": [
+        {
+          "city": {
+            "XMP": "City (Location created1) (ref2021.1)"
+          },
+          "countryCode": {
+            "XMP": "R17"
+          },
+          "countryName": {
+            "XMP": "CountryName (Location created1) (ref2021.1)"
+          },
+          "gpsAltitude": {
+            "XMP": 480
+          },
+          "gpsLatitude": {
+            "XMP": 48.275
+          },
+          "gpsLongitude": {
+            "XMP": 16.338
+          },
+          "identifiers": {
+            "XMP": [
+              "Location Id (Location created1) (ref2021.1)"
+            ]
+          },
+          "name": {
+            "XMP": "Location Name (Location created1) (ref2021.1)"
+          },
+          "provinceState": {
+            "XMP": "Province/State (Location created1) (ref2021.1)"
+          },
+          "sublocation": {
+            "XMP": "Sublocation (Location created1) (ref2021.1)"
+          },
+          "worldRegion": {
+            "XMP": "Worldregion (Location created1) (ref2021.1)"
+          }
+        }
+      ]
+    },
+    "locationsShown": {
+      "struct": [
+        {
+          "city": {
+            "XMP": "City (Location shown1) (ref2021.1)"
+          },
+          "countryCode": {
+            "XMP": "R17"
+          },
+          "countryName": {
+            "XMP": "CountryName (Location shown1) (ref2021.1)"
+          },
+          "gpsAltitude": {
+            "XMP": 140
+          },
+          "gpsLatitude": {
+            "XMP": 48.147
+          },
+          "gpsLongitude": {
+            "XMP": 17.098
+          },
+          "identifiers": {
+            "XMP": [
+              "Location Id 1a(Location shown1) (ref2021.1)",
+              "Location Id 1b(Location shown1) (ref2021.1)"
+            ]
+          },
+          "name": {
+            "XMP": "Location Name (Location shown1) (ref2021.1)"
+          },
+          "provinceState": {
+            "XMP": "Province/State (Location shown1) (ref2021.1)"
+          },
+          "sublocation": {
+            "XMP": "Sublocation (Location shown1) (ref2021.1)"
+          },
+          "worldRegion": {
+            "XMP": "Worldregion (Location shown1) (ref2021.1)"
+          }
+        },
+        {
+          "city": {
+            "XMP": "City (Location shown2) (ref2021.1)"
+          },
+          "countryCode": {
+            "XMP": "R17"
+          },
+          "countryName": {
+            "XMP": "CountryName (Location shown2) (ref2021.1)"
+          },
+          "gpsAltitude": {
+            "XMP": 120
+          },
+          "gpsLatitude": {
+            "XMP": 47.952
+          },
+          "gpsLongitude": {
+            "XMP": 16.83
+          },
+          "identifiers": {
+            "XMP": [
+              "Location Id 2a(Location shown2) (ref2021.1)",
+              "Location Id 2b(Location shown2) (ref2021.1)"
+            ]
+          },
+          "name": {
+            "XMP": "Location Name (Location shown2) (ref2021.1)"
+          },
+          "provinceState": {
+            "XMP": "Province/State (Location shown2) (ref2021.1)"
+          },
+          "sublocation": {
+            "XMP": "Sublocation (Location shown2) (ref2021.1)"
+          },
+          "worldRegion": {
+            "XMP": "Worldregion (Location shown2) (ref2021.1)"
+          }
+        }
+      ]
+    },
+    "maxAvailHeight": {
+      "XMP": 20
+    },
+    "maxAvailWidth": {
+      "XMP": 21
+    },
+    "minorModelAgeDisclosure": {
+      "XMP": "AG-A25"
+    },
+    "modelAges": {
+      "XMP": [
+        25,
+        27,
+        30
+      ]
+    },
+    "modelReleaseDocuments": {
+      "XMP": [
+        "Model Release ID 1 (ref2021.1)",
+        "Model Release ID 2 (ref2021.1)"
+      ]
+    },
+    "modelReleaseStatus": {
+      "XMP": "MR-NAP"
+    },
+    "organisationInImageNames": {
+      "XMP": [
+        "Organisation Name 1 (ref2021.1)",
+        "Organisation Name 2 (ref2021.1)",
+        "Organisation Name 3 (ref2021.1)"
+      ]
+    },
+    "personInImageNames": {
+      "XMP": [
+        "Person Shown 1 (ref2021.1)",
+        "Person Shown 2 (ref2021.1)"
+      ]
+    },
+    "personsShown": {
+      "struct": [
+        {
+          "characteristics": {
+            "struct": [
+              {
+                "cvId": {
+                  "XMP": "http://example.com/cv/test99/ref2021.1"
+                },
+                "cvTermId": {
+                  "XMP": "http://example.com/cv/test99/code987/ref2021.1"
+                },
+                "cvTermName": {
+                  "XMP": "Person Characteristic Name 1 (ref2021.1)"
+                },
+                "cvTermRefinedAbout": {
+                  "XMP": "http://example.com/cv/refinements987/codeY765/ref2021.1"
+                }
+              }
+            ]
+          },
+          "description": {
+            "XMP": "Person Description 1 (ref2021.1)"
+          },
+          "identifiers": {
+            "XMP": [
+              "http://wikidata.org/item/Q123456789/ref2021.1",
+              "http://freebase.com/m/987654321/ref2021.1"
+            ]
+          },
+          "name": {
+            "XMP": "Person Name 1 (ref2021.1)"
+          }
+        }
+      ]
+    },
+    "productsShown": {
+      "struct": [
+        {
+          "description": {
+            "XMP": "Product Description 1 (ref2021.1)"
+          },
+          "gtin": {
+            "XMP": 123456782021.1
+          },
+          "name": {
+            "XMP": "Product Name 1 (ref2021.1)"
+          }
+        }
+      ]
+    },
+    "propertyReleaseDocuments": {
+      "XMP": [
+        "Property Release ID 1 (ref2021.1)",
+        "Property Release ID 2 (ref2021.1)"
+      ]
+    },
+    "propertyReleaseStatus": {
+      "XMP": "PR-NAP"
+    },
+    "webstatementRights": {
+      "XMP": "http://www.WebStatementOfRights.org/2021.1"
+    }
+  }
+}

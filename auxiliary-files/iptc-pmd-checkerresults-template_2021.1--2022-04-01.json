@@ -1,0 +1,999 @@
+{
+  "altTextAccessibility": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "cityName": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "copyrightNotice": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "EXIF": 0,
+      "INSYNC": -1,
+      "MAPINSYNC": -1
+    }
+  },
+  "countryName": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "countryCode": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "creatorNames": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1,
+      "IIM": 0,
+      "EXIF": 0,
+      "INSYNC": -1,
+      "MAPINSYNC": -1
+    }
+  },
+  "creatorContactInfo": {
+    "data": {
+      "XMP": 0
+    },
+    "struct": {
+      "address": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "city": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "country": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "emailwork": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "phonework": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "postalCode": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "region": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "weburlwork": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "jobtitle": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "creditLine": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "dateCreated": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "EXIF": 0,
+      "INSYNC": -1,
+      "MAPINSYNC": -1
+    }
+  },
+  "description": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "EXIF": 0,
+      "INSYNC": -1,
+      "MAPINSYNC": -1
+    }
+  },
+  "captionWriter": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "extDescrAccessibility": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "headline": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "instructions": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "intellectualGenre": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "jobid": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "keywords": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "provinceState": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "usageTerms": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "sceneCodes": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    }
+  },
+  "source": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "subjectCodes": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "sublocationName": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "title": {
+    "data": {
+      "XMP": 0,
+      "IIM": 0,
+      "INSYNC": -1
+    }
+  },
+  "eventId": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    }
+  },
+  "eventName": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "additionalModelInfo": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "artworkOrObjects": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "circaDateCreated": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "contentDescription": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "contributionDescription": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "copyrightNotice": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "creatorNames": {
+        "data": {
+          "XMP": 0,
+          "XMPVALOCCUR": -1
+        }
+      },
+      "creatorIdentifiers": {
+        "data": {
+          "XMP": 0,
+          "XMPVALOCCUR": -1
+        }
+      },
+      "currentCopyrightOwnerIdentifier": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "currentCopyrightOwnerName": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "currentLicensorIdentifier": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "currentLicensorName": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "dateCreated": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "physicalDescription": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "source": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "sourceInventoryNr": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "sourceInventoryUrl": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "stylePeriod": {
+        "data": {
+          "XMP": 0,
+          "XMPVALOCCUR": -1
+        }
+      },
+      "title": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "organisationInImageCodes": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    }
+  },
+  "copyrightOwners": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "copyrightOwnerId": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "copyrightOwnerName": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "aboutCvTerms": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "cvId": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "cvTermId": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "cvTermName": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "cvTermRefinedAbout": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "digitalImageGuid": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "digitalSourceType": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "embdEncRightsExprs": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "rightsExprLangId": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "rightsExprEncType": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "encRightsExpr": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "genres": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "cvId": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "cvTermId": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "cvTermName": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "cvTermRefinedAbout": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "imageCreators": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "imageCreatorId": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "imageCreatorName": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "imageRating": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "imageRegion": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "regionBoundary": {
+        "data": {
+          "XMP": 0
+        },
+        "struct": {
+          "rbShape": {
+            "data": {
+              "XMP": 0
+            }
+          },
+          "rbUnit": {
+            "data": {
+              "XMP": 0
+            }
+          },
+          "rbX": {
+            "data": {
+              "XMP": 0
+            }
+          },
+          "rbY": {
+            "data": {
+              "XMP": 0
+            }
+          },
+          "rbW": {
+            "data": {
+              "XMP": 0
+            }
+          },
+          "rbH": {
+            "data": {
+              "XMP": 0
+            }
+          },
+          "rbRx": {
+            "data": {
+              "XMP": 0
+            }
+          },
+          "rbVertices": {
+            "data": {
+              "XMP": 0,
+              "XMPVALOCCUR": -1
+            },
+            "struct": {
+              "rbX": {
+                "data": {
+                  "XMP": 0
+                }
+              },
+              "rbY": {
+                "data": {
+                  "XMP": 0
+                }
+              }
+            }
+          }
+        }
+      },
+      "rId": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "name": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "rCtype": {
+        "data": {
+          "XMP": 0,
+          "XMPVALOCCUR": -1
+        },
+        "struct": {
+          "identifiers": {
+            "data": {
+              "XMP": 0,
+              "XMPVALOCCUR": -1
+            }
+          },
+          "name": {
+            "data": {
+              "XMP": 0
+            }
+          }
+        }
+      },
+      "rRole": {
+        "data": {
+          "XMP": 0,
+          "XMPVALOCCUR": -1
+        },
+        "struct": {
+          "identifiers": {
+            "data": {
+              "XMP": 0,
+              "XMPVALOCCUR": -1
+            }
+          },
+          "name": {
+            "data": {
+              "XMP": 0
+            }
+          }
+        }
+      },
+      "$anypmdproperty": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "registryEntries": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "assetIdentifier": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "registryIdentifier": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "role": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "suppliers": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "imageSupplierId": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "imageSupplierName": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "imageSupplierImageId": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "licensors": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "licensorId": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "licensorName": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "licensorAddress": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "licensorAddressDetail": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "licensorCity": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "licensorStateProvince": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "licensorPostalCode": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "licensorCountryName": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "licensorTelephoneType1": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "licensorTelephone1": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "licensorTelephoneType2": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "licensorTelephone2": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "licensorEmail": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "licensorUrl": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "linkedEncRightsExprs": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "rightsExprLangId": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "rightsExprEncType": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "linkedRightsExpr": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "locationCreated": {
+    "data": {
+      "XMP": 0
+    },
+    "struct": {
+      "city": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "countryCode": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "countryName": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "gpsAltitude": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "gpsLatitude": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "gpsLongitude": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "identifiers": {
+        "data": {
+          "XMP": 0,
+          "XMPVALOCCUR": -1
+        }
+      },
+      "name": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "provinceState": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "sublocation": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "worldRegion": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "locationsShown": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "city": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "countryCode": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "countryName": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "gpsAltitude": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "gpsLatitude": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "gpsLongitude": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "identifiers": {
+        "data": {
+          "XMP": 0,
+          "XMPVALOCCUR": -1
+        }
+      },
+      "name": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "provinceState": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "sublocation": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "worldRegion": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "maxAvailHeight": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "maxAvailWidth": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "minorModelAgeDisclosure": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "modelAges": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    }
+  },
+  "modelReleaseDocuments": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    }
+  },
+  "modelReleaseStatus": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "organisationInImageNames": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    }
+  },
+  "personInImageNames": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    }
+  },
+  "personsShown": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "characteristics": {
+        "data": {
+          "XMP": 0,
+          "XMPVALOCCUR": -1
+        },
+        "struct": {
+          "cvId": {
+            "data": {
+              "XMP": 0
+            }
+          },
+          "cvTermId": {
+            "data": {
+              "XMP": 0
+            }
+          },
+          "cvTermName": {
+            "data": {
+              "XMP": 0
+            }
+          },
+          "cvTermRefinedAbout": {
+            "data": {
+              "XMP": 0
+            }
+          }
+        }
+      },
+      "description": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "identifiers": {
+        "data": {
+          "XMP": 0,
+          "XMPVALOCCUR": -1
+        }
+      },
+      "name": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "productsShown": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    },
+    "struct": {
+      "description": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "gtin": {
+        "data": {
+          "XMP": 0
+        }
+      },
+      "name": {
+        "data": {
+          "XMP": 0
+        }
+      }
+    }
+  },
+  "propertyReleaseDocuments": {
+    "data": {
+      "XMP": 0,
+      "XMPVALOCCUR": -1
+    }
+  },
+  "propertyReleaseStatus": {
+    "data": {
+      "XMP": 0
+    }
+  },
+  "webstatementRights": {
+    "data": {
+      "XMP": 0
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "exiftoolVersion": {
+    "label": "ExifTool version used by this system",
+    "sortorder": "aod0010",
+    "datatype": "plain",
+    "dataformat": "string",
+    "etTag": "ExifTool:ExifToolVersion"
+  },
+  "xmpToolkit": {
+    "label": "XMP Toolkit version used for writing XMP",
+    "sortorder": "aod0020",
+    "datatype": "plain",
+    "dataformat": "string",
+    "etTag": "XMP-x:XMPToolkit"
+  }
+
+}

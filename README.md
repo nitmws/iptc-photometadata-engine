@@ -491,7 +491,24 @@ Transforms an IPTC Photo Metadata Checker result to an object with properties fo
 * Parameter `ipmdIdFilter`: array of IPTC Photo Metadata property identifiers. If this array is not empty only these IPTC properties are used for generating output data.
 * Parameter `ipmdTechRefFsd`: an instance of [FixedStructureData](#class-fixedstructuredata) holding the object of the IPTC TechReference
 
-Returns an array of [Row1Fields](#class-row1fields).
+Returns an array of instances of [Row1Fields](#class-row1fields).
+
+#### Class Row1Fields
+
+Object holding basic data about the state of an IPTC Photo Metadata property in an image file which can be used for building a row of a visual table (e.g. in HTML)
+
+The properties:
+* `topic`: identifier of the selected [Output Design Options](#class-outputdesignoptions)
+* `sortorder`: a string value setting the sort order of this row
+* `nameL1`: name of the IPTC property at the top level = Level 1
+* `nameL2`: name of a sub-property of the IPTC property at Level 1
+* `nameL3`: name of a sub-property of the IPTC property at Level 2
+* `nameL4`: name of a sub-property of the IPTC property at Level 3
+* `nameL5`: name of a sub-property of the IPTC property at Level 4
+* `xmpprop`: state of finding the XMP property of the IPTC property: "found" or "MISSING".
+* `iimprop`: state of finding the IIM property of the IPTC property: "found" or "MISSING" or "not spec" if for the IPTC property no IIM property is in the IPTC Photo Metadata Standard specification
+* `valuesinsync`: state of checking if the XMP and the IIM values are in sync: "in sync" or "NOT in sync"
+* `comments`: any comments to be shown in the table.
 
 ### Function tabledata1ToCsvdata1
 
@@ -519,24 +536,7 @@ Transforms an [IPTC Photo Metadata Checker Result](#object-ipmdcheckerresult) to
 * Parameter `embFormatPref`: code for creating the single value of an IPTC Photo Metadata property from the embedded XMP and IIM format values: "XMP" or "IIM"
 * Parameter `thisEmbFormatOnly`: if "true", only values of the XMP or IIM format selected by `embFormatPref` are used. In fact this overrules any "which format should be preferred" processing.
 
-Returns an [IPTC Photo Metadata object](#object-iptc-photo-metadata). 
-
-### Class Row1Fields
-
-Object holding basic data about the state of an IPTC Photo Metadata property in an image file which can be used for building a row of a visual table (e.g. in HTML)
-
-The properties:
-* `topic`: identifier of the selected [Output Design Options](#class-outputdesignoptions)
-* `sortorder`: a string value setting the sort order of this row
-* `nameL1`: name of the IPTC property at the top level = Level 1
-* `nameL2`: name of a sub-property of the IPTC property at Level 1
-* `nameL3`: name of a sub-property of the IPTC property at Level 2
-* `nameL4`: name of a sub-property of the IPTC property at Level 3
-* `nameL5`: name of a sub-property of the IPTC property at Level 4
-* `xmpprop`: state of finding the XMP property of the IPTC property: "found" or "MISSING".
-* `iimprop`: state of finding the IIM property of the IPTC property: "found" or "MISSING" or "not spec" if for the IPTC property no IIM property is in the IPTC Photo Metadata Standard specification
-* `valuesinsync`: state of checking if the XMP and the IIM values are in sync: "in sync" or "NOT in sync"
-* `comments`: any comments to be shown in the table.
+Returns an [IPTC Photo Metadata object](#object-iptc-photo-metadata).
 
 ### Class Csv1Options
 

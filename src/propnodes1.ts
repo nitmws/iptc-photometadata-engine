@@ -1,6 +1,7 @@
 import * as icc from "./constants";
 import { MdStruct } from "./incommon";
 import * as util1 from "./utilities1";
+import { IipmdCheckerResult } from "./ipmdchecker";
 import FixedStructureData from "./fixed_structure_data";
 
 /**
@@ -82,23 +83,32 @@ const fsdIsel = "#";
 
 /**
  * Transforms an IPTC PMD Checker Result object to PropNodes (property nodes)
- * @param ipmdChkResultFsd
+ * @param ipmdChkResult
  * @param opdOpt
  * @param labeltype
  * @param noValueText
  * @param ipmdIdFilter
- * @param ipmdTechRefFsd
+ * @param ipmdTechRef
  * @param anyOtherDataRef
  */
 export function ipmdChkResultToPropNodes(
-  ipmdChkResultFsd: FixedStructureData,
+  ipmdChkResult: IipmdCheckerResult,
   opdOpt: OutputDesignOptions,
   labeltype: Labeltype,
   noValueText: string,
   ipmdIdFilter: string[],
-  ipmdTechRefFsd: FixedStructureData,
+  ipmdTechRef: object,
   anyOtherDataRef: MdStruct
 ): PropNodesArraysSet1 {
+  const ipmdTechRefFsd: FixedStructureData = new FixedStructureData(
+    ipmdTechRef,
+    false
+  );
+
+  const ipmdChkResultFsd: FixedStructureData = new FixedStructureData(
+    ipmdChkResult,
+    false
+  );
   const ipmdChkResultState: object = ipmdChkResultFsd.getFsData(
     icc.ipmdcrState
   )["value"];

@@ -1,5 +1,5 @@
 import { MdStruct } from "./incommon";
-import FixedStructureData from "./fixed_structure_data";
+import { IipmdCheckerResult } from "./ipmdchecker";
 /**
  * Class holds all options relevant for the design of the output
  */
@@ -65,12 +65,12 @@ export declare enum Ptype {
 }
 /**
  * Transforms an IPTC PMD Checker Result object to PropNodes (property nodes)
- * @param ipmdChkResultFsd
+ * @param ipmdChkResult
  * @param opdOpt
  * @param labeltype
  * @param noValueText
  * @param ipmdIdFilter
- * @param ipmdTechRefFsd
+ * @param ipmdTechRef
  * @param anyOtherDataRef
  */
-export declare function ipmdChkResultToPropNodes(ipmdChkResultFsd: FixedStructureData, opdOpt: OutputDesignOptions, labeltype: Labeltype, noValueText: string, ipmdIdFilter: string[], ipmdTechRefFsd: FixedStructureData, anyOtherDataRef: MdStruct): PropNodesArraysSet1;
+export declare function ipmdChkResultToPropNodes(ipmdChkResult: IipmdCheckerResult, opdOpt: OutputDesignOptions, labeltype: Labeltype, noValueText: string, ipmdIdFilter: string[], ipmdTechRef: object, anyOtherDataRef: MdStruct): PropNodesArraysSet1;

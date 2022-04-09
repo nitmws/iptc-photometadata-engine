@@ -1,4 +1,3 @@
-import FixedStructureData from "./fixed_structure_data";
 import { IipmdCheckerResult } from "./ipmdchecker";
 export declare class Csv1Options {
     fieldsep: string;
@@ -18,11 +17,11 @@ export declare class Row1Fields {
 }
 /**
  * Transform an IPTC PMD Checker Result object to an array of table rows, type 1 (Row1Fields)
- * @param ipmdChkResultFsd
+ * @param ipmdChkResult
  * @param ipmdIdFilter
- * @param ipmdTechRefFsd
+ * @param ipmdTechRef
  */
-export declare function ipmdChkResultToTabledata1(ipmdChkResultFsd: FixedStructureData, ipmdIdFilter: string[], ipmdTechRefFsd: FixedStructureData): Row1Fields[];
+export declare function ipmdChkResultToTabledata1(ipmdChkResult: IipmdCheckerResult, ipmdIdFilter: string[], ipmdTechRef: object): Row1Fields[];
 /**
  * Transforms the tabledata1 format to CSV data, type 1
  * @param tableRows

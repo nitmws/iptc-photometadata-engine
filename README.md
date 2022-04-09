@@ -47,9 +47,6 @@ import * as ipmde from 'iptc-photometadata-engine'
 * [Class IpmdSetter](#class-ipmdsetter)
     * [Method generateExiftoolJson](#method-generateexiftooljson)
     * [Class GenerateEtJsonOptions](#class-generateetjsonoptions)
-* [Class FixedStructureData](#class-fixedstructuredata)
-    * [Method getFsData](#method-getfsdata)
-    * [Method setFsd](#method-setfsd)
 * [Construct Tree of Property Nodes](#construct-tree-of-property-nodes)
     * [Function ipmdChkResultToPropNodes](#function-ipmdchkresulttopropnodes)
     * [Class OutputDesignOptions](#class-outputdesignoptions)
@@ -70,6 +67,9 @@ import * as ipmde from 'iptc-photometadata-engine'
     * [Function objectIsEmpty](#function-objectisempty)
     * [Function arraysEqual](#function-arraysequal)
     * [generateIpmdChkResultsStateTemplate](#function-generateipmdchkresultsstatetemplate)
+* [Class FixedStructureData](#class-fixedstructuredata)
+  * [Method getFsData](#method-getfsdata)
+  * [Method setFsd](#method-setfsd)
 * [Available constants](#available-constants)
 * [Auxiliary Files folder](#auxiliary-files-folder)
 
@@ -266,69 +266,6 @@ The properties of this class act as options for the method [generateExiftoolJson
 
 * `disabledPrintConv`: boolean = false. Should be set to "true" if -f parameter of ExifTool will be used
 
-## Class FixedStructureData
-
-A helper for reading from and writing to a fixed structure of data. It supports the use of hierarchical paths from the top level of the structure down to any deeper level. "Fixed structure" means that the data structure loaded into an instance of this class is not changed during reading (and optionally writing) values of its properties.
-
-In the IPTC Photo Metadata Engine it is used for the structured data of IPTC properties.
-
-### constructor
-
-* Parameter `fsData`: object of fixed structure data, it may have a hierarchical structure.
-* Parameter `readAndWrite`: if `false`: date can be read only, if `true`: data can be written too.
-
-### Method getFsData
-
-Reads value(s) from a property in the fixed structure of data with a path of property names as selector.
-
-The method returns this object:
-* Property `state` with one of these values
-    * "FOUND" = the addressed property was found
-    * "ERROR" = value occured, see property "msg"
-* Property `msg` (only with "state": "ERROR"): a human readable message about any error
-* Property `value` (only with "state": "FOUND"): the value(s) of the addressed property as it is:
-    * a single string or number
-    * an array of strings or numbers
-    * an object being the structured value
-    * an array of objects being the structured values
-    * Note: a returned string or object may be an empty value
-
-The parameters:
-* Parameter `selectpath`: a sequence of property names of the structure. The property names are separated by the parameter levelsep (see below) and the top level property is the first one. If multiple values of a property may occur a zero-based index can address a specific item of this array.
-* Parameter `levelsep` (optional): a character separating property names of the hierarchical structure in the `selectpath`. Default value: "/"
-* Parameter `indexsep` (optional): a character separating the property identifier from the index number of a to-be-read value in an array of values in the `selectpath`. Default value: "#"
-
-Returns an object of this structure:
-* Property `state` with one of these values
-  * "SET" = the value of the addressed property was set
-  * "ERROR" = value occured, see property "msg"
-* Property `msg`: in case of "state" = "ERROR", a human readable message about any error
-* Property `value`: in case of "state" = "FOUND", the value of the found property.
-
-**Examples** of `selectpath`:
-* "copyrightNotice": addresses the IPTC property with the identifier "copyrightNotice" at the top level of the hierarchy
-* "keywords": addresses the IPTC property with the identifier "keywords" at the top level of the hierarchy. As this property has an array of strings as data type an array with none, one or many strings is returned.
-* "locationCreated/countryCode": addresses the top level IPTC property with the identifier "locationCreated" and in its structured value the sub-property with the identifier "countryCode"
-* "locationShown#2/city": addresses the top level IPTC property with the identifier "locationShown" and as its value is an array the item with index 2. In this item the sub-property with the identifier "city" is addressed.
-
-### Method setFsd
-
-Writes value(s) to a property in the fixed structure of data with a path of property names as selector.
-
-The parameters:
-* Parameter `setvalue`: a string or a number or an object or an array thereof to be set as value of the property addressed by the `selectpath`.
-* Parameter `selectpath`: a sequence of property names of the structure. The property names are separated by the parameter levelsep (see below) and the top level property is the first one. If multiple values of a property may occur a zero-based index can address a specific item of this array.
-* Parameter `levelsep` (optional): a character separating property names of the hierarchical structure in the `selectpath`. Default value: "/"
-* Parameter `indexsep` (optional): a character separating the property identifier from the index number of a to-be-read value in an array of values in the `selectpath`. Default value: "#"
-
-The method returns an object of this structure:
-* Property `state` with one of these values
-  * "SET" = the value of the addressed property was set
-  * "ERROR" = value occured, see property "msg"
-* Property `msg` (only with "state": "ERROR"): a human readable message about any error
-
-See the Examples of the [method getFsData](#method-getfsdata) they apply to using the selectpath for this method in the same way.
-
 ## Construct Tree of Property Nodes
 
 This construct is a helper for creating a tree-like display of the hierarchical IPTC Photo Metadata properties in a user interface like an HTML document.
@@ -342,12 +279,12 @@ The basic design is:
 
 Transforms an instance of the object [IpmdCheckerResult](#object-ipmdcheckerresult) to a hierarchical structure of PropNodes.
 
-* Parameter `ipmdChkResultFsd`: an instance of [FixedStructureData](#class-fixedstructuredata) holding the to-be-converted [IPTC Photo Metadata Checker Result](#object-ipmdcheckerresult)
+* Parameter `ipmdChkResult`: an instance of the to-be-converted [IPTC Photo Metadata Checker Result](#object-ipmdcheckerresult)
 * Parameter `opdOpt`: an instance of [OutputDesignOptions](#class-outputdesignoptions) for controlling the generation of output data corresponding to the design option.
 * Parameter `labeltype`: a code from this enumeration selects the applied label: ipmd (= IPTC Photo Metadata Standard labels), valuefmt (= labels used by XMP, IPTC IIM or Exif), et (= labels used by ExifTool)
 * Parameter `noValueText`: a string acting as default text applied if no embedded value was found, e.g. "[no value found]"
 * Parameter `ipmdIdFilter`: array of IPTC Photo Metadata property identifiers. If this array is not empty only these IPTC properties are used for generating output data.
-* Parameter `ipmdTechRefFsd`: an instance of [FixedStructureData](#class-fixedstructuredata) holding the object of the IPTC TechReference
+* Parameter `ipmdTechRef`: an object of the IPTC TechReference data.
 * Parameter `anyOtherDataRef`: [Any-Other-Metadata-Reference](#object-any-other-metadata-reference) object setting properties of any non-IPTC (meta)data in the ExifTool object.
 
 Returns an instance of [PropNodesArraysSet1](#class-propnodesarraysset1).
@@ -487,9 +424,9 @@ The properties of this JavaScript object:
 
 Transforms an IPTC Photo Metadata Checker result to an object with properties for building a visual table (in HTML). These properties reflect a state of the IPTC properties: was it found, are XMP and IIM values in sync.
 
-* Parameter `ipmdChkResultFsd`: an instance of [FixedStructureData](#class-fixedstructuredata) holding the to-be-converted [IPTC Photo Metadata Checker Result](#object-ipmdcheckerresult)
+* Parameter `ipmdChkResult`: an instance of the to-be-converted [IPTC Photo Metadata Checker Result](#object-ipmdcheckerresult)
 * Parameter `ipmdIdFilter`: array of IPTC Photo Metadata property identifiers. If this array is not empty only these IPTC properties are used for generating output data.
-* Parameter `ipmdTechRefFsd`: an instance of [FixedStructureData](#class-fixedstructuredata) holding the object of the IPTC TechReference
+* Parameter `ipmdTechRef`: an object of the IPTC TechReference data.
 
 Returns an array of instances of [Row1Fields](#class-row1fields).
 
@@ -588,6 +525,69 @@ IPTC makes IPTC TechRef files available [on this page](https://iptc.org/standard
 The latest file is also available in the [Auxiliary Files folder](#auxiliary-files-folder) of this project.
 
 * Parameter `ipmdTechRefData`: an object with IPTC TechReference data, can be obtained by the loadFromJson function applied to a local copy of the TechRef file.
+
+## Class FixedStructureData
+
+A helper for reading from and writing to a fixed structure of data. It supports the use of hierarchical paths from the top level of the structure down to any deeper level. "Fixed structure" means that the data structure loaded into an instance of this class is not changed during reading (and optionally writing) values of its properties.
+
+In the IPTC Photo Metadata Engine it is used for the structured data of IPTC properties.
+
+### constructor
+
+* Parameter `fsData`: object of fixed structure data, it may have a hierarchical structure.
+* Parameter `readAndWrite`: if `false`: date can be read only, if `true`: data can be written too.
+
+### Method getFsData
+
+Reads value(s) from a property in the fixed structure of data with a path of property names as selector.
+
+The method returns this object:
+* Property `state` with one of these values
+  * "FOUND" = the addressed property was found
+  * "ERROR" = value occured, see property "msg"
+* Property `msg` (only with "state": "ERROR"): a human readable message about any error
+* Property `value` (only with "state": "FOUND"): the value(s) of the addressed property as it is:
+  * a single string or number
+  * an array of strings or numbers
+  * an object being the structured value
+  * an array of objects being the structured values
+  * Note: a returned string or object may be an empty value
+
+The parameters:
+* Parameter `selectpath`: a sequence of property names of the structure. The property names are separated by the parameter levelsep (see below) and the top level property is the first one. If multiple values of a property may occur a zero-based index can address a specific item of this array.
+* Parameter `levelsep` (optional): a character separating property names of the hierarchical structure in the `selectpath`. Default value: "/"
+* Parameter `indexsep` (optional): a character separating the property identifier from the index number of a to-be-read value in an array of values in the `selectpath`. Default value: "#"
+
+Returns an object of this structure:
+* Property `state` with one of these values
+  * "SET" = the value of the addressed property was set
+  * "ERROR" = value occured, see property "msg"
+* Property `msg`: in case of "state" = "ERROR", a human readable message about any error
+* Property `value`: in case of "state" = "FOUND", the value of the found property.
+
+**Examples** of `selectpath`:
+* "copyrightNotice": addresses the IPTC property with the identifier "copyrightNotice" at the top level of the hierarchy
+* "keywords": addresses the IPTC property with the identifier "keywords" at the top level of the hierarchy. As this property has an array of strings as data type an array with none, one or many strings is returned.
+* "locationCreated/countryCode": addresses the top level IPTC property with the identifier "locationCreated" and in its structured value the sub-property with the identifier "countryCode"
+* "locationShown#2/city": addresses the top level IPTC property with the identifier "locationShown" and as its value is an array the item with index 2. In this item the sub-property with the identifier "city" is addressed.
+
+### Method setFsd
+
+Writes value(s) to a property in the fixed structure of data with a path of property names as selector.
+
+The parameters:
+* Parameter `setvalue`: a string or a number or an object or an array thereof to be set as value of the property addressed by the `selectpath`.
+* Parameter `selectpath`: a sequence of property names of the structure. The property names are separated by the parameter levelsep (see below) and the top level property is the first one. If multiple values of a property may occur a zero-based index can address a specific item of this array.
+* Parameter `levelsep` (optional): a character separating property names of the hierarchical structure in the `selectpath`. Default value: "/"
+* Parameter `indexsep` (optional): a character separating the property identifier from the index number of a to-be-read value in an array of values in the `selectpath`. Default value: "#"
+
+The method returns an object of this structure:
+* Property `state` with one of these values
+  * "SET" = the value of the addressed property was set
+  * "ERROR" = value occured, see property "msg"
+* Property `msg` (only with "state": "ERROR"): a human readable message about any error
+
+See the Examples of the [method getFsData](#method-getfsdata) they apply to using the selectpath for this method in the same way.
 
 ## Available constants
 

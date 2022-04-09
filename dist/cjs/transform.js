@@ -22,9 +22,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ipmdChkResultToIpmd = exports.tabledata1ToCsvstring1 = exports.tabledata1ToCsvdata1 = exports.ipmdChkResultToTabledata1 = exports.Row1Fields = exports.Csv1Options = void 0;
 const icc = __importStar(require("./constants"));
+const fixed_structure_data_1 = __importDefault(require("./fixed_structure_data"));
 const util = __importStar(require("./utilities1"));
 class Csv1Options {
     constructor() {
@@ -57,11 +61,13 @@ const valInsync = "in sync";
 const valNotInsync = "NOT in sync";
 /**
  * Transform an IPTC PMD Checker Result object to an array of table rows, type 1 (Row1Fields)
- * @param ipmdChkResultFsd
+ * @param ipmdChkResult
  * @param ipmdIdFilter
- * @param ipmdTechRefFsd
+ * @param ipmdTechRef
  */
-function ipmdChkResultToTabledata1(ipmdChkResultFsd, ipmdIdFilter, ipmdTechRefFsd) {
+function ipmdChkResultToTabledata1(ipmdChkResult, ipmdIdFilter, ipmdTechRef) {
+    const ipmdTechRefFsd = new fixed_structure_data_1.default(ipmdTechRef, false);
+    const ipmdChkResultFsd = new fixed_structure_data_1.default(ipmdChkResult, false);
     const ipmdDataState = ipmdChkResultFsd.getFsData(icc.ipmdcrState)["value"];
     let statestructIpmdIds = [];
     const statestructIpmdIdsPre = Object.keys(ipmdDataState);

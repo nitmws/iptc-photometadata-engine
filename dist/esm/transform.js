@@ -1,4 +1,5 @@
 import * as icc from "./constants";
+import FixedStructureData from "./fixed_structure_data";
 import * as util from "./utilities1";
 export class Csv1Options {
     constructor() {
@@ -29,11 +30,13 @@ const valInsync = "in sync";
 const valNotInsync = "NOT in sync";
 /**
  * Transform an IPTC PMD Checker Result object to an array of table rows, type 1 (Row1Fields)
- * @param ipmdChkResultFsd
+ * @param ipmdChkResult
  * @param ipmdIdFilter
- * @param ipmdTechRefFsd
+ * @param ipmdTechRef
  */
-export function ipmdChkResultToTabledata1(ipmdChkResultFsd, ipmdIdFilter, ipmdTechRefFsd) {
+export function ipmdChkResultToTabledata1(ipmdChkResult, ipmdIdFilter, ipmdTechRef) {
+    const ipmdTechRefFsd = new FixedStructureData(ipmdTechRef, false);
+    const ipmdChkResultFsd = new FixedStructureData(ipmdChkResult, false);
     const ipmdDataState = ipmdChkResultFsd.getFsData(icc.ipmdcrState)["value"];
     let statestructIpmdIds = [];
     const statestructIpmdIdsPre = Object.keys(ipmdDataState);

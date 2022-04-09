@@ -22,10 +22,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ipmdChkResultToPropNodes = exports.Ptype = exports.PropNodesArraysSet1 = exports.Labeltype = exports.OutputDesignOptions = void 0;
 const icc = __importStar(require("./constants"));
 const util1 = __importStar(require("./utilities1"));
+const fixed_structure_data_1 = __importDefault(require("./fixed_structure_data"));
 /**
  * Class holds all options relevant for the design of the output
  */
@@ -94,15 +98,17 @@ const fsdLsep = "/";
 const fsdIsel = "#";
 /**
  * Transforms an IPTC PMD Checker Result object to PropNodes (property nodes)
- * @param ipmdChkResultFsd
+ * @param ipmdChkResult
  * @param opdOpt
  * @param labeltype
  * @param noValueText
  * @param ipmdIdFilter
- * @param ipmdTechRefFsd
+ * @param ipmdTechRef
  * @param anyOtherDataRef
  */
-function ipmdChkResultToPropNodes(ipmdChkResultFsd, opdOpt, labeltype, noValueText, ipmdIdFilter, ipmdTechRefFsd, anyOtherDataRef) {
+function ipmdChkResultToPropNodes(ipmdChkResult, opdOpt, labeltype, noValueText, ipmdIdFilter, ipmdTechRef, anyOtherDataRef) {
+    const ipmdTechRefFsd = new fixed_structure_data_1.default(ipmdTechRef, false);
+    const ipmdChkResultFsd = new fixed_structure_data_1.default(ipmdChkResult, false);
     const ipmdChkResultState = ipmdChkResultFsd.getFsData(icc.ipmdcrState)["value"];
     const allPNodesArrays = new PropNodesArraysSet1();
     let ipmdcrSpropIds = [];

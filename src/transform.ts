@@ -33,15 +33,23 @@ const valNotInsync = "NOT in sync";
 
 /**
  * Transform an IPTC PMD Checker Result object to an array of table rows, type 1 (Row1Fields)
- * @param ipmdChkResultFsd
+ * @param ipmdChkResult
  * @param ipmdIdFilter
- * @param ipmdTechRefFsd
+ * @param ipmdTechRef
  */
 export function ipmdChkResultToTabledata1(
-  ipmdChkResultFsd: FixedStructureData,
+  ipmdChkResult: IipmdCheckerResult,
   ipmdIdFilter: string[],
-  ipmdTechRefFsd: FixedStructureData
+  ipmdTechRef: object
 ): Row1Fields[] {
+  const ipmdTechRefFsd: FixedStructureData = new FixedStructureData(
+    ipmdTechRef,
+    false
+  );
+  const ipmdChkResultFsd: FixedStructureData = new FixedStructureData(
+    ipmdChkResult,
+    false
+  );
   const ipmdDataState: object = ipmdChkResultFsd.getFsData(icc.ipmdcrState)[
     "value"
   ];

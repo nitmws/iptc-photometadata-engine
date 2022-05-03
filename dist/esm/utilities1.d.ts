@@ -47,3 +47,9 @@ export declare function etTagColon(etTagUnderscore: string): string;
  * @param xmpIsoDt
  */
 export declare function xmpIsoDatetime2etDatetime(xmpIsoDt: string): string;
+export declare type ExifParts = {
+    dateTime: string | null;
+    subSeconds: string | null;
+    tzOffset: string | null;
+};
+export declare function etDatetime2ExifParts(isoDatetime: string): ExifParts;

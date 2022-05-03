@@ -160,8 +160,6 @@ class IpmdSetter {
                 valIsArray) {
                 etPropValue = ipmdPropValue;
             }
-            // datatype "struct" + dataformat != 'AltLang'
-            // console.log(typeof ipmdPropValue);
             if (datatype === icc.itgDtStruct &&
                 dataformat !== icc.itgDfAlg &&
                 propoccurrence === icc.itgPropoccurSingle &&
@@ -199,10 +197,15 @@ class IpmdSetter {
                 if (etPropValue !== undefined) {
                     switch (refPropId) {
                         case "dateCreated":
-                            const etPropValues = etPropValue.split(" ");
-                            etJson["IPTC:DateCreated"] = etPropValues[0];
-                            if (etPropValues.length > 1) {
-                                etJson["IPTC:TimeCreated"] = etPropValues[1];
+                            const exifParts = util1.etDatetime2ExifParts(etPropValue);
+                            if (exifParts.dateTime !== null) {
+                                const etPropValues = exifParts.dateTime.split(" ");
+                                etJson["IPTC:DateCreated"] = etPropValues[0];
+                                if (etPropValues.length > 1) {
+                                    etJson["IPTC:TimeCreated"] = etPropValues[1];
+                                }
+                                if (exifParts.tzOffset !== null)
+                                    etJson["IPTC:TimeCreated"] += exifParts.tzOffset;
                             }
                             break;
                         case "subjectCodes":
@@ -222,8 +225,13 @@ class IpmdSetter {
                 if (etPropValue !== undefined) {
                     switch (refPropId) {
                         case "dateCreated":
-                            etJson["ExifIFD:DateTimeOriginal"] = etPropValue.substring(0, 19);
-                            etJson["ExifIFD:TimeZoneOffset"] = etPropValue.substring(19);
+                            const exifParts = util1.etDatetime2ExifParts(etPropValue);
+                            if (exifParts.dateTime !== null)
+                                etJson["ExifIFD:DateTimeOriginal"] = exifParts.dateTime;
+                            if (exifParts.subSeconds !== null)
+                                etJson["ExifIFD:SubSecTimeOriginal"] = exifParts.subSeconds;
+                            if (exifParts.tzOffset !== null)
+                                etJson["ExifIFD:OffsetTimeOriginal"] = exifParts.tzOffset;
                             break;
                         case "imageRegion": // the mapping to Exif's Subject Area is virtual
                             break;

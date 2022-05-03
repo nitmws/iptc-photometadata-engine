@@ -271,36 +271,48 @@ export class IpmdChecker {
             if (refPropData.hasOwnProperty(icc.itgEtExif)) {
                 const etExifId = refPropData[icc.itgEtExif];
                 let exifDataSet = false; // changed to true if any Exif data value is set
-                // special case: combine Date Created from multiple Exif tags
-                if (etExifId === "ExifIFD:DateTimeOriginal+ExifIFD:TimeZoneOffset") {
+                // special case: combine Date Created from multiple Exif tags, subSeconds supported
+                if (etExifId === "ExifIFD:DateTimeOriginal+ExifIFD:OffsetTimeOriginal") {
                     if (testImgEtPmd.hasOwnProperty("ExifIFD:DateTimeOriginal")) {
                         this._ipmdStateData.setFsData(1, refPropId +
                             this._lsep +
                             icc.ipmdcrSData +
                             this._lsep +
                             icc.ipmdcrSDexif);
+                        let tzOffset = "";
+                        if (testImgEtPmd.hasOwnProperty("ExifIFD:OffsetTimeOriginal")) {
+                            tzOffset = testImgEtPmd["ExifIFD:OffsetTimeOriginal"];
+                        }
                         propVresult[icc.ipmdcrVexif] =
-                            testImgEtPmd["ExifIFD:DateTimeOriginal"];
+                            testImgEtPmd["ExifIFD:DateTimeOriginal"] + tzOffset;
                         exifValue = testImgEtPmd["ExifIFD:DateTimeOriginal"];
                         exifDataSet = true;
                     }
                 }
                 if (etExifId ===
-                    "ExifIFD:DateTimeOriginal+ExifIFD:SubSecTimeOriginal+ExifIFD:TimeZoneOffset") {
+                    "ExifIFD:DateTimeOriginal+ExifIFD:SubSecTimeOriginal+ExifIFD:OffsetTimeOriginal") {
                     if (testImgEtPmd.hasOwnProperty("ExifIFD:DateTimeOriginal")) {
                         this._ipmdStateData.setFsData(1, refPropId +
                             this._lsep +
                             icc.ipmdcrSData +
                             this._lsep +
                             icc.ipmdcrSDexif);
+                        let subSeconds = "";
+                        if (testImgEtPmd.hasOwnProperty("ExifIFD:SubSecTimeOriginal")) {
+                            subSeconds = testImgEtPmd["ExifIFD:SubSecTimeOriginal"];
+                        }
+                        let tzOffset = "";
+                        if (testImgEtPmd.hasOwnProperty("ExifIFD:OffsetTimeOriginal")) {
+                            tzOffset = testImgEtPmd["ExifIFD:OffsetTimeOriginal"];
+                        }
                         propVresult[icc.ipmdcrVexif] =
-                            testImgEtPmd["ExifIFD:DateTimeOriginal"];
+                            testImgEtPmd["ExifIFD:DateTimeOriginal"] + subSeconds + tzOffset;
                         exifValue = testImgEtPmd["ExifIFD:DateTimeOriginal"];
                         exifDataSet = true;
                     }
                 }
                 // special case: look for alternative Exif Tags describing the image
-                if (etExifId === "IFD0:ImageDescription|ExifIFD:UserComment") {
+                if (etExifId === "IFD0:ImageDescription") {
                     if (testImgEtPmd.hasOwnProperty("IFD0:ImageDescription")) {
                         // try ImageDescription first ...
                         this._ipmdStateData.setFsData(1, refPropId +
@@ -313,40 +325,30 @@ export class IpmdChecker {
                         exifValue = testImgEtPmd["IFD0:ImageDescription"];
                         exifDataSet = true;
                     }
-                    else {
-                        if (testImgEtPmd.hasOwnProperty("ExifIFD:UserComment")) {
-                            //...alternative: try UserComment
-                            this._ipmdStateData.setFsData(1, refPropId +
-                                this._lsep +
-                                icc.ipmdcrSData +
-                                this._lsep +
-                                icc.ipmdcrSDexif);
-                            propVresult[icc.ipmdcrVexif] =
-                                testImgEtPmd["ExifIFD:UserComment"];
-                            exifValue = testImgEtPmd["ExifIFD:UserComment"];
-                            exifDataSet = true;
-                        }
-                    }
                 }
                 // special case for the IPTC property title: an Exif ImageDescription value without spaces makes one
+                /* IPTC Title--Exif ImageDescription mapping cancelled
                 if (etExifId === "IFD0:ImageDescription" && refPropId === "title") {
-                    if (testImgEtPmd.hasOwnProperty(etExifId)) {
-                        const testValue = testImgEtPmd[etExifId];
-                        if (!testValue.includes(" ")) {
-                            this._ipmdStateData.setFsData(1, refPropId +
-                                this._lsep +
-                                icc.ipmdcrSData +
-                                this._lsep +
-                                icc.ipmdcrSDexif);
-                            propVresult[icc.ipmdcrVexif] = testValue;
-                            exifValue = testValue;
-                            exifDataSet = true;
-                        }
-                        else {
-                            exifDataSet = true; // = in fact not setting a value
-                        }
+                  if (testImgEtPmd.hasOwnProperty(etExifId)) {
+                    const testValue: string = testImgEtPmd[etExifId];
+                    if (!testValue.includes(" ")) {
+                      this._ipmdStateData.setFsData(
+                        1,
+                        refPropId +
+                          this._lsep +
+                          icc.ipmdcrSData +
+                          this._lsep +
+                          icc.ipmdcrSDexif
+                      );
+                      propVresult[icc.ipmdcrVexif] = testValue;
+                      exifValue = testValue;
+                      exifDataSet = true;
+                    } else {
+                      exifDataSet = true; // = in fact not setting a value
                     }
+                  }
                 }
+                */
                 // special case: Exif Tag Artist, make its value a single item array to compare properly
                 if (etExifId === "IFD0:Artist") {
                     if (testImgEtPmd.hasOwnProperty(etExifId)) {

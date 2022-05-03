@@ -272,7 +272,8 @@ export function xmpIsoDatetime2etDatetime(xmpIsoDt: string): string {
   let etDay = "01";
   let etTime = "00:00:00";
   let etTz = "+00:00";
-  // full ISO DT: 2022-03-04T12:02:07+00:00 full-len=25, D+T-len=19 D-len=10
+  // full ISO DT 1: 2022-03-04T12:02:07+00:00 full-len=25, D+T-len=19 D-len=10
+  // full ISO DT 2: 2022-03-04T12:02:07.123+00:00 full-len=?, D+T-len=? D-len=10
   const xmpIsoDtLen: number = xmpIsoDt.length;
   if (xmpIsoDtLen < 4) return etDt;
   if (xmpIsoDtLen === 4) {
@@ -305,16 +306,99 @@ export function xmpIsoDatetime2etDatetime(xmpIsoDt: string): string {
     etDt = etYear + ":" + etMonth + ":" + etDay + " " + etTime + etTz;
     return etDt;
   }
-  if (xmpIsoDtLen === 25) {
-    // day date + time + time zone
+  if (xmpIsoDtLen > 19) {
+    // day date + time + more
     etYear = xmpIsoDt.substring(0, 4);
     etMonth = xmpIsoDt.substring(5, 7);
     etDay = xmpIsoDt.substring(8, 10);
     etTime = xmpIsoDt.substring(11, 19);
-    etTz = xmpIsoDt.substring(19);
+
+    if (xmpIsoDtLen > 20) {
+      if (xmpIsoDt[19] === ".") {
+        // with subSeconds
+        let subSeconds = "";
+        let idx = 20;
+        let quitloop = false;
+        let outofstr = false;
+        while (!quitloop) {
+          if (xmpIsoDt[idx] >= "0" && xmpIsoDt[idx] <= "9") {
+            subSeconds += xmpIsoDt[idx];
+          } else {
+            quitloop = true;
+          }
+          idx++;
+          if (idx >= xmpIsoDtLen) {
+            quitloop = true;
+            outofstr = true;
+          }
+        }
+        if (subSeconds !== "") etTime += "." + subSeconds;
+        // idx is beyond subSeconds, maybe out of string
+        if (!outofstr) {
+          etTz = xmpIsoDt.substring(idx - 1);
+        }
+      } else {
+        etTz = xmpIsoDt.substring(19);
+      }
+    }
     etDt = etYear + ":" + etMonth + ":" + etDay + " " + etTime + etTz;
     return etDt;
   }
   // the xmpIsoDt had no matching length, return an empty value
   return etDt;
+}
+
+export type ExifParts = {
+  dateTime: string | null;
+  subSeconds: string | null;
+  tzOffset: string | null;
+};
+
+/**
+ * Transforms date/time in ExifTool format to parts required for setting Exif tags
+ * @param isoDatetime
+ */
+export function etDatetime2ExifParts(isoDatetime: string): ExifParts {
+  // Exiftool format option 1: 2022:05:03 15:55:25+00:00
+  // Exiftool format option 2, with subSeconds: 2022:05:03 15:55:25.123+00:00
+  const exifParts: ExifParts = {
+    dateTime: null,
+    subSeconds: null,
+    tzOffset: null,
+  };
+  if (isoDatetime.length > 18) {
+    exifParts["dateTime"] = isoDatetime.substring(0, 19);
+  } else {
+    return exifParts;
+  }
+  if (isoDatetime.length > 20) {
+    if (isoDatetime[19] === ".") {
+      // with subSeconds
+      let subSeconds = "";
+      let idx = 20;
+      let quitloop = false;
+      let outofstr = false;
+      while (!quitloop) {
+        if (isoDatetime[idx] >= "0" && isoDatetime[idx] <= "9") {
+          subSeconds += isoDatetime[idx];
+        } else {
+          quitloop = true;
+        }
+        idx++;
+        if (idx >= isoDatetime.length) {
+          quitloop = true;
+          outofstr = true;
+        }
+      }
+      exifParts.subSeconds = subSeconds;
+      // idx is beyond subSeconds, maybe out of string
+      if (!outofstr) {
+        exifParts.tzOffset = isoDatetime.substring(idx - 1);
+      }
+    } else {
+      exifParts.tzOffset = isoDatetime.substring(19);
+    }
+    return exifParts;
+  }
+  return exifParts;
 }

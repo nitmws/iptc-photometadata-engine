@@ -360,10 +360,13 @@ function xmpIsoDatetime2etDatetime(xmpIsoDt) {
     return etDt;
 }
 exports.xmpIsoDatetime2etDatetime = xmpIsoDatetime2etDatetime;
+/**
+ * Transforms date/time in ExifTool format to parts required for setting Exif tags
+ * @param isoDatetime
+ */
 function etDatetime2ExifParts(isoDatetime) {
-    // ISO format option 1: 2022-05-03T15:55:25+00:00
-    // ISO format option 2: 2022-05-03T15:55:25.123+00:00
-    // date endidx=9, len=10, time endidx=18, len=19
+    // Exiftool format option 1: 2022:05:03 15:55:25+00:00
+    // Exiftool format option 2, with subSeconds: 2022:05:03 15:55:25.123+00:00
     const exifParts = {
         dateTime: null,
         subSeconds: null,

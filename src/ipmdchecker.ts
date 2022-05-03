@@ -347,7 +347,7 @@ export class IpmdChecker {
             }
             propVresult[icc.ipmdcrVexif] =
               testImgEtPmd["ExifIFD:DateTimeOriginal"] + tzOffset;
-            exifValue = testImgEtPmd["ExifIFD:DateTimeOriginal"];
+            exifValue = testImgEtPmd["ExifIFD:DateTimeOriginal"] + tzOffset;
             exifDataSet = true;
           }
         }
@@ -374,7 +374,8 @@ export class IpmdChecker {
             }
             propVresult[icc.ipmdcrVexif] =
               testImgEtPmd["ExifIFD:DateTimeOriginal"] + subSeconds + tzOffset;
-            exifValue = testImgEtPmd["ExifIFD:DateTimeOriginal"];
+            exifValue =
+              testImgEtPmd["ExifIFD:DateTimeOriginal"] + subSeconds + tzOffset;
             exifDataSet = true;
           }
         }

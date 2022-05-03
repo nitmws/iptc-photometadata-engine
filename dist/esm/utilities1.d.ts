@@ -52,4 +52,8 @@ export declare type ExifParts = {
     subSeconds: string | null;
     tzOffset: string | null;
 };
+/**
+ * Transforms date/time in ExifTool format to parts required for setting Exif tags
+ * @param isoDatetime
+ */
 export declare function etDatetime2ExifParts(isoDatetime: string): ExifParts;

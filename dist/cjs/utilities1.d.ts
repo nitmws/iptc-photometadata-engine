@@ -43,17 +43,19 @@ export declare function etTagUnderscore(etTagColon: string): string;
  */
 export declare function etTagColon(etTagUnderscore: string): string;
 /**
- * Transforms an ISO DateTime string as used by XMP to an ExifTool date + time value
- * @param xmpIsoDt
+ * Object covering all IPTC related variants of date and time formats
  */
-export declare function xmpIsoDatetime2etDatetime(xmpIsoDt: string): string;
-export declare type ExifParts = {
-    dateTime: string | null;
-    subSeconds: string | null;
-    tzOffset: string | null;
+export declare type EtDateTimeVariants = {
+    xmpDateTime: string | null;
+    iimDate: string | null;
+    iimTime: string | null;
+    exifDateTime: string | null;
+    exifSubSeconds: string | null;
+    exifTzOffset: string | null;
 };
 /**
- * Transforms date/time in ExifTool format to parts required for setting Exif tags
- * @param isoDatetime
+ * Transforms an ISO DateTime string as used by XMP to an ExifTool date + time value
+ * @param xmpIsoDt A string with date and optionally time as specified by XMP
+ * @returns EtDateTimeVariants
  */
-export declare function etDatetime2ExifParts(isoDatetime: string): ExifParts;
+export declare function xmpIsoDatetime2etDatetime(xmpIsoDt: string): EtDateTimeVariants;

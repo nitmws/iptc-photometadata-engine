@@ -122,7 +122,7 @@ class IpmdSetter {
                 dataformat === icc.itgDfDt &&
                 propoccurrence === icc.itgPropoccurSingle &&
                 typeof ipmdPropValue === "string") {
-                etPropValue = util1.xmpIsoDatetime2etDatetime(ipmdPropValue);
+                etPropValue = util1.xmpIsoDatetime2etDatetime(ipmdPropValue); // data type: EtDateTimeVariants
             }
             // datatype "number"
             if (datatype === icc.itgDtNumber &&
@@ -188,8 +188,18 @@ class IpmdSetter {
                             }
                         });
                     }
-                    else
-                        etJson[refPropData[icc.itgEtXmp]] = etPropValue;
+                    else {
+                        switch (refPropId) {
+                            case "dateCreated":
+                                if (etPropValue["xmpDateTime"] != null)
+                                    etJson[refPropData[icc.itgEtXmp]] =
+                                        etPropValue["xmpDateTime"];
+                                break;
+                            default:
+                                etJson[refPropData[icc.itgEtXmp]] = etPropValue;
+                                break;
+                        }
+                    }
                 }
             }
             // set IIM value(s)
@@ -197,15 +207,11 @@ class IpmdSetter {
                 if (etPropValue !== undefined) {
                     switch (refPropId) {
                         case "dateCreated":
-                            const exifParts = util1.etDatetime2ExifParts(etPropValue);
-                            if (exifParts.dateTime !== null) {
-                                const etPropValues = exifParts.dateTime.split(" ");
-                                etJson["IPTC:DateCreated"] = etPropValues[0];
-                                if (etPropValues.length > 1) {
-                                    etJson["IPTC:TimeCreated"] = etPropValues[1];
+                            if (etPropValue["iimDate"] !== null) {
+                                etJson["IPTC:DateCreated"] = etPropValue["iimDate"];
+                                if (etPropValue["iimTime"] !== null) {
+                                    etJson["IPTC:TimeCreated"] = etPropValue["iimTime"];
                                 }
-                                if (exifParts.tzOffset !== null)
-                                    etJson["IPTC:TimeCreated"] += exifParts.tzOffset;
                             }
                             break;
                         case "subjectCodes":
@@ -225,13 +231,16 @@ class IpmdSetter {
                 if (etPropValue !== undefined) {
                     switch (refPropId) {
                         case "dateCreated":
-                            const exifParts = util1.etDatetime2ExifParts(etPropValue);
-                            if (exifParts.dateTime !== null)
-                                etJson["ExifIFD:DateTimeOriginal"] = exifParts.dateTime;
-                            if (exifParts.subSeconds !== null)
-                                etJson["ExifIFD:SubSecTimeOriginal"] = exifParts.subSeconds;
-                            if (exifParts.tzOffset !== null)
-                                etJson["ExifIFD:OffsetTimeOriginal"] = exifParts.tzOffset;
+                            if (etPropValue["exifDateTime"] !== null) {
+                                etJson["ExifIFD:DateTimeOriginal"] =
+                                    etPropValue["exifDateTime"];
+                                if (etPropValue["exifSubSeconds"] !== null)
+                                    etJson["ExifIFD:SubSecTimeOriginal"] =
+                                        etPropValue["exifSubSeconds"];
+                                if (etPropValue["exifTzOffset"] !== null)
+                                    etJson["ExifIFD:OffsetTimeOriginal"] =
+                                        etPropValue["exifTzOffset"];
+                            }
                             break;
                         case "imageRegion": // the mapping to Exif's Subject Area is virtual
                             break;
@@ -378,8 +387,19 @@ class IpmdSetter {
                                 }
                             });
                         }
-                        else
-                            etJsonStruct[refPropData[icc.itgEtTag]] = etPropValue;
+                        else {
+                            switch (refPropId) {
+                                case "dateCreated":
+                                    if (etPropValue["xmpDateTime"] != null)
+                                        etJsonStruct[refPropData[icc.itgEtTag]] =
+                                            etPropValue["xmpDateTime"];
+                                    break;
+                                default:
+                                    etJsonStruct[refPropData[icc.itgEtTag]] = etPropValue;
+                                    break;
+                            }
+                        }
+                        // etJsonStruct[refPropData[icc.itgEtTag]] = etPropValue;
                     }
                 }
             }

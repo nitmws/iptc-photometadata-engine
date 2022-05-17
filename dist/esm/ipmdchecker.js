@@ -307,7 +307,8 @@ export class IpmdChecker {
                         }
                         propVresult[icc.ipmdcrVexif] =
                             testImgEtPmd["ExifIFD:DateTimeOriginal"] + subSeconds + tzOffset;
-                        exifValue = testImgEtPmd["ExifIFD:DateTimeOriginal"] + subSeconds + tzOffset;
+                        exifValue =
+                            testImgEtPmd["ExifIFD:DateTimeOriginal"] + subSeconds + tzOffset;
                         exifDataSet = true;
                     }
                 }
@@ -326,29 +327,6 @@ export class IpmdChecker {
                         exifDataSet = true;
                     }
                 }
-                // special case for the IPTC property title: an Exif ImageDescription value without spaces makes one
-                /* IPTC Title--Exif ImageDescription mapping cancelled
-                if (etExifId === "IFD0:ImageDescription" && refPropId === "title") {
-                  if (testImgEtPmd.hasOwnProperty(etExifId)) {
-                    const testValue: string = testImgEtPmd[etExifId];
-                    if (!testValue.includes(" ")) {
-                      this._ipmdStateData.setFsData(
-                        1,
-                        refPropId +
-                          this._lsep +
-                          icc.ipmdcrSData +
-                          this._lsep +
-                          icc.ipmdcrSDexif
-                      );
-                      propVresult[icc.ipmdcrVexif] = testValue;
-                      exifValue = testValue;
-                      exifDataSet = true;
-                    } else {
-                      exifDataSet = true; // = in fact not setting a value
-                    }
-                  }
-                }
-                */
                 // special case: Exif Tag Artist, make its value a single item array to compare properly
                 if (etExifId === "IFD0:Artist") {
                     if (testImgEtPmd.hasOwnProperty(etExifId)) {
@@ -403,10 +381,13 @@ export class IpmdChecker {
                                 case "dateCreated":
                                     let xmptestval = xmpValue;
                                     if (xmptestval.includes("Z")) {
-                                        // pre code: .substr(0, xmptestval.length - 1);
-                                        xmptestval = xmptestval.substring(0, xmptestval.length);
+                                        xmptestval =
+                                            xmptestval.substring(0, xmptestval.length) + "+00:00";
                                     }
                                     xmpIimAreEqual = xmptestval === iimValue;
+                                    break;
+                                case "intellectualGenre":
+                                    xmpIimAreEqual = "000:" + xmpValue === iimValue;
                                     break;
                                 default:
                                     xmpIimAreEqual = xmpValue === iimValue;
@@ -633,7 +614,7 @@ export class IpmdChecker {
         const refDataValueFsd = new FixedStructureData(refDataValue, false);
         const testDataValue = resultTest.value;
         const testDataValueFsd = new FixedStructureData(testDataValue, false);
-        const compareResultRows = []; // this will be retured as result of this method
+        const compareResultRows = []; // this will be returned as result of this method
         // interate across the top level properties in the values of the reference file
         for (let idx = 0; idx < refValueIpmdIds.length; idx++) {
             const refIpmdId = refValueIpmdIds[idx];

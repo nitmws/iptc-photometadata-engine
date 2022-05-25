@@ -217,7 +217,13 @@ export class IpmdSetter {
               }
               break;
             case "subjectCodes":
-              etJson[refPropData[icc.itgEtIim]] = "IPTC:" + etPropValue;
+              if (Array.isArray(etPropValue)) {
+                const etPropValue2: string[] = [];
+                etPropValue.forEach((subjectCode: string) =>
+                  etPropValue2.push("IPTC:" + subjectCode)
+                );
+                etJson[refPropData[icc.itgEtIim]] = etPropValue2;
+              } else etJson[refPropData[icc.itgEtIim]] = "IPTC:" + etPropValue;
               break;
             case "intellectualGenre":
               etJson[refPropData[icc.itgEtIim]] = "000:" + etPropValue;

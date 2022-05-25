@@ -388,6 +388,8 @@ export class IpmdChecker {
                                     break;
                                 case "intellectualGenre":
                                     xmpIimAreEqual = "000:" + xmpValue === iimValue;
+                                    if (!xmpIimAreEqual)
+                                        xmpIimAreEqual = xmpValue === iimValue; // "old" variant accepted for backward compatibility
                                     break;
                                 default:
                                     xmpIimAreEqual = xmpValue === iimValue;

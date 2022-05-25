@@ -2,9 +2,13 @@
 
 (Latest changes at the top. Changes refer to a version provided in the "version" property of package.json.)
 
+* v 0.2.7 2022-05-25:
+  * impmdchecker: comparing of intellectualGenre accepts IIM values without leading "000:" to support backward compatibility.
+  * ipmdsetter: setting an array of IIM values of subjectCode corrected 
 * v 0.2.6 2022-05-17:
   * ipmdsetter: processing of dateCreated's date-time value was made more flexible, all XMP format variants are supported. 
-  * ipmdchecker: comparing dateCreated's XMP and IIM values adjusted to support "Z" as time zone; special comparing of intellectualGenre added. 
+  * ipmdchecker: comparing dateCreated's XMP and IIM values adjusted to support "Z" as time zone
+  * ipmdchecker: special comparing of intellectualGenre added. 
 * v 0.2.4+.5 2022-05-03: 
   * ipmdchecker: IPTC/Exif mappings of Date Created, Description and Title corrected, aligned to updated TechReference file
   * ipmdsetter: creating XMP, IIM and Exif properties for Date Created changed: fractions of a second are supported now

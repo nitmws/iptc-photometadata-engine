@@ -362,9 +362,13 @@ export class IpmdChecker {
                             case "subjectCodes":
                                 let valequ = true;
                                 for (let idx = 0; idx < xmpValue.length; idx++) {
+                                    if (typeof iimValue[idx] !== "string") {
+                                        valequ = false;
+                                        break;
+                                    }
                                     const scode = xmpValue[idx];
                                     const iimtestval = "IPTC:" + scode;
-                                    if (!iimValue[idx].includes(iimtestval)) {
+                                    if (iimValue[idx] !== iimtestval) {
                                         valequ = false;
                                     }
                                 }

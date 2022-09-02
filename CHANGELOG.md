@@ -2,8 +2,10 @@
 
 (Latest changes at the top. Changes refer to a version provided in the "version" property of package.json.)
 
-* v 0.2.8 
-  * impmdchecker: error in testing subjectCodes values fixed
+* v 0.2.9 2022-09-02: documentation updated
+* v 0.2.8 2022-09-02
+  * impmdchecker: read ExifTool values are normalized to the IPTC Standard datatype
+  * Object ipmdCheckerResult extended
 * v 0.2.7 2022-05-25:
   * impmdchecker: comparing of intellectualGenre accepts IIM values without leading "000:" to support backward compatibility.
   * ipmdsetter: setting an array of IIM values of subjectCode corrected 

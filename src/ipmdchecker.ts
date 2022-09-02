@@ -1,6 +1,6 @@
 import fs from "fs";
 import * as icc from "./constants";
-import { MdStruct } from "./incommon";
+import { ErrorMsg, MdStruct, ProcState } from "./incommon";
 import * as util1 from "./utilities1";
 import FixedStructureData from "./fixed_structure_data";
 
@@ -8,8 +8,15 @@ import FixedStructureData from "./fixed_structure_data";
  * The result object of IpmdChecker
  */
 export interface IipmdCheckerResult {
+  procstate: ProcState;
   state: MdStruct; // object holding all states of checked properties
   value: MdStruct; // object holding all values of checked (and found) properties
+  errormsgs: ErrorMsg[]; // array of Error Messages (should be empty)
+}
+
+interface IcheckIpmdStdStructResult {
+  procstate: ProcState;
+  procresult: object[]; // object holding an array of the result(s) of checking object(s)
 }
 
 /**
@@ -47,6 +54,7 @@ export class IpmdChecker {
   _ipmdStateDataTempl: MdStruct;
   _ipmdStateData: any;
   _ipmdValueData: MdStruct;
+  _errmsgs: ErrorMsg[];
   _lsep: string;
 
   /**
@@ -68,6 +76,7 @@ export class IpmdChecker {
       true
     );
     this._ipmdValueData = {};
+    this._errmsgs = [];
     this._testEtJsonFp = "";
     this._lsep = "/";
   }
@@ -160,19 +169,56 @@ export class IpmdChecker {
     let testImgEtPmd: MdStruct;
     if (imgEtPmdInput === {}) {
       testImgEtPmd = this.loadTestEtJson();
-      if (testImgEtPmd === {}) return { state: {}, value: {} };
+      if (testImgEtPmd === {}) {
+        const errmsg: ErrorMsg = {
+          propId: "NA",
+          propName: "Generic processing",
+          msg: "No metadata read by Exiftool can be loaded into the Metadata Engine",
+        };
+        return {
+          procstate: ProcState.ProcErr,
+          state: {},
+          value: {},
+          errormsgs: [errmsg],
+        };
+      }
     } else {
       testImgEtPmd = imgEtPmdInput;
     }
 
-    if (util1.objectIsEmpty(testImgEtPmd)) return { state: {}, value: {} };
+    if (util1.objectIsEmpty(testImgEtPmd)) {
+      const errmsg: ErrorMsg = {
+        propId: "NA",
+        propName: "Generic processing",
+        msg: "The metadata object read by ExifTool is empty",
+      };
+      return {
+        procstate: ProcState.PmdErr,
+        state: {},
+        value: {},
+        errormsgs: [errmsg],
+      };
+      // return {procstate: ProcState.PmdErr, state: {}, value: {}, errormsgs: [] };
+    }
+
     this._ipmdStateData = new FixedStructureData(this._ipmdStateDataTempl);
     this._ipmdValueData = {};
     this._checkReadyToCheck();
     if (!this._readyToCheck) {
-      return { state: {}, value: {} };
+      const errmsg: ErrorMsg = {
+        propId: "NA",
+        propName: "Generic processing",
+        msg: "The IPTC Photo Metadata Engine is currently not Ready-to-Check - processing cancelled.",
+      };
+      return {
+        procstate: ProcState.ProcErr,
+        state: {},
+        value: {},
+        errormsgs: [errmsg],
+      };
     }
     // start checking
+    let dtTestval: any;
     const refIpmdTop = this.ipmdRef[icc.itgIpmdTop];
     // Iterate all properties of the reference ipmd_top
     for (const refPropId in refIpmdTop) {
@@ -182,6 +228,7 @@ export class IpmdChecker {
       const propVresult: MdStruct = {};
       const refPropData = refIpmdTop[refPropId];
       const etXmpId = refPropData[icc.itgEtXmp];
+      const datatype: string = refPropData[icc.itgDatatype];
       if (testImgEtPmd.hasOwnProperty(etXmpId)) {
         this._ipmdStateData.setFsData(
           1,
@@ -191,38 +238,52 @@ export class IpmdChecker {
             this._lsep +
             icc.ipmdcrSDxmp
         );
-        const datatype: string = refPropData[icc.itgDatatype];
+
         if (datatype === icc.itgDtStruct) {
           const structureId = refPropData[icc.itgDataformat];
           if (structureId !== icc.itgDfAlg) {
             const structureTestValue = testImgEtPmd[etXmpId];
-            const checkStructVresult: object[] = this._checkIpmdStdStruct(
-              refPropId,
-              structureId,
-              structureTestValue,
-              countOccurrences
-            );
-            if (!util1.objectIsEmpty(checkStructVresult)) {
-              propVresult[icc.itgDtStruct] = checkStructVresult;
-              if (countOccurrences) {
-                if (Array.isArray(checkStructVresult)) {
-                  this._ipmdStateData.setFsData(
-                    checkStructVresult.length,
-                    refPropId +
-                      this._lsep +
-                      icc.ipmdcrSData +
-                      this._lsep +
-                      icc.ipmdcrSDvaloccur
-                  );
-                } else {
-                  this._ipmdStateData.setFsData(
-                    1,
-                    refPropId +
-                      this._lsep +
-                      icc.ipmdcrSData +
-                      this._lsep +
-                      icc.ipmdcrSDvaloccur
-                  );
+            const checkStructProcresult: IcheckIpmdStdStructResult =
+              this._checkIpmdStdStruct(
+                refPropId,
+                structureId,
+                structureTestValue,
+                countOccurrences
+              );
+            switch (checkStructProcresult.procstate) {
+              case ProcState.ProcErr:
+                return {
+                  procstate: ProcState.ProcErr,
+                  state: {},
+                  value: {},
+                  errormsgs: this._errmsgs,
+                };
+            }
+            if (checkStructProcresult.procstate === ProcState.OK) {
+              const checkStructVresult: object[] =
+                checkStructProcresult.procresult;
+              if (!util1.objectIsEmpty(checkStructVresult)) {
+                propVresult[icc.itgDtStruct] = checkStructVresult;
+                if (countOccurrences) {
+                  if (Array.isArray(checkStructVresult)) {
+                    this._ipmdStateData.setFsData(
+                      checkStructVresult.length,
+                      refPropId +
+                        this._lsep +
+                        icc.ipmdcrSData +
+                        this._lsep +
+                        icc.ipmdcrSDvaloccur
+                    );
+                  } else {
+                    this._ipmdStateData.setFsData(
+                      1,
+                      refPropId +
+                        this._lsep +
+                        icc.ipmdcrSData +
+                        this._lsep +
+                        icc.ipmdcrSDvaloccur
+                    );
+                  }
                 }
               }
             }
@@ -253,8 +314,20 @@ export class IpmdChecker {
             }
           }
         } else {
-          propVresult[icc.ipmdcrVxmp] = testImgEtPmd[etXmpId];
-          xmpValue = testImgEtPmd[etXmpId];
+          // datatype is NOT a structure
+          xmpValue = this._normalizePropValue(
+            testImgEtPmd[etXmpId],
+            datatype,
+            refPropId
+          );
+          propVresult[icc.ipmdcrVxmp] = xmpValue;
+          /*
+          propVresult[icc.ipmdcrVxmp] = this._normalizePropValue(
+              testImgEtPmd[etXmpId],
+              datatype,
+              refPropId
+          );
+           */
           if (countOccurrences) {
             if (Array.isArray(xmpValue)) {
               this._ipmdStateData.setFsData(
@@ -315,12 +388,81 @@ export class IpmdChecker {
           );
           if (etIimId === "IPTC:By-line") {
             const tempIimValue: string[] = [];
-            tempIimValue.push(testImgEtPmd[etIimId]);
+            tempIimValue.push(
+              this._normalizePropValue(
+                testImgEtPmd[etIimId],
+                datatype,
+                refPropId
+              )
+            );
             propVresult[icc.ipmdcrViim] = tempIimValue;
             iimValue = tempIimValue;
           } else {
-            propVresult[icc.ipmdcrViim] = testImgEtPmd[etIimId];
-            iimValue = testImgEtPmd[etIimId];
+            /*
+            dtTestval = testImgEtPmd[etIimId];
+            if (Array.isArray(dtTestval)) {
+              dtTestval = this._normalizePropValueArray(dtTestval, datatype);
+              for (let idx = 0; idx < dtTestval.length; idx++) {
+                const dtTestval2 = dtTestval[idx];
+                if (datatype === icc.itgDtString) {
+                  if (typeof dtTestval2 !== "string") {
+                    const errmsg: ErrorMsg = {
+                      propId: refPropId,
+                      propName: "",
+                      msg: "IIM value is NOT a string",
+                    };
+                    this._errmsgs.push(errmsg);
+                  }
+                }
+                if (datatype === icc.itgDtNumber) {
+                  if (typeof dtTestval2 !== "number") {
+                    const errmsg: ErrorMsg = {
+                      propId: refPropId,
+                      propName: "",
+                      msg: "IIM value is NOT a number",
+                    };
+                    this._errmsgs.push(errmsg);
+                  }
+                }
+              }
+            } else {
+              // dtTestval is NOT an array
+              dtTestval = this._normalizePropValue(dtTestval, datatype); // ++2022-09-01
+              if (datatype === icc.itgDtString) {
+                if (typeof dtTestval !== "string") {
+                  const errmsg: ErrorMsg = {
+                    propId: refPropId,
+                    propName: "",
+                    msg: "IIM value is NOT a string",
+                  };
+                  this._errmsgs.push(errmsg);
+                }
+              }
+              if (datatype === icc.itgDtNumber) {
+                if (typeof dtTestval !== "number") {
+                  const errmsg: ErrorMsg = {
+                    propId: refPropId,
+                    propName: "",
+                    msg: "IIM value is NOT a number",
+                  };
+                  this._errmsgs.push(errmsg);
+                }
+              }
+            }
+             */
+            iimValue = this._normalizePropValue(
+              testImgEtPmd[etIimId],
+              datatype,
+              refPropId
+            );
+            propVresult[icc.ipmdcrViim] = iimValue;
+            /*
+            propVresult[icc.ipmdcrViim] = this._normalizePropValue(
+              testImgEtPmd[etIimId],
+              datatype,
+              refPropId
+            );
+            */
           }
         }
       }
@@ -380,6 +522,7 @@ export class IpmdChecker {
           }
         }
         // special case: look for alternative Exif Tags describing the image
+        /* retired 2022-09-02 as agreed with CIPA
         if (etExifId === "IFD0:ImageDescription") {
           if (testImgEtPmd.hasOwnProperty("IFD0:ImageDescription")) {
             // try ImageDescription first ...
@@ -397,6 +540,7 @@ export class IpmdChecker {
             exifDataSet = true;
           }
         }
+         */
         // special case: Exif Tag Artist, make its value a single item array to compare properly
         if (etExifId === "IFD0:Artist") {
           if (testImgEtPmd.hasOwnProperty(etExifId)) {
@@ -431,7 +575,8 @@ export class IpmdChecker {
       }
       this._ipmdValueData[refPropId] = propVresult;
 
-      if (compareValues) {
+      // compares only if no errors were found during getting property values
+      if (compareValues && this._errmsgs.length === 0) {
         if (xmpValue !== undefined && iimValue !== undefined) {
           let xmpIimAreEqual = false;
           if (Array.isArray(xmpValue) && Array.isArray(iimValue)) {
@@ -540,9 +685,18 @@ export class IpmdChecker {
       }
     }
     // create the check result object
-    const checkResult: IipmdCheckerResult = { state: {}, value: {} };
+    const checkResult: IipmdCheckerResult = {
+      procstate: ProcState.OK,
+      state: {},
+      value: {},
+      errormsgs: [],
+    };
     checkResult.state = this._ipmdStateData.fsData;
     checkResult.value = this._ipmdValueData;
+    checkResult.errormsgs = this._errmsgs;
+    if (this._errmsgs.length > 0) {
+      checkResult.procstate = ProcState.PmdErr;
+    }
     return checkResult;
   }
 
@@ -561,9 +715,18 @@ export class IpmdChecker {
     refstructId: string,
     teststructEtPmd: MdStruct,
     countOccurrences = false
-  ): object[] {
+  ): IcheckIpmdStdStructResult {
     if (typeof teststructEtPmd !== "object") {
-      return [{}];
+      const errMsg: ErrorMsg = {
+        propId: parentIpmdIdsStr,
+        propName: "",
+        msg: "PMD structure is not an object (1)",
+      };
+      this._errmsgs.push(errMsg);
+      return {
+        procstate: ProcState.PmdErr,
+        procresult: [{}],
+      };
     }
     // create an array of test structures, even if only one test structure exists
     let teststructEtPmdArr: MdStruct[] = [];
@@ -573,7 +736,16 @@ export class IpmdChecker {
       teststructEtPmdArr.push(teststructEtPmd);
     }
     if (typeof teststructEtPmd !== "object") {
-      return [{}];
+      const errMsg: ErrorMsg = {
+        propId: parentIpmdIdsStr,
+        propName: "",
+        msg: "PMD structure is not an object (2)",
+      };
+      this._errmsgs.push(errMsg);
+      return {
+        procstate: ProcState.PmdErr,
+        procresult: [{}],
+      };
     }
     const parentIpmdIds: string[] = parentIpmdIdsStr.split("/");
     // parentIpmdIds = parentIpmdIds.reverse();
@@ -584,7 +756,8 @@ export class IpmdChecker {
       parentIpmdIds.forEach((pid) => (parentStatePath += pid + "/struct/"));
     }
 
-    const structVresultArr: MdStruct[] = [];
+    const allErrMsg: ErrorMsg[] = []; // array will be returned at the bottom
+    const structVresultArr: MdStruct[] = []; // array will be returned at the bottom
     teststructEtPmdArr.forEach((teststructEtPmdOfArr) => {
       const structVresult: MdStruct = {};
       const refIpmdStruct = this.ipmdRef[icc.itgIpmdStruct][refstructId];
@@ -607,38 +780,51 @@ export class IpmdChecker {
           if (datatype === icc.itgDtStruct) {
             const structureId = refPropData[icc.itgDataformat];
             if (structureId !== icc.itgDfAlg) {
+              // not an AltLang structure: recursive call of _checkIpmdStdStruct
               const structureTestValue = teststructEtPmdOfArr[etTag];
               const parentIpmdIdsStrSub = parentIpmdIdsStr + "/" + refPropId;
-              const checkStructVresult: object[] = this._checkIpmdStdStruct(
-                parentIpmdIdsStrSub,
-                structureId,
-                structureTestValue,
-                countOccurrences
-              );
-              if (!util1.objectIsEmpty(checkStructVresult)) {
-                propVresult[icc.itgDtStruct] = checkStructVresult;
-                propVresult[icc.itgDtStruct] = checkStructVresult;
-                if (countOccurrences) {
-                  if (Array.isArray(checkStructVresult)) {
-                    this._ipmdStateData.setFsData(
-                      checkStructVresult.length,
-                      parentStatePath +
-                        refPropId +
-                        this._lsep +
-                        icc.ipmdcrSData +
-                        this._lsep +
-                        icc.ipmdcrSDvaloccur
-                    );
-                  } else {
-                    this._ipmdStateData.setFsData(
-                      1,
-                      parentStatePath +
-                        refPropId +
-                        this._lsep +
-                        icc.ipmdcrSData +
-                        this._lsep +
-                        icc.ipmdcrSDvaloccur
-                    );
+              const checkStructProcresult: IcheckIpmdStdStructResult =
+                this._checkIpmdStdStruct(
+                  parentIpmdIdsStrSub,
+                  structureId,
+                  structureTestValue,
+                  countOccurrences
+                );
+              switch (checkStructProcresult.procstate) {
+                case ProcState.ProcErr:
+                  return {
+                    procstate: ProcState.ProcErr,
+                    procresult: [{}],
+                  };
+              }
+              if (checkStructProcresult.procstate === ProcState.OK) {
+                const checkStructVresult: object[] =
+                  checkStructProcresult.procresult;
+                if (!util1.objectIsEmpty(checkStructVresult)) {
+                  propVresult[icc.itgDtStruct] = checkStructVresult;
+                  propVresult[icc.itgDtStruct] = checkStructVresult;
+                  if (countOccurrences) {
+                    if (Array.isArray(checkStructVresult)) {
+                      this._ipmdStateData.setFsData(
+                        checkStructVresult.length,
+                        parentStatePath +
+                          refPropId +
+                          this._lsep +
+                          icc.ipmdcrSData +
+                          this._lsep +
+                          icc.ipmdcrSDvaloccur
+                      );
+                    } else {
+                      this._ipmdStateData.setFsData(
+                        1,
+                        parentStatePath +
+                          refPropId +
+                          this._lsep +
+                          icc.ipmdcrSData +
+                          this._lsep +
+                          icc.ipmdcrSDvaloccur
+                      );
+                    }
                   }
                 }
               }
@@ -673,7 +859,12 @@ export class IpmdChecker {
               }
             }
           } else {
-            propVresult[icc.ipmdcrVxmp] = teststructEtPmdOfArr[etTag];
+            // datatype: not a structure
+            propVresult[icc.ipmdcrVxmp] = this._normalizePropValue(
+              teststructEtPmdOfArr[etTag],
+              datatype,
+              parentIpmdIdsStr + "/" + refPropId
+            );
             if (countOccurrences) {
               if (Array.isArray(teststructEtPmdOfArr[etTag])) {
                 this._ipmdStateData.setFsData(
@@ -703,7 +894,10 @@ export class IpmdChecker {
       }
       structVresultArr.push(structVresult);
     });
-    return structVresultArr;
+    return {
+      procstate: ProcState.OK,
+      procresult: structVresultArr,
+    };
   }
 
   // ==================================================================================
@@ -1322,6 +1516,95 @@ export class IpmdChecker {
       }
     });
     return altLangStr;
+  }
+
+  /**
+   * Normalizes (= transforms) the value(s) of a property to a given data type
+   *   Sub-methods deal with a single value and an array of values
+   * @param propValue The to-be-normalized value
+   * @param shouldbeDatatype The target data type
+   * @private
+   */
+  private _normalizePropValue(
+    propValue: any,
+    shouldbeDatatype: string,
+    propId: string
+  ): any {
+    if (Array.isArray(propValue)) {
+      return this._normalizePropValueArray(propValue, shouldbeDatatype, propId);
+    }
+    return this._normalizePropSingleValue(propValue, shouldbeDatatype, propId);
+  }
+
+  private _normalizePropValueArray(
+    propValueArray: any,
+    shouldbeDatatype: string,
+    propId: string
+  ): any {
+    if (!Array.isArray(propValueArray)) {
+      return propValueArray;
+    }
+    const retArray: any[] = [];
+    propValueArray.forEach((anItem) => {
+      const normAnItem: any = this._normalizePropSingleValue(
+        anItem,
+        shouldbeDatatype,
+        propId
+      );
+      retArray.push(normAnItem);
+    });
+    return retArray;
+  }
+
+  private _normalizePropSingleValue(
+    propValue: any,
+    shouldbeDatatype: string,
+    propId: string
+  ): any {
+    if (shouldbeDatatype === icc.itgDtStruct) {
+      return propValue;
+    }
+    if (shouldbeDatatype === icc.itgDtString) {
+      return propValue.toString();
+    }
+    if (shouldbeDatatype === icc.itgDtNumber) {
+      if (typeof propValue === "string") {
+        if (propValue.indexOf(".") > -1) {
+          let retValue: number | null;
+          retValue = parseFloat(propValue);
+          if (isNaN(retValue)) {
+            const errmsg: ErrorMsg = {
+              propId: propId,
+              propName: "",
+              msg:
+                "The read embedded string value <" +
+                propValue +
+                "> does not represent a number",
+            };
+            this._errmsgs.push(errmsg);
+            retValue = null;
+          }
+          return retValue;
+        } else {
+          let retValue: number | null;
+          retValue = parseInt(propValue, 10);
+          if (isNaN(retValue)) {
+            const errmsg: ErrorMsg = {
+              propId: propId,
+              propName: "",
+              msg:
+                "The read embedded string value <" +
+                propValue +
+                "> does not represent a number",
+            };
+            this._errmsgs.push(errmsg);
+            retValue = null;
+          }
+          return retValue;
+        }
+      } else return propValue;
+    }
+    return propValue;
   }
 } // class IpmdChecker
 

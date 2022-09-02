@@ -153,6 +153,10 @@ Returns an [ipmdCheckerResult object](#object-ipmdcheckerresult)
 An instance of this object is created by the checkIpmdStd method of the IpmdChecker class.
 
 Its structure:
+* `procstate`: holds a value from this enumeration:
+  * `OK`: the processing of the called method was and the result is OK
+  * `PROCERR`: the processing of the called method was not OK, see the `errormsgs`
+  * `PMDERR`: the processing of the photo metadata is not OK, see the `errormsgs`
 * `state`: object of data about each property defined by the IPTC Photo Metadata Standard. This object reflects the state of the occurrence of values and if multiple values for the same IPTC property are in sync. It has this structure:
     * `{a JSON property name}`: object of data about a specific IPTC PMD property. The property name is the identifier of this property as defined by the JSON Specs row in the specification table of a property in the IPTC Photo Metadata Standard and used by the IPTC TechReference. The object has this structure:
         * `data`: object with details about the plain (not-structured) value(s) of this IPTC property. The object has this structure:
@@ -171,6 +175,10 @@ Its structure:
         * `EXIF`: found value of the Exif format
         * `struct`: object with data aboute the IPTC Photo Metadata structure used as value of the IPTC property. The object has this structure:
             * `{a JSON property name}`: object with values a specific IPTC Photo Metadata property of this structure. All properties of this object are the same as for an `{a JSON property name}`-property at the superior level.
+* `errormsgs`: an array of objects providing details about an error occurring while processing the called method. The objects have this structure:
+  * `propId`: the identifier of the property involved in the error - as defined by the IPTC Photo Metadata Standard as identifier of the JSON property, also used by the IPTC Photo Metadata Standard TechReference files and document. If not property was involved "NA" is the value.
+  * `propName`: the name of the property as defined by the IPTC Photo Metadata Standard. If not property is identified an empty string is the value.
+  * `msg`: A free text message about the error.
 
 #### Object Any-Other-Metadata-Reference
 

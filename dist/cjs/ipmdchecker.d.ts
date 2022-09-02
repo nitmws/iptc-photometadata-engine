@@ -1,10 +1,12 @@
-import { MdStruct } from "./incommon";
+import { ErrorMsg, MdStruct, ProcState } from "./incommon";
 /**
  * The result object of IpmdChecker
  */
 export interface IipmdCheckerResult {
+    procstate: ProcState;
     state: MdStruct;
     value: MdStruct;
+    errormsgs: ErrorMsg[];
 }
 /**
  * Options for comparing two results of IpmdChecker
@@ -39,6 +41,7 @@ export declare class IpmdChecker {
     _ipmdStateDataTempl: MdStruct;
     _ipmdStateData: any;
     _ipmdValueData: MdStruct;
+    _errmsgs: ErrorMsg[];
     _lsep: string;
     /**
      * Constructor of the IpmdChecker class
@@ -141,4 +144,14 @@ export declare class IpmdChecker {
      */
     private _ipmdIdPath2nameSeq;
     private _buildAltLangValue;
+    /**
+     * Normalizes (= transforms) the value(s) of a property to a given data type
+     *   Sub-methods deal with a single value and an array of values
+     * @param propValue The to-be-normalized value
+     * @param shouldbeDatatype The target data type
+     * @private
+     */
+    private _normalizePropValue;
+    private _normalizePropValueArray;
+    private _normalizePropSingleValue;
 }

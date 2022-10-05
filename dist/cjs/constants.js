@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ipmdcrSStruct = exports.ipmdcrSDvaloccur = exports.ipmdcrSDmapinsync = exports.ipmdcrSDinsync = exports.ipmdcrSDexif = exports.ipmdcrSDiim = exports.ipmdcrSDxmp = exports.ipmdcrSData = exports.ipmdcrState = exports.itgUgtRights = exports.itgUgtPerson = exports.itgUgtOthings = exports.itgUgtLocation = exports.itgUgtLicensing = exports.itgUgtImgreg = exports.itgUgtGimgcont = exports.itgUgtAdmin = exports.itgPropoccurMulti = exports.itgPropoccurSingle = exports.itgDfUrl = exports.itgDfUri = exports.itgDfDt = exports.itgDfAlg = exports.itgDtStruct = exports.itgDtNumber = exports.itgDtString = exports.itgIpmddatatype = exports.itgIpmdid = exports.itgEtTag = exports.itgEtExif = exports.itgEtIim = exports.itgEtXmp = exports.itgExifid = exports.itgIimmaxbytes = exports.itgIimname = exports.itgIimid = exports.itgXmpid = exports.itgPropoccurrence = exports.itgDataformat = exports.itgDatatype = exports.itgSpecidx = exports.itgUgtopic = exports.itgSortorder = exports.itgIpmdschema = exports.itgName = exports.itgEtInstruct = exports.itgEtTonopre = exports.itgEtTopwpre = exports.itgIpmdStruct = exports.itgIpmdTop = void 0;
-exports.anyPlusBaseUrl = exports.cmpRCpmisg = exports.cmpRCvnotarr = exports.cmpRCvmisg = exports.cmpRCvchngd = exports.fsdStRO = exports.fsdStSearch = exports.fsdStErr = exports.fsdStFound = exports.fsdResValue = exports.fsdResState = exports.pnodeTypeStruct = exports.pnodeTypePlain = exports.ipmdcrVaodPrefix = exports.ipmdcrVet = exports.ipmdcrVexif = exports.ipmdcrViim = exports.ipmdcrVxmp = exports.ipmdcrValue = void 0;
+exports.ipmdcrSDvaloccur = exports.ipmdcrSDmapinsync = exports.ipmdcrSDinsync = exports.ipmdcrSDexif = exports.ipmdcrSDiim = exports.ipmdcrSDxmp = exports.ipmdcrSData = exports.ipmdcrState = exports.itgSpidAny = exports.itgUgtRights = exports.itgUgtPerson = exports.itgUgtOthings = exports.itgUgtLocation = exports.itgUgtLicensing = exports.itgUgtImgreg = exports.itgUgtGimgcont = exports.itgUgtAdmin = exports.itgPropoccurMulti = exports.itgPropoccurSingle = exports.itgDfUrl = exports.itgDfUri = exports.itgDfDt = exports.itgDfAlg = exports.itgDtStruct = exports.itgDtNumber = exports.itgDtString = exports.itgIpmddatatype = exports.itgIpmdid = exports.itgEtTag = exports.itgEtExif = exports.itgEtIim = exports.itgEtXmp = exports.itgExifid = exports.itgIimmaxbytes = exports.itgIimname = exports.itgIimid = exports.itgXmpid = exports.itgPropoccurrence = exports.itgDataformat = exports.itgDatatype = exports.itgSpecidx = exports.itgUgtopic = exports.itgSortorder = exports.itgIpmdschema = exports.itgName = exports.itgEtInstruct = exports.itgEtTonopre = exports.itgEtTopwpre = exports.itgIpmdStruct = exports.itgIpmdTop = void 0;
+exports.anyPlusBaseUrl = exports.cmpRCpmisg = exports.cmpRCvnotarr = exports.cmpRCvmisg = exports.cmpRCvchngd = exports.fsdStRO = exports.fsdStSearch = exports.fsdStErr = exports.fsdStFound = exports.fsdResValue = exports.fsdResState = exports.pnodeTypeStruct = exports.pnodeTypePlain = exports.ipmdcrVaodPrefix = exports.ipmdcrVet = exports.ipmdcrVexif = exports.ipmdcrViim = exports.ipmdcrVxmp = exports.ipmdcrValue = exports.ipmdcrSStruct = void 0;
 // constant property names and property values
 //    of the IPTC PMD TechGuide object
 // top level properties
@@ -39,7 +39,7 @@ exports.itgDfAlg = "AltLang";
 exports.itgDfDt = "date-time";
 exports.itgDfUri = "uri";
 exports.itgDfUrl = "url";
-// calues for itgPropoccurrence values
+// values for itgPropoccurrence values
 exports.itgPropoccurSingle = "single";
 exports.itgPropoccurMulti = "multi";
 // values for itgUgtopic
@@ -51,6 +51,8 @@ exports.itgUgtLocation = "location";
 exports.itgUgtOthings = "othings";
 exports.itgUgtPerson = "person";
 exports.itgUgtRights = "rights";
+// special property ids:
+exports.itgSpidAny = "$anypmdproperty";
 // constant property names of an IPTC PMD Checker Result (ipmdcr) object
 exports.ipmdcrState = "state";
 // ... property names inside the top level "state" property

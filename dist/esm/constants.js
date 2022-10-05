@@ -35,7 +35,7 @@ export const itgDfAlg = "AltLang";
 export const itgDfDt = "date-time";
 export const itgDfUri = "uri";
 export const itgDfUrl = "url";
-// calues for itgPropoccurrence values
+// values for itgPropoccurrence values
 export const itgPropoccurSingle = "single";
 export const itgPropoccurMulti = "multi";
 // values for itgUgtopic
@@ -47,6 +47,8 @@ export const itgUgtLocation = "location";
 export const itgUgtOthings = "othings";
 export const itgUgtPerson = "person";
 export const itgUgtRights = "rights";
+// special property ids:
+export const itgSpidAny = "$anypmdproperty";
 // constant property names of an IPTC PMD Checker Result (ipmdcr) object
 export const ipmdcrState = "state";
 // ... property names inside the top level "state" property

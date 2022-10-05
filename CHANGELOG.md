@@ -2,6 +2,7 @@
 
 (Latest changes at the top. Changes refer to a version provided in the "version" property of package.json.)
 
+* 2022-10-04: ipmdchecker: enabled to find IPTC properties replacing the placeholder $anypmdproperty in the TechReference
 * v 0.2.10 2022-09-12: propnodes1: properties with an Exif value only are displayed now in the full list and the tech format list.
 * v 0.2.9 2022-09-02: documentation updated
 * v 0.2.8 2022-09-02

@@ -90,6 +90,8 @@ export declare class IpmdChecker {
      * @param countOccurrences - "true" = if the XMP value may occur mulitple times: the occurrences are counted
      */
     private _checkIpmdStdStruct;
+    private _checkStructForAnyproperty;
+    private _checkSubpropByEtTag;
     /**
      * Compares an IPMD Checker Result of a test image against the IPMD Checker Result
      * of a reference image
@@ -154,4 +156,5 @@ export declare class IpmdChecker {
     private _normalizePropValue;
     private _normalizePropValueArray;
     private _normalizePropSingleValue;
+    private _getEtTagsOfStruct;
 }

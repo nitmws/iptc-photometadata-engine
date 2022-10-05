@@ -39,6 +39,7 @@ export declare const itgUgtLocation = "location";
 export declare const itgUgtOthings = "othings";
 export declare const itgUgtPerson = "person";
 export declare const itgUgtRights = "rights";
+export declare const itgSpidAny = "$anypmdproperty";
 export declare const ipmdcrState = "state";
 export declare const ipmdcrSData = "data";
 export declare const ipmdcrSDxmp = "XMP";

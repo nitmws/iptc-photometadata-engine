@@ -28,7 +28,7 @@ export enum Labeltype {
 }
 
 /**
- * Class of properties holding arrays of PropNodes
+ * Class with properties holding arrays of PropNodes
  * for different Output Designs
  */
 export class PropNodesArraysSet1 {
@@ -70,7 +70,7 @@ export interface IPropNode {
 }
 
 /**
- * Enumeration of types of PropNodes
+ * Enumeration of types of PropNodes, see property ptype of IPropNode
  */
 export enum Ptype {
   plain,
@@ -82,14 +82,15 @@ const fsdLsep = "/";
 const fsdIsel = "#";
 
 /**
- * Transforms an IPTC PMD Checker Result object to PropNodes (property nodes)
- * @param ipmdChkResult
- * @param opdOpt
- * @param labeltype
- * @param noValueText
- * @param ipmdIdFilter
- * @param ipmdTechRef
- * @param anyOtherDataRef
+ * Transforms an IPTC Photo Metadata Checker Result object
+ *   to a set of trees of PropNodes (property nodes)
+ * @param ipmdChkResult The to-be-transformed IPTC Photo Metadata Checker Result
+ * @param opdOpt Options for the design of the output
+ * @param labeltype To-be-used type of the labels
+ * @param noValueText Text to be shown if no value was found for a property
+ * @param ipmdIdFilter Array of to-be-shown IPTC property Ids, if empty all properties are shown
+ * @param ipmdTechRef Data of the IPTC PMD TechReference
+ * @param anyOtherDataRef Reference data of any non-IPTC properties
  */
 export function ipmdChkResultToPropNodes(
   ipmdChkResult: IipmdCheckerResult,
@@ -798,15 +799,15 @@ export function ipmdChkResultToPropNodes(
 
 /**
  * Recursive internal function for creating XMP values which may be structured
- * @param ipmdChkResPathState
- * @param ipmdChkResPathValue
- * @param ipmdChkResultFsd
- * @param propIpmdRefData
- * @param wValueOnly
- * @param labeltype
- * @param noValueText
- * @param ipmdTechRefPath
- * @param ipmdTechRefFsd
+ * @param ipmdChkResPathState Path to this property in the State segment of the ipmdCheckResult object
+ * @param ipmdChkResPathValue Path to this property in the Value segment of the ipmdCheckResult object
+ * @param ipmdChkResultFsd The ipmdCheckResult as Fixed Structure Data
+ * @param propIpmdRefData  Structured data of this property from the TechReference
+ * @param wValueOnly Boolean parameter, if only properties with a value should be included (if true)
+ * @param labeltype Parameter to set the type of the used property labels
+ * @param noValueText Parameter with a (short) string which is used in PNodes without a value
+ * @param ipmdTechRefPath Path to this property in the TechReference object
+ * @param ipmdTechRefFsd The TechReference as Fixed Structure Data
  */
 function _generateXmpPropNode(
   ipmdChkResPathState: string,
@@ -908,23 +909,288 @@ function _generateXmpPropNode(
             idx.toString() +
             fsdLsep +
             ipmdId;
-          const structPropNode = _generateXmpPropNode(
-            ipmdChkResPathStateSub,
-            ipmdChkResPathValueSub,
-            ipmdChkResultFsd,
-            propIpmdRefDataSub,
-            wValueOnly,
-            labeltype,
-            noValueText,
-            ipmdTechRefPathSub,
-            ipmdTechRefFsd
-          );
-          structPropNode.plabel =
-            "[" + (idx + 1).toString() + "] " + structPropNode.plabel;
-          if (wValueOnly) {
-            if (structPropNode.hasValue) fullStructPna.push(structPropNode);
+          if (ipmdChkResPathStateSub.includes("$anypmdproperty")) {
+            // collect a pnode for each "$anypmdproperty" and insert it
+            const ipmdChkResPathValueBox: string =
+              ipmdChkResPathValue +
+              fsdLsep +
+              icc.ipmdcrSStruct +
+              fsdIsel +
+              idx.toString();
+            const ipmdTechRefPathBox: string =
+              icc.itgIpmdStruct + fsdLsep + propRefStructId;
+            const anyPropNodes: IPropNode[] = _generateAnyXmpPropNodes(
+              ipmdChkResPathValueBox,
+              ipmdChkResultFsd,
+              propIpmdRefData,
+              wValueOnly,
+              labeltype,
+              noValueText,
+              ipmdTechRefPathBox,
+              ipmdTechRefFsd
+            );
+            anyPropNodes.forEach((anyPropNode) => {
+              anyPropNode.plabel =
+                "[" + (idx + 1).toString() + "] " + anyPropNode.plabel;
+              fullStructPna.push(anyPropNode);
+            });
           } else {
-            fullStructPna.push(structPropNode);
+            // not an "$anypmdproperty"
+            const structPropNode = _generateXmpPropNode(
+              ipmdChkResPathStateSub,
+              ipmdChkResPathValueSub,
+              ipmdChkResultFsd,
+              propIpmdRefDataSub,
+              wValueOnly,
+              labeltype,
+              noValueText,
+              ipmdTechRefPathSub,
+              ipmdTechRefFsd
+            );
+            structPropNode.plabel =
+              "[" + (idx + 1).toString() + "] " + structPropNode.plabel;
+            if (wValueOnly) {
+              if (structPropNode.hasValue) fullStructPna.push(structPropNode);
+            } else {
+              fullStructPna.push(structPropNode);
+            }
+          }
+        });
+      }
+    } else {
+      // structure value is a single object only
+      // iterate across all properties of the single value-object of this structure
+      statestructIpmdIds.forEach(function (ipmdId) {
+        // get reference data:
+        const ipmdTechRefPathSub: string =
+          icc.itgIpmdStruct + fsdLsep + propRefStructId + fsdLsep + ipmdId;
+        const propIpmdRefDataSub: object =
+          ipmdTechRefFsd.getFsData(ipmdTechRefPathSub)["value"];
+        // get state data:
+        const ipmdChkResPathBothSub: string =
+          ipmdChkResPathState + fsdLsep + icc.ipmdcrSStruct + fsdLsep + ipmdId;
+        const structPropNode = _generateXmpPropNode(
+          ipmdChkResPathBothSub,
+          ipmdChkResPathBothSub,
+          ipmdChkResultFsd,
+          propIpmdRefDataSub,
+          wValueOnly,
+          labeltype,
+          noValueText,
+          ipmdTechRefPathSub,
+          ipmdTechRefFsd
+        );
+        fullStructPna.push(structPropNode);
+      });
+    }
+    propNode.pvalue = fullStructPna;
+    let fullStructHasValue = false;
+    const pnaLen: number = fullStructPna.length;
+    for (let idx = 0; idx < pnaLen; idx++) {
+      if (fullStructPna[idx].hasValue) {
+        fullStructHasValue = true;
+      }
+    }
+    propNode.hasValue = fullStructHasValue;
+  }
+  return propNode;
+}
+
+function _generateAnyXmpPropNodes(
+  ipmdChkResPathValueBox: string,
+  ipmdChkResultFsd: FixedStructureData,
+  propIpmdRefData: MdStruct,
+  wValueOnly: boolean,
+  labeltype: Labeltype,
+  noValueText: string,
+  ipmdTechRefPath: string,
+  ipmdTechRefFsd: FixedStructureData
+): IPropNode[] {
+  const anyPropNodes: IPropNode[] = [];
+
+  const boxStruct: MdStruct = ipmdChkResultFsd.getFsData(
+    ipmdChkResPathValueBox
+  );
+  if (boxStruct[icc.ipmdcrState] !== icc.fsdStFound) return anyPropNodes;
+  const ipmdPropIdsInBox: string[] = Object.keys(boxStruct[icc.fsdResValue]);
+  const boxTechRefData: MdStruct = ipmdTechRefFsd.getFsData(ipmdTechRefPath);
+  if (boxTechRefData[icc.ipmdcrState] !== icc.fsdStFound) return anyPropNodes;
+  const ipmdRefIdsinTechRef: string[] = Object.keys(
+    boxTechRefData[icc.fsdResValue]
+  );
+  // remove "$anypmdproperty" - actually it must be here
+  const aidx: number = ipmdRefIdsinTechRef.indexOf(icc.itgSpidAny);
+  if (aidx !== -1) {
+    ipmdRefIdsinTechRef.splice(aidx, 1);
+  }
+  ipmdPropIdsInBox.forEach((ipmdPropId) => {
+    if (!ipmdRefIdsinTechRef.includes(ipmdPropId)) {
+      // process only non-regular properties
+      const ipmdChkResPathState: string =
+        icc.ipmdcrState + fsdLsep + ipmdPropId;
+      const ipmdChkResPathValue: string =
+        ipmdChkResPathValueBox + fsdLsep + ipmdPropId;
+      const propIpmdRefData: MdStruct = ipmdTechRefFsd.getFsData(
+        icc.itgIpmdTop + fsdLsep + ipmdPropId
+      )["value"];
+      const ipmdTechRefPath: string = icc.itgIpmdTop + fsdLsep + ipmdPropId;
+      const anyPropNode = _generateAnyXmpPropNode(
+        ipmdChkResPathState,
+        ipmdChkResPathValue,
+        ipmdChkResultFsd,
+        propIpmdRefData,
+        wValueOnly,
+        labeltype,
+        noValueText,
+        ipmdTechRefPath,
+        ipmdTechRefFsd
+      );
+      if (!util1.objectIsEmpty(anyPropNode)) {
+        anyPropNodes.push(anyPropNode);
+      }
+    }
+  });
+  return anyPropNodes;
+}
+
+/**
+ * Recursive internal function for creating XMP values which may be structured
+ * @param ipmdChkResPathState Path to this property in the State segment of the ipmdCheckResult object
+ * @param ipmdChkResPathValue Path to this property in the Value segment of the ipmdCheckResult object
+ * @param ipmdChkResultFsd The ipmdCheckResult as Fixed Structure Data
+ * @param propIpmdRefData  Structured data of this property from the TechReference
+ * @param wValueOnly Boolean parameter, if only properties with a value should be included (if true)
+ * @param labeltype Parameter to set the type of the used property labels
+ * @param noValueText Parameter with a (short) string which is used in PNodes without a value
+ * @param ipmdTechRefPath Path to this property in the TechReference object
+ * @param ipmdTechRefFsd The TechReference as Fixed Structure Data
+ */
+function _generateAnyXmpPropNode(
+  ipmdChkResPathState: string,
+  ipmdChkResPathValue: string,
+  ipmdChkResultFsd: FixedStructureData,
+  propIpmdRefData: MdStruct,
+  wValueOnly: boolean,
+  labeltype: Labeltype,
+  noValueText: string,
+  ipmdTechRefPath: string,
+  ipmdTechRefFsd: FixedStructureData
+): IPropNode {
+  let propRefDtIsStruct = false;
+  if (propIpmdRefData[icc.itgDatatype] === icc.itgDtStruct) {
+    propRefDtIsStruct = true;
+  }
+  let propRefStructId = "";
+  if (propRefDtIsStruct) {
+    propRefStructId = propIpmdRefData[icc.itgDataformat];
+  }
+  const propNode: IPropNode = _initPropNode(noValueText);
+  switch (labeltype) {
+    case Labeltype.ipmd:
+      propNode.plabel = propIpmdRefData[icc.itgName];
+      break;
+    case Labeltype.valuefmt:
+      propNode.plabel = propIpmdRefData[icc.itgXmpid];
+      break;
+    case Labeltype.et:
+      if (propIpmdRefData.hasOwnProperty(icc.itgEtXmp)) {
+        propNode.plabel = propIpmdRefData[icc.itgEtXmp];
+      } else {
+        if (propIpmdRefData.hasOwnProperty(icc.itgEtTag)) {
+          propNode.plabel = propIpmdRefData[icc.itgEtTag];
+        } else propNode.plabel = " ";
+      }
+      break;
+  }
+  propNode.psort = propIpmdRefData[icc.itgSortorder];
+  propNode.pspecidx = propIpmdRefData[icc.itgSpecidx];
+  // sort out: is the value of the property a plain value or a structure
+  let propContentType: Ptype = Ptype.plain;
+  const testIsStruct: MdStruct = ipmdChkResultFsd.getFsData(
+    ipmdChkResPathState + fsdLsep + icc.ipmdcrSStruct
+  );
+  if (testIsStruct["state"] === "FOUND") {
+    propContentType = Ptype.struct;
+  }
+  if (propContentType === Ptype.plain) {
+    // value type === plain
+    propNode.ptype = icc.pnodeTypePlain;
+    const propValue: string | string[] | number = ipmdChkResultFsd.getFsData(
+      ipmdChkResPathValue + fsdLsep + icc.ipmdcrVxmp
+    )["value"];
+    propNode.pvalue = _generateOutputStr(propValue);
+    if (propNode.pvalue !== "") {
+      propNode.hasValue = true;
+    } else {
+      propNode.pvalue = noValueText;
+    }
+  } else {
+    // value type === struct
+    propNode.ptype = icc.pnodeTypeStruct;
+    const ipmdDataState: object = ipmdChkResultFsd.getFsData(
+      ipmdChkResPathState + fsdLsep + icc.ipmdcrSStruct
+    )["value"];
+    const statestructIpmdIds: string[] = Object.keys(ipmdDataState);
+
+    const fullStructPna: IPropNode[] = [];
+
+    // check if the value of this structure is a single object or an array of objects
+    const testStructValue: object | object[] = ipmdChkResultFsd.getFsData(
+      ipmdChkResPathValue + fsdLsep + icc.ipmdcrSStruct
+    )["value"];
+    if (Array.isArray(testStructValue)) {
+      // structure value is an array of objects
+      const superIdx: number = testStructValue.length;
+      // loop across all value-objects in the array
+      for (let idx = 0; idx < superIdx; idx++) {
+        // iterate across all properties of the single value-object of this structure
+        statestructIpmdIds.forEach(function (ipmdId) {
+          // get reference data:
+          const ipmdTechRefPathSub: string =
+            icc.itgIpmdStruct + fsdLsep + propRefStructId + fsdLsep + ipmdId;
+          const propIpmdRefDataSub: object =
+            ipmdTechRefFsd.getFsData(ipmdTechRefPathSub)["value"];
+          // get state data:
+          const ipmdChkResPathStateSub: string =
+            ipmdChkResPathState +
+            fsdLsep +
+            icc.ipmdcrSStruct +
+            fsdLsep +
+            ipmdId;
+          const ipmdChkResPathValueSub: string =
+            ipmdChkResPathValue +
+            fsdLsep +
+            icc.ipmdcrSStruct +
+            fsdIsel +
+            idx.toString() +
+            fsdLsep +
+            ipmdId;
+          if (ipmdChkResPathStateSub.includes("$anypmdproperty")) {
+            // collect a pnode for each "$anypmdproperty" and insert it
+            const anyPropNodes: IPropNode[] = [];
+            anyPropNodes.forEach((anyPropNode) => {
+              fullStructPna.push(anyPropNode);
+            });
+          } else {
+            // not an "$anypmdproperty"
+            const structPropNode = _generateXmpPropNode(
+              ipmdChkResPathStateSub,
+              ipmdChkResPathValueSub,
+              ipmdChkResultFsd,
+              propIpmdRefDataSub,
+              wValueOnly,
+              labeltype,
+              noValueText,
+              ipmdTechRefPathSub,
+              ipmdTechRefFsd
+            );
+            structPropNode.plabel =
+              "[" + (idx + 1).toString() + "] " + structPropNode.plabel;
+            if (wValueOnly) {
+              if (structPropNode.hasValue) fullStructPna.push(structPropNode);
+            } else {
+              fullStructPna.push(structPropNode);
+            }
           }
         });
       }

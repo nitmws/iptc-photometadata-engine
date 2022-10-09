@@ -22,7 +22,7 @@ export declare enum Labeltype {
     et = 2
 }
 /**
- * Class of properties holding arrays of PropNodes
+ * Class with properties holding arrays of PropNodes
  * for different Output Designs
  */
 export declare class PropNodesArraysSet1 {
@@ -57,20 +57,21 @@ export interface IPropNode {
     hasValue: boolean;
 }
 /**
- * Enumeration of types of PropNodes
+ * Enumeration of types of PropNodes, see property ptype of IPropNode
  */
 export declare enum Ptype {
     plain = 0,
     struct = 1
 }
 /**
- * Transforms an IPTC PMD Checker Result object to PropNodes (property nodes)
- * @param ipmdChkResult
- * @param opdOpt
- * @param labeltype
- * @param noValueText
- * @param ipmdIdFilter
- * @param ipmdTechRef
- * @param anyOtherDataRef
+ * Transforms an IPTC Photo Metadata Checker Result object
+ *   to a set of trees of PropNodes (property nodes)
+ * @param ipmdChkResult The to-be-transformed IPTC Photo Metadata Checker Result
+ * @param opdOpt Options for the design of the output
+ * @param labeltype To-be-used type of the labels
+ * @param noValueText Text to be shown if no value was found for a property
+ * @param ipmdIdFilter Array of to-be-shown IPTC property Ids, if empty all properties are shown
+ * @param ipmdTechRef Data of the IPTC PMD TechReference
+ * @param anyOtherDataRef Reference data of any non-IPTC properties
  */
 export declare function ipmdChkResultToPropNodes(ipmdChkResult: IipmdCheckerResult, opdOpt: OutputDesignOptions, labeltype: Labeltype, noValueText: string, ipmdIdFilter: string[], ipmdTechRef: object, anyOtherDataRef: MdStruct): PropNodesArraysSet1;

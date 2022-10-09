@@ -9,12 +9,15 @@ import { itgEtTag, itgEtTonopre, itgIpmdTop, itgSpidAny } from "./constants";
  * The result object of IpmdChecker
  */
 export interface IipmdCheckerResult {
-  procstate: ProcState;
+  procstate: ProcState; // State of the Result: "OK" = ok, "ERROR" = error
   state: MdStruct; // object holding all states of checked properties
   value: MdStruct; // object holding all values of checked (and found) properties
   errormsgs: ErrorMsg[]; // array of Error Messages (should be empty)
 }
 
+/**
+ * The result object of a structure of checked properties
+ */
 interface IcheckIpmdStdStructResult {
   procstate: ProcState;
   procresult: object[]; // object holding an array of the result(s) of checking object(s)
@@ -44,7 +47,7 @@ export class CompareResultRow {
 }
 
 /**
- * Class for checking if IPTC Photo Metadata embedded to an image file: do they comply and are XMP/IIM and Exif values in sync.
+ * Class for checking if IPTC Photo Metadata embedded into an image file: do they comply to the IPTC Standard and are existing XMP/IIM and Exif values in sync.
  */
 export class IpmdChecker {
   readonly fsdLsep: string = "/";
@@ -60,7 +63,7 @@ export class IpmdChecker {
 
   /**
    * Constructor of the IpmdChecker class
-   * @param iptcPmdTechRefDocFp File path of the JSON file with the IPTC PMD reference data
+   * @param iptcPmdTechRefDocFp File path of the JSON file with the IPTC PMD TechReference data
    * @param ipmdCheckerResultTemplateFp File path of the JSON file with the IPTC PMD State Data template
    */
   constructor(
@@ -97,7 +100,7 @@ export class IpmdChecker {
   }
 
   /**
-   * Returns all reference data about a top level IPTC PMD property
+   * Returns all TechReference data about a top level IPTC PMD property
    * @param propertyId identifier of the property as defined for the reference data
    */
   public getIpmdTopPropertyData(propertyId: string): object {
@@ -113,7 +116,7 @@ export class IpmdChecker {
   }
 
   /**
-   * Returns all reference data about an IPTC PMD structure
+   * Returns all TechReference data about an IPTC PMD structure
    * @param structId identifier of the structure as defined for the reference data
    */
   public getIpmdStructData(structId: string): object {
@@ -154,11 +157,13 @@ export class IpmdChecker {
   // C H E C K E R  methods
 
   /**
-   * Checks the PMD of a test image based on the properties defined by the IPTC PMD Standard
+   * Checks the photo metadata of a test image based on
+   *   the properties defined by the IPTC PMD Standard
    * @param imgEtPmdInput - object with photo metadata as provided by ExifTool
    * @param compareValues - "true" = if XMP and IIM values exist they are compared
    * @param countOccurrences - "true" = if the XMP value may occur mulitple times: the occurrences are counted
    * @param anyOtherDataRef - object referencing any non-IPTC (meta)data in the ExifTool object
+   * @returns Instance of the ipmdCheckerResult
    */
   public checkIpmdStd(
     imgEtPmdInput: MdStruct = {},
@@ -637,20 +642,24 @@ export class IpmdChecker {
   }
 
   /**
-   * Checks a specific structure of PMD of a test image based on the properties
-   * defined for this kind of structure by the IPTC PMD Standard.
+   * Checks a specific structure of the photo metadata of a test image
+   *   based on the properties defined for this kind of structure
+   *   by the IPTC PMD Standard.
    * This method is called by the checkIpmdStd method.
-   * Be aware: only for the XMP format structures are defined!
+   * Be aware: structures are defined only for the XMP format!
    * @param parentIpmdIdsStr Sequence of IPTC PMD property identifiers, separated by a slash (/)
    * @param refstructId Identifier of the structure in the IPTC PMD reference object
    * @param teststructEtPmd Structure of photo metadata as provided by ExifTool
    * @param countOccurrences - "true" = if the XMP value may occur mulitple times: the occurrences are counted
+   * @param setPmdState - "true" = should the ipmdStateData be set
+   * @returns Instance of the ipmdCheckerResult
    */
   private _checkIpmdStdStruct(
     parentIpmdIdsStr: string,
     refstructId: string,
     teststructEtPmd: MdStruct,
-    countOccurrences = false
+    countOccurrences = false,
+    setPmdState = true
   ): IcheckIpmdStdStructResult {
     if (typeof teststructEtPmd !== "object") {
       const errMsg: ErrorMsg = {
@@ -700,21 +709,31 @@ export class IpmdChecker {
       // Iterate all properties of the reference ipmd_struct[refstructId]
       for (const refPropId in refIpmdStruct) {
         if (refPropId === icc.itgSpidAny) {
-          // is a placeholder for zero to many IPTC properties
-          const anypropVresult: MdStruct = this._checkStructForAnyproperty(
+          // is a placeholder for zero to many other IPTC properties
+          const anypropVresult: MdStruct = this._checkStructForAnyOtherProp(
             refIpmdStruct,
             teststructEtPmdOfArr
           );
-          const propIds = Object.keys(anypropVresult);
+          const propIds: string[] = Object.keys(anypropVresult);
           for (const propId of propIds) {
             structVresult[propId] = anypropVresult[propId];
           }
+          if (setPmdState && propIds.length > 0)
+            this._ipmdStateData.setFsData(
+              1,
+              parentStatePath +
+                refPropId +
+                this._lsep +
+                icc.ipmdcrSData +
+                this._lsep +
+                icc.ipmdcrSDxmp
+            );
         } else {
           // is a regular IPTC property
           const propVresult: MdStruct = {};
           const refPropData = refIpmdStruct[refPropId];
           const etTag = refPropData[icc.itgEtTag];
-          if (teststructEtPmdOfArr.hasOwnProperty(etTag)) {
+          if (setPmdState && teststructEtPmdOfArr.hasOwnProperty(etTag)) {
             this._ipmdStateData.setFsData(
               1,
               parentStatePath +
@@ -751,7 +770,7 @@ export class IpmdChecker {
                   if (!util1.objectIsEmpty(checkStructVresult)) {
                     propVresult[icc.itgDtStruct] = checkStructVresult;
                     // propVresult[icc.itgDtStruct] = checkStructVresult;
-                    if (countOccurrences) {
+                    if (setPmdState && countOccurrences) {
                       if (Array.isArray(checkStructVresult)) {
                         this._ipmdStateData.setFsData(
                           checkStructVresult.length,
@@ -782,7 +801,7 @@ export class IpmdChecker {
                   teststructEtPmdOfArr,
                   etTag
                 );
-                if (countOccurrences) {
+                if (setPmdState && countOccurrences) {
                   if (Array.isArray(teststructEtPmdOfArr[etTag])) {
                     this._ipmdStateData.setFsData(
                       teststructEtPmdOfArr[etTag].length,
@@ -813,7 +832,7 @@ export class IpmdChecker {
                 datatype,
                 parentIpmdIdsStr + "/" + refPropId
               );
-              if (countOccurrences) {
+              if (setPmdState && countOccurrences) {
                 if (Array.isArray(teststructEtPmdOfArr[etTag])) {
                   this._ipmdStateData.setFsData(
                     teststructEtPmdOfArr[etTag].length,
@@ -852,7 +871,15 @@ export class IpmdChecker {
   // ==================================================================================
   // P R O C E S S   "A N Y   P R O P E R T Y"  methods
 
-  private _checkStructForAnyproperty(
+  /**
+   * Check a structure if it has any other property than those defined by the
+   *    IPTC PMD standard
+   * @param refIpmdStruct Data about the to-be-checked structure from the TechReference
+   * @param teststructEtPmd Data of the to-be-checked structure from the ExifTool output
+   * @returns A metadata structure including found "other properties"
+   * @private
+   */
+  private _checkStructForAnyOtherProp(
     refIpmdStruct: object,
     teststructEtPmd: MdStruct
   ): MdStruct {
@@ -879,6 +906,14 @@ export class IpmdChecker {
   // ==================================================================================
   // C H E C K  B Y  E T T A G methods
 
+  /**
+   * Check "sub-properties" (property inside a structure) by it ExifTool tag
+   *   and not by its IPTC spec identifier
+   * @param etTag ExifTool tag of the to-be-checked property
+   * @param etValue Value of the property as delivered by ExifTool
+   * @returns A metadata structure of the checked property
+   * @private
+   */
   private _checkSubpropByEtTag(etTag: string, etValue: any): MdStruct {
     // Search for Ipmd-Top property with this EtTag, if not found return nothing
     const refEtTopNoprefix = this.ipmdRef[icc.itgEtTonopre];
@@ -901,7 +936,9 @@ export class IpmdChecker {
           this._checkIpmdStdStruct(
             subpropIpmdId,
             structureId,
-            structureTestValue
+            structureTestValue,
+            true,
+            false
           );
         switch (checkStructProcresult.procstate) {
           case ProcState.ProcErr:
@@ -938,10 +975,11 @@ export class IpmdChecker {
    * Compares an IPMD Checker Result of a test image against the IPMD Checker Result
    * of a reference image
    * Returns: array of CompareResultRow objects
-   * @param resultRef
-   * @param resultTest
-   * @param ipmdIdFilter
-   * @param compareOptions
+   * @param resultRef IPMD Checker Result of a reference image
+   * @param resultTest IPMD Checker Result of a test image
+   * @param ipmdIdFilter Array of to-be-compared IPTC property Id, if empty all properties are compared
+   * @param compareOptions Instance of the CompareOptions
+   * @returns Array of CompareResultRow
    */
   public compareIpmdCheckerResults(
     resultRef: IipmdCheckerResult,
@@ -1240,10 +1278,11 @@ export class IpmdChecker {
   /**
    * Sub-method of compareIpmdCheckerResults. Compares a structure of an IPTC PMD property.
    * The ...Struct1 method sorts out a single value vs. multiple values in an array
-   * @param refDataValueFsd
-   * @param testDataValueFsd
-   * @param thisImpdIdPath
-   * @param compareOptions
+   * @param refDataValueFsd Value data of a property of the reference image
+   * @param testDataValueFsd Value data of a property of the test image
+   * @param thisImpdIdPath Path of this IPTC property Id in the hierarchy of properties
+   * @param compareOptions Instance of CompareOptions
+   * @returns Array of CompareResultRow
    */
   private _compareIpmdCheckerResultsStruct1(
     refDataValueFsd: FixedStructureData,
@@ -1285,10 +1324,11 @@ export class IpmdChecker {
   /**
    * Sub-method of compareIpmdCheckerResults and of _compareIpmdCheckerResultsStruct1.
    * Compares a single value of or in a structure of an IPTC PMD property.
-   * @param refDataValueFsd
-   * @param testDataValueFsd
-   * @param thisImpdIdPath
-   * @param compareOptions
+   * @param refDataValueFsd Value data of a property of the reference image
+   * @param testDataValueFsd Value data of a property of the test image
+   * @param thisImpdIdPath Path of this IPTC property Id in the hierarchy of properties
+   * @param compareOptions Instance of CompareOptions
+   * @returns Array of CompareResultRow
    */
   private _compareIpmdCheckerResultsStruct2(
     refDataValueFsd: FixedStructureData,
@@ -1431,7 +1471,7 @@ export class IpmdChecker {
 
   // ============= I N T E R N A L   H E L P E R   M E T H O D S    ===================
   /**
-   * Loads the IPTC Photo Metadata Reference document from a JSON file.
+   * Loads the IPTC Photo Metadata TechReference document from a JSON file.
    * For class-internal use only.
    */
   private static _loadIpmdRefJson(ipmdRefFp: string): object {
@@ -1453,7 +1493,7 @@ export class IpmdChecker {
   }
 
   /**
-   * Checks if the class instance is ready for doing a check and set the property _readyToCheck
+   * Checks if an instance of this class is ready for doing a check and set the property _readyToCheck accordingly
    */
   private _checkReadyToCheck() {
     this._readyToCheck =
@@ -1531,6 +1571,15 @@ export class IpmdChecker {
     return nameSeq;
   }
 
+  /**
+   * Builds a single string value from an AltLang value - which may have
+   *   values in different languages. This single string follows a format
+   *   enabling software to split it up into the strings in different languages
+   * @param etJsonData JSON object with the AltLang data
+   * @param basicPropId IPTC property Id of the property owning this value
+   * @returns A single string with text values in different languages
+   * @private
+   */
   private _buildAltLangValue(
     etJsonData: MdStruct,
     basicPropId: string
@@ -1554,6 +1603,7 @@ export class IpmdChecker {
    *   Sub-methods deal with a single value and an array of values
    * @param propValue The to-be-normalized value
    * @param shouldbeDatatype The target data type
+   * @returns The normalized value
    * @private
    */
   private _normalizePropValue(
@@ -1567,6 +1617,14 @@ export class IpmdChecker {
     return this._normalizePropSingleValue(propValue, shouldbeDatatype, propId);
   }
 
+  /**
+   * Sub-method of _normalizePropValue: normalizes an array of values
+   * @param propValueArray
+   * @param shouldbeDatatype
+   * @param propId
+   * @returns The normalized values
+   * @private
+   */
   private _normalizePropValueArray(
     propValueArray: any,
     shouldbeDatatype: string,
@@ -1587,6 +1645,14 @@ export class IpmdChecker {
     return retArray;
   }
 
+  /**
+   * Sub-method of _normalizePropValue: normalizes a single value
+   * @param propValue
+   * @param shouldbeDatatype
+   * @param propId
+   * @returns The normalized values
+   * @private
+   */
   private _normalizePropSingleValue(
     propValue: any,
     shouldbeDatatype: string,
@@ -1638,6 +1704,13 @@ export class IpmdChecker {
     return propValue;
   }
 
+  /**
+   * Gets all ExifTool tags of properties defined by the IPTC PMD Standard
+   *   for a structure
+   * @param refIpmdStruct Data of the structure from the IPTC TechReference
+   * @returns Array of ExifTool tags
+   * @private
+   */
   private _getEtTagsOfStruct(refIpmdStruct: MdStruct): string[] {
     const etTags: string[] = [];
     for (const refPropId in refIpmdStruct) {
@@ -1648,6 +1721,9 @@ export class IpmdChecker {
   }
 } // class IpmdChecker
 
+/**
+ * Special purpose class, helps indicating boolean values of the XMP and the IIM properties
+ */
 class XmpIimTwins {
   xmp = false;
   iim = false;

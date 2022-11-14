@@ -1,6 +1,6 @@
 {
   "name": "iptc-photometadata-engine",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "description": "Processing of photo metadata in compliance with the IPTC Photo Metadata Standard",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

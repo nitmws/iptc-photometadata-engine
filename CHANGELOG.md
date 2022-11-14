@@ -2,6 +2,8 @@
 
 (Latest changes at the top. Changes refer to a version provided in the "version" property of package.json.)
 
+* v 0.2.12 2022-11-14:
+  * ipmdchecker/_checkIpmdStdStruct(): error in using setPmdState fixed, occured in $anypmdproperty properties with a structure.
 * v 0.2.11 2022-10-09:
   * ipmdchecker: enabled to find IPTC properties replacing the placeholder $anypmdproperty in the TechReference
   * propnodes1: enabled to show IPTC properties found in the context of the placeholder $anypmdproperty

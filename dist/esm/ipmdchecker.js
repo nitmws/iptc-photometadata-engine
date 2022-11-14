@@ -575,7 +575,6 @@ export class IpmdChecker {
             };
         }
         const parentIpmdIds = parentIpmdIdsStr.split("/");
-        // parentIpmdIds = parentIpmdIds.reverse();
         let parentStatePath = "";
         if (parentIpmdIds.length < 2) {
             parentStatePath = parentIpmdIdsStr + "/struct/";
@@ -606,17 +605,19 @@ export class IpmdChecker {
                             icc.ipmdcrSDxmp);
                 }
                 else {
-                    // is a regular IPTC property
+                    // this is a regular IPTC property
                     const propVresult = {};
                     const refPropData = refIpmdStruct[refPropId];
                     const etTag = refPropData[icc.itgEtTag];
-                    if (setPmdState && teststructEtPmdOfArr.hasOwnProperty(etTag)) {
-                        this._ipmdStateData.setFsData(1, parentStatePath +
-                            refPropId +
-                            this._lsep +
-                            icc.ipmdcrSData +
-                            this._lsep +
-                            icc.ipmdcrSDxmp);
+                    if (teststructEtPmdOfArr.hasOwnProperty(etTag)) {
+                        if (setPmdState) {
+                            this._ipmdStateData.setFsData(1, parentStatePath +
+                                refPropId +
+                                this._lsep +
+                                icc.ipmdcrSData +
+                                this._lsep +
+                                icc.ipmdcrSDxmp);
+                        }
                         const datatype = refPropData[icc.itgDatatype];
                         if (datatype === icc.itgDtStruct) {
                             const structureId = refPropData[icc.itgDataformat];

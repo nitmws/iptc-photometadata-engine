@@ -68,16 +68,16 @@ export class IpmdChecker {
    */
   constructor(
     iptcPmdTechRefDocFp: string,
-    ipmdCheckerResultTemplateFp: string
+    ipmdCheckerResultTemplateFp: string,
   ) {
     this._readyToCheck = false;
     this.ipmdRef = IpmdChecker._loadIpmdRefJson(iptcPmdTechRefDocFp);
     this._ipmdStateDataTempl = IpmdChecker._loadIpmdStateDataTemplate(
-      ipmdCheckerResultTemplateFp
+      ipmdCheckerResultTemplateFp,
     );
     this._ipmdStateData = new FixedStructureData(
       this._ipmdStateDataTempl,
-      true
+      true,
     );
     this._ipmdValueData = {};
     this._errmsgs = [];
@@ -169,7 +169,7 @@ export class IpmdChecker {
     imgEtPmdInput: MdStruct = {},
     compareValues = false,
     countOccurrences = false,
-    anyOtherDataRef: MdStruct = {}
+    anyOtherDataRef: MdStruct = {},
   ): IipmdCheckerResult {
     // prerequisites
     let testImgEtPmd: MdStruct;
@@ -249,7 +249,7 @@ export class IpmdChecker {
             this._lsep +
             icc.ipmdcrSData +
             this._lsep +
-            icc.ipmdcrSDxmp
+            icc.ipmdcrSDxmp,
         );
 
         if (datatype === icc.itgDtStruct) {
@@ -261,7 +261,7 @@ export class IpmdChecker {
                 refPropId,
                 structureId,
                 structureTestValue,
-                countOccurrences
+                countOccurrences,
               );
             switch (checkStructProcresult.procstate) {
               case ProcState.ProcErr:
@@ -285,7 +285,7 @@ export class IpmdChecker {
                         this._lsep +
                         icc.ipmdcrSData +
                         this._lsep +
-                        icc.ipmdcrSDvaloccur
+                        icc.ipmdcrSDvaloccur,
                     );
                   } else {
                     this._ipmdStateData.setFsData(
@@ -294,7 +294,7 @@ export class IpmdChecker {
                         this._lsep +
                         icc.ipmdcrSData +
                         this._lsep +
-                        icc.ipmdcrSDvaloccur
+                        icc.ipmdcrSDvaloccur,
                     );
                   }
                 }
@@ -312,7 +312,7 @@ export class IpmdChecker {
                     this._lsep +
                     icc.ipmdcrSData +
                     this._lsep +
-                    icc.ipmdcrSDvaloccur
+                    icc.ipmdcrSDvaloccur,
                 );
               } else {
                 this._ipmdStateData.setFsData(
@@ -321,7 +321,7 @@ export class IpmdChecker {
                     this._lsep +
                     icc.ipmdcrSData +
                     this._lsep +
-                    icc.ipmdcrSDvaloccur
+                    icc.ipmdcrSDvaloccur,
                 );
               }
             }
@@ -331,7 +331,7 @@ export class IpmdChecker {
           xmpValue = this._normalizePropValue(
             testImgEtPmd[etXmpId],
             datatype,
-            refPropId
+            refPropId,
           );
           propVresult[icc.ipmdcrVxmp] = xmpValue;
           if (countOccurrences) {
@@ -342,7 +342,7 @@ export class IpmdChecker {
                   this._lsep +
                   icc.ipmdcrSData +
                   this._lsep +
-                  icc.ipmdcrSDvaloccur
+                  icc.ipmdcrSDvaloccur,
               );
             } else {
               this._ipmdStateData.setFsData(
@@ -351,7 +351,7 @@ export class IpmdChecker {
                   this._lsep +
                   icc.ipmdcrSData +
                   this._lsep +
-                  icc.ipmdcrSDvaloccur
+                  icc.ipmdcrSDvaloccur,
               );
             }
           }
@@ -371,7 +371,7 @@ export class IpmdChecker {
                 this._lsep +
                 icc.ipmdcrSData +
                 this._lsep +
-                icc.ipmdcrSDiim
+                icc.ipmdcrSDiim,
             );
             propVresult[icc.ipmdcrViim] =
               testImgEtPmd["IPTC:DateCreated"] +
@@ -390,7 +390,7 @@ export class IpmdChecker {
               this._lsep +
               icc.ipmdcrSData +
               this._lsep +
-              icc.ipmdcrSDiim
+              icc.ipmdcrSDiim,
           );
           if (etIimId === "IPTC:By-line") {
             const tempIimValue: string[] = [];
@@ -398,8 +398,8 @@ export class IpmdChecker {
               this._normalizePropValue(
                 testImgEtPmd[etIimId],
                 datatype,
-                refPropId
-              )
+                refPropId,
+              ),
             );
             propVresult[icc.ipmdcrViim] = tempIimValue;
             iimValue = tempIimValue;
@@ -407,7 +407,7 @@ export class IpmdChecker {
             iimValue = this._normalizePropValue(
               testImgEtPmd[etIimId],
               datatype,
-              refPropId
+              refPropId,
             );
             propVresult[icc.ipmdcrViim] = iimValue;
           }
@@ -441,7 +441,7 @@ export class IpmdChecker {
                 this._lsep +
                 icc.ipmdcrSData +
                 this._lsep +
-                icc.ipmdcrSDexif
+                icc.ipmdcrSDexif,
             );
             let tzOffset = "";
             if (testImgEtPmd.hasOwnProperty("ExifIFD:OffsetTimeOriginal")) {
@@ -464,7 +464,7 @@ export class IpmdChecker {
                 this._lsep +
                 icc.ipmdcrSData +
                 this._lsep +
-                icc.ipmdcrSDexif
+                icc.ipmdcrSDexif,
             );
             let subSeconds = "";
             if (testImgEtPmd.hasOwnProperty("ExifIFD:SubSecTimeOriginal")) {
@@ -492,7 +492,7 @@ export class IpmdChecker {
                 this._lsep +
                 icc.ipmdcrSData +
                 this._lsep +
-                icc.ipmdcrSDexif
+                icc.ipmdcrSDexif,
             );
             propVresult[icc.ipmdcrVexif] =
               testImgEtPmd["IFD0:ImageDescription"];
@@ -509,10 +509,10 @@ export class IpmdChecker {
                 this._lsep +
                 icc.ipmdcrSData +
                 this._lsep +
-                icc.ipmdcrSDexif
+                icc.ipmdcrSDexif,
             );
             propVresult[icc.ipmdcrVexif] = testImgEtPmd["IFD0:Copyright"];
-            exifValue = testImgEtPmd["IFD0:ImageDescription"];
+            exifValue = testImgEtPmd["IFD0:Copyright"];
             exifDataSet = true;
           }
         }
@@ -531,7 +531,7 @@ export class IpmdChecker {
                 this._lsep +
                 icc.ipmdcrSData +
                 this._lsep +
-                icc.ipmdcrSDexif
+                icc.ipmdcrSDexif,
             );
           }
         }
@@ -543,7 +543,7 @@ export class IpmdChecker {
               this._lsep +
               icc.ipmdcrSData +
               this._lsep +
-              icc.ipmdcrSDexif
+              icc.ipmdcrSDexif,
           );
           propVresult[icc.ipmdcrVexif] = testImgEtPmd[etExifId];
           exifValue = testImgEtPmd[etExifId];
@@ -608,7 +608,7 @@ export class IpmdChecker {
                 this._lsep +
                 icc.ipmdcrSData +
                 this._lsep +
-                icc.ipmdcrSDinsync
+                icc.ipmdcrSDinsync,
             );
             if (exifValue !== undefined) {
               let iptcExifAreEqual = false;
@@ -626,7 +626,7 @@ export class IpmdChecker {
                     this._lsep +
                     icc.ipmdcrSData +
                     this._lsep +
-                    icc.ipmdcrSDmapinsync
+                    icc.ipmdcrSDmapinsync,
                 );
               } else {
                 this._ipmdStateData.setFsData(
@@ -635,7 +635,7 @@ export class IpmdChecker {
                     this._lsep +
                     icc.ipmdcrSData +
                     this._lsep +
-                    icc.ipmdcrSDmapinsync
+                    icc.ipmdcrSDmapinsync,
                 );
               }
             }
@@ -646,7 +646,7 @@ export class IpmdChecker {
                 this._lsep +
                 icc.ipmdcrSData +
                 this._lsep +
-                icc.ipmdcrSDinsync
+                icc.ipmdcrSDinsync,
             );
           }
         }
@@ -698,7 +698,7 @@ export class IpmdChecker {
     refstructId: string,
     teststructEtPmd: MdStruct,
     countOccurrences = false,
-    setPmdState = true
+    setPmdState = true,
   ): IcheckIpmdStdStructResult {
     if (typeof teststructEtPmd !== "object") {
       const errMsg: ErrorMsg = {
@@ -750,7 +750,7 @@ export class IpmdChecker {
           // is a placeholder for zero to many other IPTC properties
           const anypropVresult: MdStruct = this._checkStructForAnyOtherProp(
             refIpmdStruct,
-            teststructEtPmdOfArr
+            teststructEtPmdOfArr,
           );
           const propIds: string[] = Object.keys(anypropVresult);
           for (const propId of propIds) {
@@ -764,7 +764,7 @@ export class IpmdChecker {
                 this._lsep +
                 icc.ipmdcrSData +
                 this._lsep +
-                icc.ipmdcrSDxmp
+                icc.ipmdcrSDxmp,
             );
         } else {
           // this is a regular IPTC property
@@ -780,7 +780,7 @@ export class IpmdChecker {
                   this._lsep +
                   icc.ipmdcrSData +
                   this._lsep +
-                  icc.ipmdcrSDxmp
+                  icc.ipmdcrSDxmp,
               );
             }
             const datatype: string = refPropData[icc.itgDatatype];
@@ -795,7 +795,7 @@ export class IpmdChecker {
                     parentIpmdIdsStrSub,
                     structureId,
                     structureTestValue,
-                    countOccurrences
+                    countOccurrences,
                   );
                 switch (checkStructProcresult.procstate) {
                   case ProcState.ProcErr:
@@ -819,7 +819,7 @@ export class IpmdChecker {
                             this._lsep +
                             icc.ipmdcrSData +
                             this._lsep +
-                            icc.ipmdcrSDvaloccur
+                            icc.ipmdcrSDvaloccur,
                         );
                       } else {
                         this._ipmdStateData.setFsData(
@@ -829,7 +829,7 @@ export class IpmdChecker {
                             this._lsep +
                             icc.ipmdcrSData +
                             this._lsep +
-                            icc.ipmdcrSDvaloccur
+                            icc.ipmdcrSDvaloccur,
                         );
                       }
                     }
@@ -839,7 +839,7 @@ export class IpmdChecker {
                 // AltLang property
                 propVresult[icc.ipmdcrVxmp] = this._buildAltLangValue(
                   teststructEtPmdOfArr,
-                  etTag
+                  etTag,
                 );
                 if (setPmdState && countOccurrences) {
                   if (Array.isArray(teststructEtPmdOfArr[etTag])) {
@@ -850,7 +850,7 @@ export class IpmdChecker {
                         this._lsep +
                         icc.ipmdcrSData +
                         this._lsep +
-                        icc.ipmdcrSDvaloccur
+                        icc.ipmdcrSDvaloccur,
                     );
                   } else {
                     this._ipmdStateData.setFsData(
@@ -860,7 +860,7 @@ export class IpmdChecker {
                         this._lsep +
                         icc.ipmdcrSData +
                         this._lsep +
-                        icc.ipmdcrSDvaloccur
+                        icc.ipmdcrSDvaloccur,
                     );
                   }
                 }
@@ -870,7 +870,7 @@ export class IpmdChecker {
               propVresult[icc.ipmdcrVxmp] = this._normalizePropValue(
                 teststructEtPmdOfArr[etTag],
                 datatype,
-                parentIpmdIdsStr + "/" + refPropId
+                parentIpmdIdsStr + "/" + refPropId,
               );
               if (setPmdState && countOccurrences) {
                 if (Array.isArray(teststructEtPmdOfArr[etTag])) {
@@ -881,7 +881,7 @@ export class IpmdChecker {
                       this._lsep +
                       icc.ipmdcrSData +
                       this._lsep +
-                      icc.ipmdcrSDvaloccur
+                      icc.ipmdcrSDvaloccur,
                   );
                 } else {
                   this._ipmdStateData.setFsData(
@@ -891,7 +891,7 @@ export class IpmdChecker {
                       this._lsep +
                       icc.ipmdcrSData +
                       this._lsep +
-                      icc.ipmdcrSDvaloccur
+                      icc.ipmdcrSDvaloccur,
                   );
                 }
               }
@@ -921,7 +921,7 @@ export class IpmdChecker {
    */
   private _checkStructForAnyOtherProp(
     refIpmdStruct: object,
-    teststructEtPmd: MdStruct
+    teststructEtPmd: MdStruct,
   ): MdStruct {
     const etTagsInRefStruct: string[] = this._getEtTagsOfStruct(refIpmdStruct);
     const structVresult: MdStruct = {};
@@ -978,7 +978,7 @@ export class IpmdChecker {
             structureId,
             structureTestValue,
             true,
-            false
+            false,
           );
         switch (checkStructProcresult.procstate) {
           case ProcState.ProcErr:
@@ -1002,7 +1002,7 @@ export class IpmdChecker {
       propVresult[icc.ipmdcrVxmp] = this._normalizePropValue(
         etValue,
         datatype,
-        subpropIpmdId
+        subpropIpmdId,
       );
     }
     return propVresult;
@@ -1025,7 +1025,7 @@ export class IpmdChecker {
     resultRef: IipmdCheckerResult,
     resultTest: IipmdCheckerResult,
     ipmdIdFilter: string[],
-    compareOptions: CompareOptions
+    compareOptions: CompareOptions,
   ): CompareResultRow[] {
     const refDataValue: MdStruct = resultRef.value;
 
@@ -1043,13 +1043,13 @@ export class IpmdChecker {
 
     const refDataValueFsd: FixedStructureData = new FixedStructureData(
       refDataValue,
-      false
+      false,
     );
 
     const testDataValue: MdStruct = resultTest.value;
     const testDataValueFsd: FixedStructureData = new FixedStructureData(
       testDataValue,
-      false
+      false,
     );
     const compareResultRows: CompareResultRow[] = []; // this will be returned as result of this method
     // interate across the top level properties in the values of the reference file
@@ -1101,7 +1101,7 @@ export class IpmdChecker {
               xmpCrRow.comparedIpmdIdPath = refIpmdId; // + this.fsdLsep + 'XMP';
               xmpCrRow.comparedValueFormat = icc.ipmdcrVxmp;
               xmpCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-                xmpCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp
+                xmpCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp,
               );
               xmpCrRow.refValue = propRefValueXmp.toString();
               xmpCrRow.testValue = propTestValueXmp.toString();
@@ -1113,7 +1113,7 @@ export class IpmdChecker {
             xmpCrRow.comparedIpmdIdPath = refIpmdId; // + this.fsdLsep + 'XMP';
             xmpCrRow.comparedValueFormat = icc.ipmdcrVxmp;
             xmpCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-              xmpCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp
+              xmpCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp,
             );
             xmpCrRow.refValue = propRefValueXmp.toString();
             compareResultRows.push(xmpCrRow);
@@ -1127,7 +1127,7 @@ export class IpmdChecker {
             xmpCrRow.comparedIpmdIdPath = refIpmdId;
             xmpCrRow.comparedValueFormat = icc.ipmdcrVxmp;
             xmpCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-              xmpCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp
+              xmpCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp,
             );
             xmpCrRow.refValue = propRefValueXmp.toString();
             compareResultRows.push(xmpCrRow);
@@ -1142,7 +1142,7 @@ export class IpmdChecker {
                 xmpCrRow.comparedIpmdIdPath = refIpmdId;
                 xmpCrRow.comparedValueFormat = icc.ipmdcrVxmp;
                 xmpCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-                  xmpCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp
+                  xmpCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp,
                 );
                 xmpCrRow.refValue = propRefValueXmp.toString();
                 xmpCrRow.testValue = propTestValueXmp.toString();
@@ -1156,7 +1156,7 @@ export class IpmdChecker {
               xmpCrRow.refValue = "[array of value(s)]";
               xmpCrRow.testValue = "[a plain value]";
               xmpCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-                xmpCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp
+                xmpCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp,
               );
               compareResultRows.push(xmpCrRow);
             }
@@ -1175,7 +1175,7 @@ export class IpmdChecker {
             iimCrRow.comparedIpmdIdPath = refIpmdId;
             iimCrRow.comparedValueFormat = icc.ipmdcrViim;
             iimCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-              iimCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrViim
+              iimCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrViim,
             );
             iimCrRow.refValue = propRefValueIim.toString();
           }
@@ -1192,7 +1192,7 @@ export class IpmdChecker {
                 iimCrRow.comparedIpmdIdPath = refIpmdId; // + this.fsdLsep + 'IIM';
                 iimCrRow.comparedValueFormat = icc.ipmdcrViim;
                 iimCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-                  iimCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrViim
+                  iimCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrViim,
                 );
                 iimCrRow.refValue = propRefValueIim.toString();
                 iimCrRow.testValue = propTestValueIim.toString();
@@ -1203,7 +1203,7 @@ export class IpmdChecker {
               iimCrRow.comparedIpmdIdPath = refIpmdId;
               iimCrRow.comparedValueFormat = icc.ipmdcrViim;
               iimCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-                iimCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrViim
+                iimCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrViim,
               );
               iimCrRow.refValue = propRefValueIim.toString();
             }
@@ -1220,7 +1220,7 @@ export class IpmdChecker {
                 iimCrRow.comparedIpmdIdPath = refIpmdId; // + this.fsdLsep + 'IIM';
                 iimCrRow.comparedValueFormat = icc.ipmdcrViim;
                 iimCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-                  iimCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrViim
+                  iimCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrViim,
                 );
                 iimCrRow.refValue = propRefValueIim.toString();
                 iimCrRow.testValue = propTestValueIim.toString();
@@ -1233,7 +1233,7 @@ export class IpmdChecker {
               iimCrRow.refValue = "[array of value(s)]";
               iimCrRow.testValue = "[a plain value]";
               iimCrRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-                iimCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrViim
+                iimCrRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrViim,
               );
             }
           }
@@ -1259,7 +1259,7 @@ export class IpmdChecker {
                   // ... and have the same result -> merge
                   xmpCrRow.message = xmpCrRow.message.replace(
                     "XMP",
-                    "XMP and IIM"
+                    "XMP and IIM",
                   );
                   xmpCrRow.comparedNamePath =
                     xmpCrRow.comparedNamePath + "+IIM";
@@ -1302,12 +1302,12 @@ export class IpmdChecker {
             refDataValueFsd,
             testDataValueFsd,
             refIpmdId + this.fsdLsep + icc.ipmdcrSStruct,
-            compareOptions
+            compareOptions,
           );
         if (compareResultStructRows.length > 0) {
           Array.prototype.push.apply(
             compareResultRows,
-            compareResultStructRows
+            compareResultStructRows,
           );
         }
       }
@@ -1328,7 +1328,7 @@ export class IpmdChecker {
     refDataValueFsd: FixedStructureData,
     testDataValueFsd: FixedStructureData,
     thisImpdIdPath: string,
-    compareOptions: CompareOptions
+    compareOptions: CompareOptions,
   ): CompareResultRow[] {
     const fsdResult: MdStruct = refDataValueFsd.getFsData(thisImpdIdPath);
     if (fsdResult[icc.fsdResState] !== icc.fsdStFound) return [];
@@ -1344,7 +1344,7 @@ export class IpmdChecker {
           refDataValueFsd,
           testDataValueFsd,
           thisThisImpdIdPath,
-          compareOptions
+          compareOptions,
         );
         Array.prototype.push.apply(compareResultRows, singleCompareResultRows);
       }
@@ -1354,7 +1354,7 @@ export class IpmdChecker {
         refDataValueFsd,
         testDataValueFsd,
         thisImpdIdPath,
-        compareOptions
+        compareOptions,
       );
       Array.prototype.push.apply(compareResultRows, singleCompareResultRows);
     }
@@ -1374,7 +1374,7 @@ export class IpmdChecker {
     refDataValueFsd: FixedStructureData,
     testDataValueFsd: FixedStructureData,
     thisImpdIdPath: string,
-    compareOptions: CompareOptions
+    compareOptions: CompareOptions,
   ): CompareResultRow[] {
     const fsdResult: MdStruct = refDataValueFsd.getFsData(thisImpdIdPath);
     if (fsdResult[icc.fsdResState] !== icc.fsdStFound) return [];
@@ -1392,7 +1392,7 @@ export class IpmdChecker {
         crRow.message = "Test image: MISSING property";
         crRow.comparedIpmdIdPath = refIpmdIdPath;
         crRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-          crRow.comparedIpmdIdPath
+          crRow.comparedIpmdIdPath,
         );
         compareResultRows.push(crRow);
         break; // quit
@@ -1421,7 +1421,7 @@ export class IpmdChecker {
               crRow.comparedIpmdIdPath = refIpmdIdPath; // + this.fsdLsep + 'XMP';
               crRow.comparedValueFormat = icc.ipmdcrVxmp;
               crRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-                crRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp
+                crRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp,
               );
               crRow.refValue = propRefValueXmp.toString();
               crRow.testValue = propTestValueXmp.toString();
@@ -1433,11 +1433,11 @@ export class IpmdChecker {
             crRow.comparedIpmdIdPath = refIpmdIdPath; // + this.fsdLsep + 'XMP';
             crRow.comparedValueFormat = icc.ipmdcrVxmp;
             crRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-              crRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp
+              crRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp,
             );
             crRow.refValue = propRefValueXmp.toString();
             crRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-              crRow.comparedIpmdIdPath
+              crRow.comparedIpmdIdPath,
             );
             compareResultRows.push(crRow);
           }
@@ -1450,11 +1450,11 @@ export class IpmdChecker {
             crRow.comparedIpmdIdPath = refIpmdIdPath;
             crRow.comparedValueFormat = icc.ipmdcrVxmp;
             crRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-              crRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp
+              crRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp,
             );
             crRow.refValue = propRefValueXmp.toString();
             crRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-              crRow.comparedIpmdIdPath
+              crRow.comparedIpmdIdPath,
             );
             compareResultRows.push(crRow);
           } else {
@@ -1468,7 +1468,7 @@ export class IpmdChecker {
                 crRow.comparedIpmdIdPath = refIpmdIdPath; // + this.fsdLsep + 'XMP';
                 crRow.comparedValueFormat = icc.ipmdcrVxmp;
                 crRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-                  crRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp
+                  crRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp,
                 );
                 crRow.refValue = propRefValueXmp.toString();
                 crRow.testValue = propTestValueXmp.toString();
@@ -1482,7 +1482,7 @@ export class IpmdChecker {
               crRow.refValue = "[array of value(s)]";
               crRow.testValue = "[a plain value]";
               crRow.comparedNamePath = this._ipmdIdPath2nameSeq(
-                crRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp
+                crRow.comparedIpmdIdPath + this.fsdLsep + icc.ipmdcrVxmp,
               );
               compareResultRows.push(crRow);
             }
@@ -1496,12 +1496,12 @@ export class IpmdChecker {
             refDataValueFsd,
             testDataValueFsd,
             refIpmdId + this.fsdLsep + icc.ipmdcrSStruct,
-            compareOptions
+            compareOptions,
           );
         if (compareResultStructRows.length > 0) {
           Array.prototype.push.apply(
             compareResultRows,
-            compareResultStructRows
+            compareResultStructRows,
           );
         }
       }
@@ -1524,7 +1524,7 @@ export class IpmdChecker {
    * @param ipmdStateDataTemplFp
    */
   private static _loadIpmdStateDataTemplate(
-    ipmdStateDataTemplFp: string
+    ipmdStateDataTemplFp: string,
   ): object {
     if (!fs.existsSync(ipmdStateDataTemplFp)) {
       return {};
@@ -1550,7 +1550,7 @@ export class IpmdChecker {
    */
   private static _arraysAreEqual(
     array1: string[] | number[],
-    array2: string[] | number[]
+    array2: string[] | number[],
   ): boolean {
     if (array1.length !== array2.length) return false;
     if (array1.length === 0) return true;
@@ -1622,7 +1622,7 @@ export class IpmdChecker {
    */
   private _buildAltLangValue(
     etJsonData: MdStruct,
-    basicPropId: string
+    basicPropId: string,
   ): string {
     let altLangStr = "";
     if (basicPropId in etJsonData) {
@@ -1649,7 +1649,7 @@ export class IpmdChecker {
   private _normalizePropValue(
     propValue: any,
     shouldbeDatatype: string,
-    propId: string
+    propId: string,
   ): any {
     if (Array.isArray(propValue)) {
       return this._normalizePropValueArray(propValue, shouldbeDatatype, propId);
@@ -1668,7 +1668,7 @@ export class IpmdChecker {
   private _normalizePropValueArray(
     propValueArray: any,
     shouldbeDatatype: string,
-    propId: string
+    propId: string,
   ): any {
     if (!Array.isArray(propValueArray)) {
       return propValueArray;
@@ -1678,7 +1678,7 @@ export class IpmdChecker {
       const normAnItem: any = this._normalizePropSingleValue(
         anItem,
         shouldbeDatatype,
-        propId
+        propId,
       );
       retArray.push(normAnItem);
     });
@@ -1696,7 +1696,7 @@ export class IpmdChecker {
   private _normalizePropSingleValue(
     propValue: any,
     shouldbeDatatype: string,
-    propId: string
+    propId: string,
   ): any {
     if (shouldbeDatatype === icc.itgDtStruct) {
       return propValue;

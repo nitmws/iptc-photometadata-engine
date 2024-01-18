@@ -2,7 +2,10 @@
 
 (Latest changes at the top. Changes refer to a version provided in the "version" property of package.json.)
 
-* v 0.2.13 2024-xx-yy:
+* v 0.2.14 2024-01-18:
+  * ipmdchecker/checkIpmdStd: error in retrieving Exif Copyright fixed
+  * propnodes1: dealing with Exif values modified, dealing with INSYNC and MAPINSYNC simplified.
+* v 0.2.13 2024-01-18:
   * ipmdchecker/checkIpmdStd: testing if object is empty updated.
   * propnodes1: under condition XMP and IIM exist but not in sync, Exif does not exist, no XMP or IIM was shown - corrected
   * utilities1/objectIsEmpty: testing obj.constructor was removed

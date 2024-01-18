@@ -181,80 +181,68 @@ export function ipmdChkResultToPropNodes(ipmdChkResult, opdOpt, labeltype, noVal
         const ipmdTechRefPath = icc.itgIpmdTop + fsdLsep + ipmdPropId;
         const xmpPropNode = _generateXmpPropNode(ipmdChkResPathState, ipmdChkResPathValue, ipmdChkResultFsd, propIpmdRefData, opdOpt.wvalonly, labeltype, noValueText, ipmdTechRefPath, ipmdTechRefFsd);
         const xmpPropNodeVar1 = util1.deepCopyPn(xmpPropNode);
-        // create the PropNode output for all specified IPTC PMD properties, regardless of having a value or not
+        let stateInsync = 0;
+        if (propImpdStateData[icc.ipmdcrSDinsync] !== undefined) {
+            stateInsync = propImpdStateData[icc.ipmdcrSDinsync];
+        }
+        else {
+            stateInsync = -1;
+        }
+        let stateMapinsync = 0;
+        if (propImpdStateData[icc.ipmdcrSDmapinsync] !== undefined) {
+            stateMapinsync = propImpdStateData[icc.ipmdcrSDmapinsync];
+        }
+        else {
+            stateMapinsync = 99;
+        }
+        /** Create the PropNode output for all specified IPTC PMD properties,
+         *    regardless of having a value or not */
         if (!opdOpt.wvalonly) {
             if (propImpdStateData[icc.ipmdcrSDiim] !== undefined) {
                 // IIM is specified for this property
                 const iimPropNodeVar1 = util1.deepCopyPn(iimPropNode);
                 iimPropNodeVar1.plabel = iimPropNode.plabel;
                 iimPropNodeVar1.pembformat = "IIM";
-                if (propImpdStateData[icc.ipmdcrSDinsync] !== undefined) {
-                    // A value for INSYNC exists
-                    if (propImpdStateData[icc.ipmdcrSDinsync] === 1) {
-                        // XMP and IIM are in sync
-                        if (propImpdStateData[icc.ipmdcrSDmapinsync] !== undefined) {
-                            if (propImpdStateData[icc.ipmdcrSDmapinsync] === 1) {
-                                // XMP, IIM, Exif are in sync, MAPINSYNC === 1
-                                xmpPropNodeVar1.plabel = xmpPropNode.plabel;
-                                xmpPropNodeVar1.pembformat = "XMP,IIM,Exif";
-                                xmpPropNodeVar1.pinsync = 2;
-                                allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
-                                _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
-                                _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
-                            }
-                            else {
-                                // XMP, IIM exist and are in sync, Exif exists but not in sync
-                                //     MAPINSYNC != 1
-                                xmpPropNodeVar1.plabel = xmpPropNode.plabel;
-                                xmpPropNodeVar1.pembformat = "XMP,IIM";
-                                xmpPropNodeVar1.pinsync = 1;
-                                allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
-                                const exifPropNodeVar1 = util1.deepCopyPn(exifPropNode);
-                                exifPropNodeVar1.plabel = exifPropNode.plabel;
-                                exifPropNodeVar1.pembformat = "Exif";
-                                exifPropNodeVar1.pinsync = -2;
-                                allPNodesArrays.ipmdFullPna1.push(exifPropNodeVar1);
-                                _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, exifPropNodeVar1);
-                                _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
-                            }
-                        }
-                        else {
-                            // XMP and IIM exist, are in sync - no value for MAPINSYNC exists
+                if (stateInsync === 1) {
+                    // XMP and IIM are in sync
+                    if (stateMapinsync < 99) {
+                        if (stateMapinsync === 1) {
+                            // XMP, IIM, Exif are in sync, MAPINSYNC === 1
                             xmpPropNodeVar1.plabel = xmpPropNode.plabel;
-                            xmpPropNodeVar1.pembformat = "XMP,IIM";
-                            xmpPropNodeVar1.pinsync = 1;
+                            xmpPropNodeVar1.pembformat = "XMP,IIM,Exif";
+                            xmpPropNodeVar1.pinsync = 2;
                             allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
                             _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
                             _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                         }
-                    }
-                    else {
-                        // XMP and IIM exist, are not in sync, INSYNC != 1
-                        xmpPropNodeVar1.plabel = xmpPropNode.plabel;
-                        xmpPropNodeVar1.pembformat = "XMP";
-                        xmpPropNodeVar1.pinsync = -1;
-                        allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
-                        iimPropNodeVar1.pinsync = -1;
-                        allPNodesArrays.ipmdFullPna1.push(iimPropNodeVar1);
-                        if (propImpdStateData[icc.ipmdcrSDmapinsync] !== undefined) {
-                            // ... (see above), Exif exists
+                        else {
+                            // XMP, IIM exist and are in sync, Exif exists but not in sync
+                            //     MAPINSYNC != 1
+                            xmpPropNodeVar1.plabel = xmpPropNode.plabel;
+                            xmpPropNodeVar1.pembformat = "XMP,IIM";
+                            xmpPropNodeVar1.pinsync = 1;
+                            allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
                             const exifPropNodeVar1 = util1.deepCopyPn(exifPropNode);
                             exifPropNodeVar1.plabel = exifPropNode.plabel;
                             exifPropNodeVar1.pembformat = "Exif";
                             exifPropNodeVar1.pinsync = -2;
                             allPNodesArrays.ipmdFullPna1.push(exifPropNodeVar1);
-                            _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, iimPropNodeVar1, exifPropNodeVar1);
+                            _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, exifPropNodeVar1);
+                            _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                         }
-                        else {
-                            // ... (see above), Exif does not exist
-                            _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, iimPropNodeVar1, null);
-                        }
+                    }
+                    else {
+                        // XMP and IIM exist, are in sync - no value for MAPINSYNC exists
+                        xmpPropNodeVar1.plabel = xmpPropNode.plabel;
+                        xmpPropNodeVar1.pembformat = "XMP,IIM";
+                        xmpPropNodeVar1.pinsync = 1;
+                        allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
+                        _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
                         _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                     }
                 }
                 else {
-                    // INSYNC is undefined
-                    // IIM is specified, but no sync value available = same as: both exist, not in sync
+                    // XMP and IIM exist, are not in sync, INSYNC != 1
                     xmpPropNodeVar1.plabel = xmpPropNode.plabel;
                     xmpPropNodeVar1.pembformat = "XMP";
                     xmpPropNodeVar1.pinsync = -1;
@@ -262,23 +250,23 @@ export function ipmdChkResultToPropNodes(ipmdChkResult, opdOpt, labeltype, noVal
                     iimPropNodeVar1.pinsync = -1;
                     allPNodesArrays.ipmdFullPna1.push(iimPropNodeVar1);
                     if (propImpdStateData[icc.ipmdcrSDmapinsync] !== undefined) {
-                        // ... (see above), Exif exists
+                        // XMP and IIM exist, are not in sync, Exif exists
                         const exifPropNodeVar1 = util1.deepCopyPn(exifPropNode);
                         exifPropNodeVar1.plabel = exifPropNode.plabel;
                         exifPropNodeVar1.pembformat = "Exif";
                         exifPropNodeVar1.pinsync = -2;
                         allPNodesArrays.ipmdFullPna1.push(exifPropNodeVar1);
-                        _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, iimPropNode, exifPropNodeVar1);
+                        _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, iimPropNodeVar1, exifPropNodeVar1);
                     }
                     else {
-                        // ... (see above), Exif does not exist
-                        _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, iimPropNode, null);
+                        // XMP and IIM exist, are not in sync, Exif does not exist
+                        _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, iimPropNodeVar1, null);
                     }
                     _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                 }
             }
             else {
-                // only XMP is specified - IIM is undefined
+                // IIM is "undefined" - therefore only XMP is specified
                 xmpPropNodeVar1.plabel = xmpPropNode.plabel;
                 xmpPropNodeVar1.pembformat = "XMP";
                 allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
@@ -287,49 +275,29 @@ export function ipmdChkResultToPropNodes(ipmdChkResult, opdOpt, labeltype, noVal
             }
         }
         else {
-            //  create the PropNode output only for specified IPTC PMD properties if they have a value
+            /** Create the PropNode output only for specified IPTC PMD properties
+             * if they have a value */
             if (propImpdStateData[icc.ipmdcrSDiim] !== undefined) {
                 // IIM is specified for this property
                 const iimPropNodeVar1 = util1.deepCopyPn(iimPropNode);
                 iimPropNodeVar1.plabel = iimPropNode.plabel;
                 iimPropNodeVar1.pembformat = "IIM";
-                if (propImpdStateData[icc.ipmdcrSDinsync] !== undefined) {
-                    if (propImpdStateData[icc.ipmdcrSDinsync] === 1) {
-                        // XMP and IIM are in sync
-                        if (propImpdStateData[icc.ipmdcrSDmapinsync] !== undefined) {
-                            if (propImpdStateData[icc.ipmdcrSDmapinsync] === 1) {
-                                // XMP, IIM, Exif are in sync
-                                xmpPropNodeVar1.plabel = xmpPropNode.plabel;
-                                xmpPropNodeVar1.pembformat = "XMP,IIM,Exif";
-                                xmpPropNodeVar1.pinsync = 2;
-                                if (xmpPropNodeVar1.hasValue) {
-                                    allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
-                                    _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
-                                    _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
-                                }
-                            }
-                            else {
-                                // XMP, IIM exist and are in sync, Exif exists but not in sync
-                                xmpPropNodeVar1.plabel = xmpPropNode.plabel;
-                                xmpPropNodeVar1.pembformat = "XMP,IIM";
-                                xmpPropNodeVar1.pinsync = 1;
-                                if (xmpPropNodeVar1.hasValue) {
-                                    allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
-                                    _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
-                                    _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
-                                }
-                                const exifPropNodeVar1 = util1.deepCopyPn(exifPropNode);
-                                exifPropNodeVar1.plabel = exifPropNode.plabel;
-                                exifPropNodeVar1.pembformat = "Exif";
-                                exifPropNodeVar1.pinsync = -2;
-                                if (exifPropNodeVar1.hasValue) {
-                                    allPNodesArrays.ipmdFullPna1.push(exifPropNodeVar1);
-                                    _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, null, exifPropNodeVar1);
-                                }
+                if (stateInsync === 1) {
+                    // XMP and IIM are in sync
+                    if (stateMapinsync < 99) {
+                        if (stateMapinsync === 1) {
+                            // XMP, IIM, Exif are in sync
+                            xmpPropNodeVar1.plabel = xmpPropNode.plabel;
+                            xmpPropNodeVar1.pembformat = "XMP,IIM,Exif";
+                            xmpPropNodeVar1.pinsync = 2;
+                            if (xmpPropNodeVar1.hasValue) {
+                                allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
+                                _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
+                                _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                             }
                         }
                         else {
-                            // XMP and IIM exist, are in sync
+                            // XMP, IIM exist and are in sync, Exif exists but not in sync
                             xmpPropNodeVar1.plabel = xmpPropNode.plabel;
                             xmpPropNodeVar1.pembformat = "XMP,IIM";
                             xmpPropNodeVar1.pinsync = 1;
@@ -338,143 +306,57 @@ export function ipmdChkResultToPropNodes(ipmdChkResult, opdOpt, labeltype, noVal
                                 _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
                                 _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                             }
-                        }
-                    }
-                    else {
-                        // XMP and IIM exist, are not in sync - INSYNC != 1
-                        xmpPropNodeVar1.plabel = xmpPropNode.plabel;
-                        xmpPropNodeVar1.pembformat = "XMP";
-                        xmpPropNodeVar1.pinsync = -1;
-                        if (propImpdStateData[icc.ipmdcrSDmapinsync] !== undefined) {
-                            // The IPTC property and an Exif tag are mapped
-                            if (exifPropNode.hasValue) {
-                                // XMP and IIM exist, are not in sync, Exif exists and has a value
-                                const exifPropNodeVar1 = util1.deepCopyPn(exifPropNode);
-                                exifPropNodeVar1.plabel = exifPropNode.plabel;
-                                exifPropNodeVar1.pembformat = "Exif";
-                                exifPropNodeVar1.pinsync = -2;
-                                allPNodesArrays.ipmdFullPna1.push(exifPropNodeVar1);
-                                if (xmpPropNodeVar1.hasValue) {
-                                    allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
-                                    _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, exifPropNodeVar1);
-                                    _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
-                                }
-                                if (iimPropNodeVar1.hasValue) {
-                                    iimPropNodeVar1.pinsync = -1;
-                                    allPNodesArrays.ipmdFullPna1.push(iimPropNodeVar1);
-                                    _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, iimPropNodeVar1, exifPropNodeVar1);
-                                }
-                                if (!xmpPropNodeVar1.hasValue) {
-                                    if (!iimPropNodeVar1.hasValue) {
-                                        _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, null, exifPropNodeVar1);
-                                    }
-                                }
-                            }
-                            else {
-                                // XMP and IIM exist, are not in sync, Exif does NOT have a value
-                                if (xmpPropNodeVar1.hasValue) {
-                                    allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
-                                    _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
-                                    _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
-                                }
-                                if (iimPropNodeVar1.hasValue) {
-                                    iimPropNodeVar1.pinsync = -1;
-                                    allPNodesArrays.ipmdFullPna1.push(iimPropNodeVar1);
-                                    _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, iimPropNodeVar1, null);
-                                }
-                            }
-                        }
-                        else {
-                            // ... (see above), Exif does not exist
-                            if (xmpPropNodeVar1.hasValue) {
-                                allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
-                                _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
-                                _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
-                            }
-                            if (iimPropNodeVar1.hasValue) {
-                                iimPropNodeVar1.pinsync = -1;
-                                allPNodesArrays.ipmdFullPna1.push(iimPropNodeVar1);
-                                _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, iimPropNodeVar1, null);
-                            }
-                        }
-                    }
-                }
-                else {
-                    // IIM is specified, but no sync value available = same as: both exist, not in sync
-                    //      INSYNC is undefined
-                    xmpPropNodeVar1.plabel = xmpPropNode.plabel;
-                    xmpPropNodeVar1.pembformat = "XMP";
-                    xmpPropNodeVar1.pinsync = -1;
-                    if (propImpdStateData[icc.ipmdcrSDmapinsync] !== undefined) {
-                        if (exifPropNode.hasValue) {
-                            // ... (see above), Exif exists and has a val8ue
                             const exifPropNodeVar1 = util1.deepCopyPn(exifPropNode);
                             exifPropNodeVar1.plabel = exifPropNode.plabel;
                             exifPropNodeVar1.pembformat = "Exif";
                             exifPropNodeVar1.pinsync = -2;
-                            allPNodesArrays.ipmdFullPna1.push(exifPropNodeVar1);
-                            if (xmpPropNodeVar1.hasValue) {
-                                allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
-                                _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, exifPropNodeVar1);
-                                _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                            if (exifPropNodeVar1.hasValue) {
+                                allPNodesArrays.ipmdFullPna1.push(exifPropNodeVar1);
+                                _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, null, exifPropNodeVar1);
                             }
-                            if (iimPropNodeVar1.hasValue) {
-                                iimPropNodeVar1.pinsync = -1;
-                                allPNodesArrays.ipmdFullPna1.push(iimPropNodeVar1);
-                                _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, iimPropNodeVar1, exifPropNodeVar1);
-                                if (!xmpPropNodeVar1.hasValue) {
-                                    if (!iimPropNodeVar1.hasValue) {
-                                        _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, null, exifPropNodeVar1);
-                                    }
-                                }
+                            else {
+                                exifPropNodeVar1.pvalue = "[no value]";
+                                allPNodesArrays.ipmdFullPna1.push(exifPropNodeVar1);
+                                _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, null, exifPropNodeVar1);
                             }
                         }
                     }
                     else {
-                        // ... (see above), Exif does not exist
+                        // XMP and IIM exist, are in sync
+                        xmpPropNodeVar1.plabel = xmpPropNode.plabel;
+                        xmpPropNodeVar1.pembformat = "XMP,IIM";
+                        xmpPropNodeVar1.pinsync = 1;
                         if (xmpPropNodeVar1.hasValue) {
                             allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
                             _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
                             _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                         }
-                        if (iimPropNodeVar1.hasValue) {
-                            iimPropNodeVar1.pinsync = -1;
-                            allPNodesArrays.ipmdFullPna1.push(iimPropNodeVar1);
-                            _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, iimPropNodeVar1, null);
-                        }
                     }
-                    /*
+                }
+                else {
+                    // XMP and IIM exist, are not in sync - INSYNC != 1
+                    xmpPropNodeVar1.plabel = xmpPropNode.plabel;
+                    xmpPropNodeVar1.pembformat = "XMP";
+                    xmpPropNodeVar1.pinsync = -1;
                     if (xmpPropNodeVar1.hasValue) {
-                      allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
-                      _ugtPush_allPNodesArr(
-                        opdOpt,
-                        allPNodesArrays,
-                        propIpmdRefData[icc.itgUgtopic],
-                        xmpPropNodeVar1,
-                        null,
-                        null
-                      );
-                      _push_schemaorgPna(
-                        opdOpt,
-                        ipmdPropId,
-                        propIpmdRefData,
-                        xmpPropNodeVar1,
-                        allPNodesArrays
-                      );
+                        allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
+                        _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
+                        _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
                     }
                     if (iimPropNodeVar1.hasValue) {
-                      iimPropNodeVar1.pinsync = -1;
-                      allPNodesArrays.ipmdFullPna1.push(iimPropNodeVar1);
-                      _ugtPush_allPNodesArr(
-                        opdOpt,
-                        allPNodesArrays,
-                        propIpmdRefData[icc.itgUgtopic],
-                        null,
-                        iimPropNode,
-                        null
-                      );
+                        iimPropNodeVar1.pinsync = -1;
+                        allPNodesArrays.ipmdFullPna1.push(iimPropNodeVar1);
+                        _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, iimPropNodeVar1, null);
                     }
-                     */
+                    if (exifPropNode.hasValue) {
+                        // XMP and IIM exist, are not in sync, Exif exists and has a value
+                        const exifPropNodeVar1 = util1.deepCopyPn(exifPropNode);
+                        exifPropNodeVar1.plabel = exifPropNode.plabel;
+                        exifPropNodeVar1.pembformat = "Exif";
+                        exifPropNodeVar1.pinsync = -2;
+                        allPNodesArrays.ipmdFullPna1.push(exifPropNodeVar1);
+                        _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, null, exifPropNodeVar1);
+                    }
                 }
             }
             else {

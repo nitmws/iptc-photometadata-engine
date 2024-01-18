@@ -439,7 +439,7 @@ class IpmdChecker {
                             this._lsep +
                             icc.ipmdcrSDexif);
                         propVresult[icc.ipmdcrVexif] = testImgEtPmd["IFD0:Copyright"];
-                        exifValue = testImgEtPmd["IFD0:ImageDescription"];
+                        exifValue = testImgEtPmd["IFD0:Copyright"];
                         exifDataSet = true;
                     }
                 }

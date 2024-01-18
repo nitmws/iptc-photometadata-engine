@@ -54,7 +54,7 @@ var Labeltype;
     Labeltype[Labeltype["ipmd"] = 0] = "ipmd";
     Labeltype[Labeltype["valuefmt"] = 1] = "valuefmt";
     Labeltype[Labeltype["et"] = 2] = "et";
-})(Labeltype = exports.Labeltype || (exports.Labeltype = {}));
+})(Labeltype || (exports.Labeltype = Labeltype = {}));
 /**
  * Class with properties holding arrays of PropNodes
  * for different Output Designs
@@ -92,7 +92,7 @@ var Ptype;
 (function (Ptype) {
     Ptype[Ptype["plain"] = 0] = "plain";
     Ptype[Ptype["struct"] = 1] = "struct";
-})(Ptype = exports.Ptype || (exports.Ptype = {}));
+})(Ptype || (exports.Ptype = Ptype = {}));
 // Internal constants
 const fsdLsep = "/";
 const fsdIsel = "#";
@@ -108,6 +108,31 @@ const fsdIsel = "#";
  * @param anyOtherDataRef Reference data of any non-IPTC properties
  */
 function ipmdChkResultToPropNodes(ipmdChkResult, opdOpt, labeltype, noValueText, ipmdIdFilter, ipmdTechRef, anyOtherDataRef) {
+    /**
+     * As creating the tree of PropNodes is quite complex code lines checking the state of data regarding
+     * an IPTC photo metadata property should have a comment on all states at this point in the code
+     * using the structure below. This regards to IPTC rules defined for displaying IPTC photo metadata.
+     * These states are shown:
+     * UI parameter Values: show with value only: wvo, show with or without value: wwov
+     * Checker Result state properties:
+     *   XMP: doesn't exist: 0, exists: 1
+     *   IIM: defined: yes/not defined: no, if yes: doesn't exist: 0, exists: 1
+     *   Exif: mapped: yes/not mapped: no, if yes: doesn't exist: 0, exists: 1
+     *   XMP/IIM values in sync --> INSYNC:
+     *     IIM is defined: yes/IIM not defined: no
+     *     if INSYNC:yes: not in sync: 0, in sync: 1, XMP or IIM doesn't exist: -1
+     *   (XMP/IIM)/Exif values in sync --> MAPINSYNC:
+     *     XMP/IIM sync is checked (INSYNC) + Exif is mapped: yes/
+     *     if XMP/IIM sync not checked (INSYNC:no) or Exif is not mapped: no
+     *     if yes: not in sync: 0, in sync: 1, XMP/IIM sync or Exif doesn't exist: -1
+     * State line examples:
+     * wvo, XMP:1, IIM:yes:1, Exif:yes:1, INSYNC:yes:1, MAPINSYNC:yes:1
+     * wvo, XMP:1, IIM:yes:1, Exif:yes:1, INSYNC:yes:0, MAPINSYNC:yes:0
+     * wvo, XMP:1, IIM:yes:0, Exif:yes:1, INSYNC:yes:0, MAPINSYNC:yes:-1
+     * wvo, XMP:1, IIM:no, Exif:yes:1, INSYNC:no, MAPINSYNC:no
+     * wvo, XMP:1, IIM:no, Exif:no, INSYNC:no, MAPINSYNC:no
+     * wvo, XMP:1, IIM:yes,1, Exif:no, INSYNC:yes:1, MAPINSYNC:no
+     */
     const ipmdTechRefFsd = new fixed_structure_data_1.default(ipmdTechRef, false);
     const ipmdChkResultFsd = new fixed_structure_data_1.default(ipmdChkResult, false);
     const ipmdChkResultState = ipmdChkResultFsd.getFsData(icc.ipmdcrState)["value"];
@@ -352,8 +377,9 @@ function ipmdChkResultToPropNodes(ipmdChkResult, opdOpt, labeltype, noValueText,
                         xmpPropNodeVar1.pembformat = "XMP";
                         xmpPropNodeVar1.pinsync = -1;
                         if (propImpdStateData[icc.ipmdcrSDmapinsync] !== undefined) {
+                            // The IPTC property and an Exif tag are mapped
                             if (exifPropNode.hasValue) {
-                                // ... (see above), Exif exists and has a value
+                                // XMP and IIM exist, are not in sync, Exif exists and has a value
                                 const exifPropNodeVar1 = util1.deepCopyPn(exifPropNode);
                                 exifPropNodeVar1.plabel = exifPropNode.plabel;
                                 exifPropNodeVar1.pembformat = "Exif";
@@ -373,6 +399,19 @@ function ipmdChkResultToPropNodes(ipmdChkResult, opdOpt, labeltype, noValueText,
                                     if (!iimPropNodeVar1.hasValue) {
                                         _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, null, exifPropNodeVar1);
                                     }
+                                }
+                            }
+                            else {
+                                // XMP and IIM exist, are not in sync, Exif does NOT have a value
+                                if (xmpPropNodeVar1.hasValue) {
+                                    allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
+                                    _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
+                                    _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                                }
+                                if (iimPropNodeVar1.hasValue) {
+                                    iimPropNodeVar1.pinsync = -1;
+                                    allPNodesArrays.ipmdFullPna1.push(iimPropNodeVar1);
+                                    _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, iimPropNodeVar1, null);
                                 }
                             }
                         }

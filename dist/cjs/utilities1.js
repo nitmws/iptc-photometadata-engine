@@ -71,10 +71,10 @@ exports.writeAsJson = writeAsJson;
  */
 function generateIpmdChkResultsStateTemplate(ipmdTechRefData) {
     const reftop = ipmdTechRefData[icc.itgIpmdTop];
-    if (reftop === {})
+    if (objectIsEmpty(reftop))
         return {};
     const refstruct = ipmdTechRefData[icc.itgIpmdStruct];
-    if (refstruct === {})
+    if (objectIsEmpty(refstruct))
         return {};
     const stateStruct = {};
     // presets
@@ -222,7 +222,7 @@ function generateIpmdRefStateStructOfStruct(refstruct, toprefstruct) {
  * @param obj
  */
 function objectIsEmpty(obj) {
-    return Object.keys(obj).length === 0 && obj.constructor === Object;
+    return Object.keys(obj).length === 0; // && obj.constructor === Object;
 }
 exports.objectIsEmpty = objectIsEmpty;
 /**

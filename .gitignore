@@ -27,3 +27,5 @@ typings/
 # project-specific
 .idea/
 _nit/
+_archive/
+

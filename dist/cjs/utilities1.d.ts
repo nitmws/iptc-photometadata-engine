@@ -45,7 +45,7 @@ export declare function etTagColon(etTagUnderscore: string): string;
 /**
  * Object covering all IPTC related variants of date and time formats
  */
-export declare type EtDateTimeVariants = {
+export type EtDateTimeVariants = {
     xmpDateTime: string | null;
     iimDate: string | null;
     iimTime: string | null;

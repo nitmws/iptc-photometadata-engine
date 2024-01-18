@@ -44,9 +44,9 @@ export function generateIpmdChkResultsStateTemplate(
   ipmdTechRefData: MdStruct
 ): object {
   const reftop: MdStruct = ipmdTechRefData[icc.itgIpmdTop];
-  if (reftop === {}) return {};
+  if (objectIsEmpty(reftop)) return {};
   const refstruct: MdStruct = ipmdTechRefData[icc.itgIpmdStruct];
-  if (refstruct === {}) return {};
+  if (objectIsEmpty(refstruct)) return {};
   const stateStruct: MdStruct = {};
   // presets
   const dataStructXmp: object = { XMP: 0 };
@@ -219,7 +219,7 @@ function generateIpmdRefStateStructOfStruct(
  * @param obj
  */
 export function objectIsEmpty(obj: object) {
-  return Object.keys(obj).length === 0 && obj.constructor === Object;
+  return Object.keys(obj).length === 0; // && obj.constructor === Object;
 }
 
 /**

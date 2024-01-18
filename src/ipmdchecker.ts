@@ -173,9 +173,9 @@ export class IpmdChecker {
   ): IipmdCheckerResult {
     // prerequisites
     let testImgEtPmd: MdStruct;
-    if (imgEtPmdInput === {}) {
+    if (util1.objectIsEmpty(imgEtPmdInput)) {
       testImgEtPmd = this.loadTestEtJson();
-      if (testImgEtPmd === {}) {
+      if (util1.objectIsEmpty(testImgEtPmd)) {
         const errmsg: ErrorMsg = {
           propId: "NA",
           propName: "Generic processing",
@@ -226,7 +226,10 @@ export class IpmdChecker {
     // start checking
     let dtTestval: any;
     const refIpmdTop = this.ipmdRef[icc.itgIpmdTop];
-    // Iterate all properties of the reference ipmd_top
+    /****************************************************************
+     * Iterate all properties of the reference ipmd_top
+     *   = top level properties
+     */
     for (const refPropId in refIpmdTop) {
       let xmpValue: any;
       let iimValue: any;
@@ -235,7 +238,10 @@ export class IpmdChecker {
       const refPropData = refIpmdTop[refPropId];
       const etXmpId = refPropData[icc.itgEtXmp];
       const datatype: string = refPropData[icc.itgDatatype];
-      // check for XMP property
+      /***
+       Check for XMP, IIM and Exif properties
+       */
+      /*** check for XMP property */
       if (testImgEtPmd.hasOwnProperty(etXmpId)) {
         this._ipmdStateData.setFsData(
           1,
@@ -351,7 +357,7 @@ export class IpmdChecker {
           }
         }
       }
-      // check for IIM data set
+      /*** check for IIM data set */
       if (refPropData.hasOwnProperty(icc.itgEtIim)) {
         const etIimId = refPropData[icc.itgEtIim];
         if (etIimId === "IPTC:DateCreated+IPTC:TimeCreated") {
@@ -407,10 +413,23 @@ export class IpmdChecker {
           }
         }
       }
-      // Check for Exif Tag
+      /*** Check for Exif Tags */
+      /** IPTC/Exif mapped properties as of 2024-01 (with Exif 3.0 as background
+         Copyright Notice: Copyright/33432/0x8298 // et: IFD0:Copyright
+         Creator: Artist/315/0x013B // et: IFD0:Artist
+         DateCreated: special mapping as different structures are used, see below
+         Description: ImageDescription/270/0x010E et: IFD0:ImageDescription
+         Exif 3.0:
+         Contributor/ImageEditor:
+         DigitalImageGUID: ImageUniqueID/42016/0xA420
+         re Creator: Photographer/42039/0xA437
+         Contributor w Content Editor role: ImageEditor/42040/0xA438
+
+       */
       if (refPropData.hasOwnProperty(icc.itgEtExif)) {
         const etExifId = refPropData[icc.itgEtExif];
         let exifDataSet = false; // changed to true if any Exif data value is set
+        /** Check Exif tags regarding IPTC's Date Created */
         // special case: combine Date Created from multiple Exif tags, subSeconds supported
         if (
           etExifId === "ExifIFD:DateTimeOriginal+ExifIFD:OffsetTimeOriginal"
@@ -462,8 +481,8 @@ export class IpmdChecker {
             exifDataSet = true;
           }
         }
-        // special case: look for alternative Exif Tags describing the image
-        /* retired 2022-09-02 as agreed with CIPA
+        /* reactivated in 2024-01 // retired 2022-09-02 as agreed with CIPA */
+        /** Check Exif tag regarding IPTC's Description */
         if (etExifId === "IFD0:ImageDescription") {
           if (testImgEtPmd.hasOwnProperty("IFD0:ImageDescription")) {
             // try ImageDescription first ...
@@ -481,7 +500,23 @@ export class IpmdChecker {
             exifDataSet = true;
           }
         }
-         */
+        // Check Exif tags regarding IPTC's Copyright Notice
+        if (etExifId === "IFD0:Copyright") {
+          if (testImgEtPmd.hasOwnProperty("IFD0:Copyright")) {
+            this._ipmdStateData.setFsData(
+              1,
+              refPropId +
+                this._lsep +
+                icc.ipmdcrSData +
+                this._lsep +
+                icc.ipmdcrSDexif
+            );
+            propVresult[icc.ipmdcrVexif] = testImgEtPmd["IFD0:Copyright"];
+            exifValue = testImgEtPmd["IFD0:ImageDescription"];
+            exifDataSet = true;
+          }
+        }
+        /** Check Exif tags regarding IPTC's Creator */
         // special case: Exif Tag Artist, make its value a single item array to compare properly
         if (etExifId === "IFD0:Artist") {
           if (testImgEtPmd.hasOwnProperty(etExifId)) {
@@ -500,7 +535,7 @@ export class IpmdChecker {
             );
           }
         }
-        // finally, if no Exif data is set yet
+        /** finally, if no Exif data is set yet*/
         if (!exifDataSet && testImgEtPmd.hasOwnProperty(etExifId)) {
           this._ipmdStateData.setFsData(
             1,
@@ -515,9 +550,13 @@ export class IpmdChecker {
         }
       }
       this._ipmdValueData[refPropId] = propVresult;
+      /***
+       Comparing values of found XMP, IIM and Exif properties
 
-      // compares only if no errors were found during getting property values
+       Compares only if no errors were found during getting property values
+       */
       if (compareValues && this._errmsgs.length === 0) {
+        /** Compare XMP and IIM --> sync1 */
         if (xmpValue !== undefined && iimValue !== undefined) {
           let xmpIimAreEqual = false;
           if (Array.isArray(xmpValue) && Array.isArray(iimValue)) {

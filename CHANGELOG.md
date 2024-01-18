@@ -2,6 +2,10 @@
 
 (Latest changes at the top. Changes refer to a version provided in the "version" property of package.json.)
 
+* v 0.2.13 2024-xx-yy:
+  * ipmdchecker/checkIpmdStd: testing if object is empty updated.
+  * propnodes1: under condition XMP and IIM exist but not in sync, Exif does not exist, no XMP or IIM was shown - corrected
+  * utilities1/objectIsEmpty: testing obj.constructor was removed
 * v 0.2.12 2022-11-14:
   * ipmdchecker/_checkIpmdStdStruct(): error in using setPmdState fixed, occured in $anypmdproperty properties with a structure.
 * v 0.2.11 2022-10-09:

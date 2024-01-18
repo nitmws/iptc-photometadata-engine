@@ -12,5 +12,5 @@ var ProcState;
     ProcState["OK"] = "OK";
     ProcState["ProcErr"] = "PROCERR";
     ProcState["PmdErr"] = "PMDERR";
-})(ProcState = exports.ProcState || (exports.ProcState = {}));
+})(ProcState || (exports.ProcState = ProcState = {}));
 //# sourceMappingURL=incommon.js.map

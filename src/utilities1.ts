@@ -41,7 +41,7 @@ export function writeAsJson(jsonFp: string, dataObject: object): boolean {
  * @param ipmdTechRefData Object of the IPTC PMD TechGuide file
  */
 export function generateIpmdChkResultsStateTemplate(
-  ipmdTechRefData: MdStruct
+  ipmdTechRefData: MdStruct,
 ): object {
   const reftop: MdStruct = ipmdTechRefData[icc.itgIpmdTop];
   if (objectIsEmpty(reftop)) return {};
@@ -65,6 +65,11 @@ export function generateIpmdChkResultsStateTemplate(
     INSYNC: -1,
     MAPINSYNC: -1,
   };
+  const dataStructXmpExif: object = {
+    XMP: 0,
+    EXIF: 0,
+    MAPINSYNC: -1,
+  };
   const dataStructXmpIimExifMulti: object = {
     XMP: 0,
     XMPVALOCCUR: -1,
@@ -81,6 +86,7 @@ export function generateIpmdChkResultsStateTemplate(
       reftop[reftopkey][icc.itgIimid] !== undefined &&
       reftop[reftopkey][icc.itgExifid] !== undefined
     ) {
+      // XMP and IIM and Exif are defined
       if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurSingle) {
         stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpIimExif;
       }
@@ -92,6 +98,7 @@ export function generateIpmdChkResultsStateTemplate(
         reftop[reftopkey][icc.itgXmpid] !== undefined &&
         reftop[reftopkey][icc.itgIimid] !== undefined
       ) {
+        // both XMP and IIM are defined
         if (
           reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurSingle
         ) {
@@ -103,16 +110,31 @@ export function generateIpmdChkResultsStateTemplate(
           stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpIimMulti;
         }
       } else {
-        if (reftop[reftopkey][icc.itgXmpid] !== undefined) {
+        // not both XMP and IIM are defined
+        if (
+          reftop[reftopkey][icc.itgXmpid] !== undefined &&
+          reftop[reftopkey][icc.itgExifid] !== undefined
+        ) {
+          // both XMP and Exif are defined
           if (
             reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurSingle
           ) {
-            stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmp;
+            stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpExif;
           }
-          if (
-            reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurMulti
-          ) {
-            stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpMulti;
+        } else {
+          if (reftop[reftopkey][icc.itgXmpid] !== undefined) {
+            // only XMP is defined
+            if (
+              reftop[reftopkey][icc.itgPropoccurrence] ===
+              icc.itgPropoccurSingle
+            ) {
+              stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmp;
+            }
+            if (
+              reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurMulti
+            ) {
+              stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpMulti;
+            }
           }
         }
       }
@@ -125,7 +147,7 @@ export function generateIpmdChkResultsStateTemplate(
             const generateStruct = refstruct[structId];
             const structSub = generateIpmdRefStateStructOfStruct(
               generateStruct,
-              refstruct
+              refstruct,
             );
             if (!objectIsEmpty(structSub)) {
               stateStruct[reftopkey][icc.ipmdcrSStruct] = structSub;
@@ -146,7 +168,7 @@ export function generateIpmdChkResultsStateTemplate(
  */
 function generateIpmdRefStateStructOfStruct(
   refstruct: MdStruct,
-  toprefstruct: MdStruct
+  toprefstruct: MdStruct,
 ): object {
   const stateStruct: MdStruct = {};
   // presets
@@ -200,7 +222,7 @@ function generateIpmdRefStateStructOfStruct(
             const generateStruct = toprefstruct[structId];
             const structSub = generateIpmdRefStateStructOfStruct(
               generateStruct,
-              toprefstruct
+              toprefstruct,
             );
             if (!objectIsEmpty(structSub)) {
               stateStruct[refstructkey][icc.ipmdcrSStruct] = structSub;
@@ -277,7 +299,7 @@ export type EtDateTimeVariants = {
  * @returns EtDateTimeVariants
  */
 export function xmpIsoDatetime2etDatetime(
-  xmpIsoDt: string
+  xmpIsoDt: string,
 ): EtDateTimeVariants {
   const etDt: EtDateTimeVariants = {
     xmpDateTime: null,

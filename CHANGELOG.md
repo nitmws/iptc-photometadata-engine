@@ -2,6 +2,10 @@
 
 (Latest changes at the top. Changes refer to a version provided in the "version" property of package.json.)
 
+* v 0.2.15 2024-01-19:
+  * ipmdchecker/checkIpmdStd: added checking of Exif ImageUniqueID: if it holds an UUID v4 value it is accepted as value, else not.
+  * propnodes1: integrated the new case "IPTC defines only XMP and maps to Exif" (covering the specific case IPTC Digitial Image GUID/Exif ImageUniqueID)
+  * utilities1/generateIpmdChkResultsStateTemplate was updated to this new case too.
 * v 0.2.14 2024-01-18:
   * ipmdchecker/checkIpmdStd: error in retrieving Exif Copyright fixed
   * propnodes1: dealing with Exif values modified, dealing with INSYNC and MAPINSYNC simplified.

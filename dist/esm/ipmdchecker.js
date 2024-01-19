@@ -1,4 +1,5 @@
 import fs from "fs";
+import validator from "validator";
 import * as icc from "./constants";
 import { ProcState } from "./incommon";
 import * as util1 from "./utilities1";
@@ -428,6 +429,23 @@ export class IpmdChecker {
                             icc.ipmdcrSDexif);
                     }
                 }
+                // Check Exif tags regarding IPTC's Digital Image GUID
+                if (etExifId === "ExifIFD:ImageUniqueID") {
+                    if (testImgEtPmd.hasOwnProperty("ExifIFD:ImageUniqueID")) {
+                        const exifImgUID = testImgEtPmd["ExifIFD:ImageUniqueID"];
+                        if (validator.isUUID(exifImgUID, 4)) {
+                            this._ipmdStateData.setFsData(1, refPropId +
+                                this._lsep +
+                                icc.ipmdcrSData +
+                                this._lsep +
+                                icc.ipmdcrSDexif);
+                            propVresult[icc.ipmdcrVexif] =
+                                testImgEtPmd["ExifIFD:ImageUniqueID"];
+                            exifValue = testImgEtPmd["ExifIFD:ImageUniqueID"];
+                            exifDataSet = true;
+                        }
+                    }
+                }
                 /** finally, if no Exif data is set yet*/
                 if (!exifDataSet && testImgEtPmd.hasOwnProperty(etExifId)) {
                     this._ipmdStateData.setFsData(1, refPropId +
@@ -531,6 +549,35 @@ export class IpmdChecker {
                             icc.ipmdcrSData +
                             this._lsep +
                             icc.ipmdcrSDinsync);
+                    }
+                }
+                else {
+                    // else -> either xmpValue or iimValue is undefined, no sync1 comparing
+                    if (xmpValue !== undefined && exifValue !== undefined) {
+                        // XMP and Exif have a value:
+                        let iptcExifAreEqual = false;
+                        if (Array.isArray(xmpValue) && Array.isArray(exifValue)) {
+                            iptcExifAreEqual = util1.arraysEqual(xmpValue, exifValue);
+                        }
+                        else {
+                            if (!Array.isArray(xmpValue) && !Array.isArray(exifValue)) {
+                                iptcExifAreEqual = xmpValue === exifValue;
+                            }
+                        }
+                        if (iptcExifAreEqual) {
+                            this._ipmdStateData.setFsData(1, refPropId +
+                                this._lsep +
+                                icc.ipmdcrSData +
+                                this._lsep +
+                                icc.ipmdcrSDmapinsync);
+                        }
+                        else {
+                            this._ipmdStateData.setFsData(0, refPropId +
+                                this._lsep +
+                                icc.ipmdcrSData +
+                                this._lsep +
+                                icc.ipmdcrSDmapinsync);
+                        }
                     }
                 }
             }

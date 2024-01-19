@@ -94,6 +94,11 @@ function generateIpmdChkResultsStateTemplate(ipmdTechRefData) {
         INSYNC: -1,
         MAPINSYNC: -1,
     };
+    const dataStructXmpExif = {
+        XMP: 0,
+        EXIF: 0,
+        MAPINSYNC: -1,
+    };
     const dataStructXmpIimExifMulti = {
         XMP: 0,
         XMPVALOCCUR: -1,
@@ -108,6 +113,7 @@ function generateIpmdChkResultsStateTemplate(ipmdTechRefData) {
         if (reftop[reftopkey][icc.itgXmpid] !== undefined &&
             reftop[reftopkey][icc.itgIimid] !== undefined &&
             reftop[reftopkey][icc.itgExifid] !== undefined) {
+            // XMP and IIM and Exif are defined
             if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurSingle) {
                 stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpIimExif;
             }
@@ -118,6 +124,7 @@ function generateIpmdChkResultsStateTemplate(ipmdTechRefData) {
         else {
             if (reftop[reftopkey][icc.itgXmpid] !== undefined &&
                 reftop[reftopkey][icc.itgIimid] !== undefined) {
+                // both XMP and IIM are defined
                 if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurSingle) {
                     stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpIim;
                 }
@@ -126,12 +133,24 @@ function generateIpmdChkResultsStateTemplate(ipmdTechRefData) {
                 }
             }
             else {
-                if (reftop[reftopkey][icc.itgXmpid] !== undefined) {
+                // not both XMP and IIM are defined
+                if (reftop[reftopkey][icc.itgXmpid] !== undefined &&
+                    reftop[reftopkey][icc.itgExifid] !== undefined) {
+                    // both XMP and Exif are defined
                     if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurSingle) {
-                        stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmp;
+                        stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpExif;
                     }
-                    if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurMulti) {
-                        stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpMulti;
+                }
+                else {
+                    if (reftop[reftopkey][icc.itgXmpid] !== undefined) {
+                        // only XMP is defined
+                        if (reftop[reftopkey][icc.itgPropoccurrence] ===
+                            icc.itgPropoccurSingle) {
+                            stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmp;
+                        }
+                        if (reftop[reftopkey][icc.itgPropoccurrence] === icc.itgPropoccurMulti) {
+                            stateStruct[reftopkey][icc.ipmdcrSData] = dataStructXmpMulti;
+                        }
                     }
                 }
             }

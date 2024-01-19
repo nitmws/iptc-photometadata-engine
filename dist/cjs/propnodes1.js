@@ -392,13 +392,67 @@ function ipmdChkResultToPropNodes(ipmdChkResult, opdOpt, labeltype, noValueText,
             }
             else {
                 // XMP only is specified - IIM is undefined
-                if (xmpPropNodeVar1.pvalue !== "") {
+                if (xmpPropNodeVar1.pvalue !== "" && !exifPropNode.hasValue) {
+                    // XMP has a value, Exif has no value
                     xmpPropNodeVar1.plabel = xmpPropNode.plabel;
                     xmpPropNodeVar1.pembformat = "XMP";
                     if (xmpPropNodeVar1.hasValue) {
                         allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
                         _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
                         _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                    }
+                    /*
+                    if (exifPropNode.hasValue) {
+                      // both XMP and Exif exist and have a value
+                      const exifPropNodeVar1: IPropNode = util1.deepCopyPn(exifPropNode);
+                      exifPropNodeVar1.plabel = exifPropNode.plabel;
+                      exifPropNodeVar1.pembformat = "Exif";
+                      if (stateMapinsync === 1) {
+                        exifPropNodeVar1.pinsync = 2;
+                      } else {
+                        exifPropNodeVar1.pinsync = -2;
+                      }
+                      allPNodesArrays.ipmdFullPna1.push(exifPropNodeVar1);
+                      _ugtPush_allPNodesArr(
+                        opdOpt,
+                        allPNodesArrays,
+                        propIpmdRefData[icc.itgUgtopic],
+                        null,
+                        null,
+                        exifPropNodeVar1,
+                      );
+                    }
+                     */
+                }
+                if (xmpPropNodeVar1.pvalue !== "" && exifPropNode.hasValue) {
+                    // both XMP and Exif have a value
+                    xmpPropNodeVar1.plabel = xmpPropNode.plabel;
+                    xmpPropNodeVar1.pembformat = "XMP";
+                    const exifPropNodeVar1 = util1.deepCopyPn(exifPropNode);
+                    exifPropNodeVar1.plabel = exifPropNode.plabel;
+                    exifPropNodeVar1.pembformat = "Exif";
+                    if (stateMapinsync === 1) {
+                        exifPropNodeVar1.pinsync = 2;
+                    }
+                    else {
+                        exifPropNodeVar1.pinsync = -2;
+                    }
+                    if (exifPropNodeVar1.pinsync > 0) {
+                        // XMP and Exif are in sync
+                        xmpPropNodeVar1.pembformat = "XMP,Exif";
+                        xmpPropNodeVar1.pinsync = 2;
+                        allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
+                        _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
+                        _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                    }
+                    else {
+                        // exifPropNodeVar1.pinsync <= 0
+                        // XMP and Exif are NOT in sync
+                        allPNodesArrays.ipmdFullPna1.push(xmpPropNodeVar1);
+                        allPNodesArrays.ipmdFullPna1.push(exifPropNodeVar1);
+                        _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], xmpPropNodeVar1, null, null);
+                        _push_schemaorgPna(opdOpt, ipmdPropId, propIpmdRefData, xmpPropNodeVar1, allPNodesArrays);
+                        _ugtPush_allPNodesArr(opdOpt, allPNodesArrays, propIpmdRefData[icc.itgUgtopic], null, null, exifPropNodeVar1);
                     }
                 }
             }

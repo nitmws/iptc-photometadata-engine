@@ -28,4 +28,4 @@ typings/
 .idea/
 _nit/
 _archive/
-
+package-lock.json
